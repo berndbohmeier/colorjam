@@ -1,16 +1,29 @@
-import 'dart:html';
+import 'dart:html' as html;
+import 'package:stagexl/stagexl.dart';
 
 void main() {
-  querySelector("#sample_text_id")
-    ..text = "Click me!"
-    ..onClick.listen(reverseText);
+// setup the Stage and RenderLoop 
+  var canvas = html.querySelector('#stage');
+  Stage stage = new Stage('myStage', canvas);
+  
+  
+  
+  RenderLoop renderLoop = new RenderLoop();
+  renderLoop.addStage(stage);
+
+  // draw a red circle
+  var shape = new Shape();
+  shape.graphics.circle(100, 100, 60);
+  shape.graphics.fillColor(Color.Red);
+  
+  Sprite gamesprite = new Sprite();
+  stage.addChild(gamesprite);
+  gamesprite.addChild(shape);
+  
+  
+  
 }
 
-void reverseText(MouseEvent event) {
-  var text = querySelector("#sample_text_id").text;
-  var buffer = new StringBuffer();
-  for (int i = text.length - 1; i >= 0; i--) {
-    buffer.write(text[i]);
-  }
-  querySelector("#sample_text_id").text = buffer.toString();
-}
+
+
+
