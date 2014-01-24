@@ -1,4 +1,5 @@
 name: colorjam
 dependencies:
   browser: any
+  dartemis: any
   stagexl: any
