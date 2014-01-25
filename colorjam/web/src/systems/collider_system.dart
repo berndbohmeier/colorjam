@@ -10,5 +10,6 @@ class ColliderSystem extends EntitySystem {
   
   void processEntities(ReadOnlyBag<Entity> bag) {
     entities = bag;
+    Entity entity;
   }
 }

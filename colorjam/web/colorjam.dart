@@ -38,6 +38,9 @@ part "src/systems/player_control_system.dart";
 part "src/systems/player_input_system.dart";
 part "src/systems/player_movement_system.dart";
 part "src/systems/editor_system.dart";
+part "src/systems/interaction_system.dart";
+part "src/systems/collect_entities_system.dart";
+
 //scenes
 part "src/scenes/scene.dart";
 part "src/scenes/level_scene.dart";
