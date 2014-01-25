@@ -122,6 +122,7 @@ class EditorSystem extends EntityProcessingSystem {
     
     subscriptionMap[e] = sprite.onMouseDown.listen((MouseEvent event) {
       selectedEntity = e;
+      
       clickTime = new DateTime.now().millisecondsSinceEpoch;
       
       html.querySelector("#typeInput").attributes["value"] = type.type;
