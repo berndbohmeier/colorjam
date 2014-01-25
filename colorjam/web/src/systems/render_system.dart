@@ -6,13 +6,15 @@ class SpriteRenderSystem extends EntityProcessingSystem {
   
   
   ComponentMapper<PositionComponent> posMapper;
+  ComponentMapper<GeometryComponent> geomMapper;
   ComponentMapper<SpriteComponent> spriteMapper;
   
-  SpriteRenderSystem(this.dbc) : super(Aspect.getAspectForAllOf([PositionComponent,SpriteComponent]));
+  SpriteRenderSystem(this.dbc) : super(Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent]));
   
   
   void initialize() {
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
+    geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
   }
   
@@ -35,8 +37,9 @@ class SpriteRenderSystem extends EntityProcessingSystem {
   void processEntity(Entity entity){
     PositionComponent pos = posMapper.get(entity);
     SpriteComponent spr = spriteMapper.get(entity);
-    spr.sprite.x = pos.x;
-    spr.sprite.y = pos.y;
+    GeometryComponent geom = geomMapper.get(entity);
+    spr.sprite.x = pos.x - geom.width/2;
+    spr.sprite.y = pos.y - geom.height/2;
     
   }
 }

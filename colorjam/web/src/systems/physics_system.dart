@@ -7,6 +7,7 @@ class PhysicsSystem extends EntityProcessingSystem {
   ComponentMapper<VelocityComponent> velMapper;
   ComponentMapper<GeometryComponent> geomMapper;
   ComponentMapper<PhysicsComponent> physicsMapper;
+  ComponentMapper<ColliderComponent> collMapper;
   ColliderSystem colliderSystem;
   
   PhysicsSystem() : super(Aspect.getAspectForAllOf([PositionComponent, VelocityComponent, GeometryComponent, PhysicsComponent]));
@@ -16,6 +17,7 @@ class PhysicsSystem extends EntityProcessingSystem {
     velMapper = new ComponentMapper<VelocityComponent>(VelocityComponent, world);
     geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
     physicsMapper = new ComponentMapper<PhysicsComponent>(PhysicsComponent, world);
+    collMapper = new ComponentMapper<ColliderComponent>(ColliderComponent, world);
     colliderSystem = world.getSystem(ColliderSystem);
   }
   
@@ -56,18 +58,20 @@ class PhysicsSystem extends EntityProcessingSystem {
           num t2 = rect.y;
           num l2 = rect.x;
           num r2 = rect.x + rect.width;
-          
+          print("b2: $b2, t2: $t2, b1: $b1, t1: $t1");
           num distX = 0;
           num distY = 0;
-          if(r2 > l1)
+          if(r1 > r2 && r2 > l1 && l1 > l2)
             distX = r2 - l1;
-          else if(l2 < r1)
+          else if(l2 > l1 && l2 < r1 && r1 < r2)
             distX = l2 - r1;
-          if(b1 > t2)
-            distY = b1 - t2;
-          else if(b2 > t1)
+          if(b1 < b2 && b1 > t2 && t2 > t1)
+            distY = t2 - b1;
+          else if(b1 > b2 && b2 > t1 && t1 > t2)
             distY = b2 - t1;
           
+          print("x: $distX");
+          print("y: $distY");
           // distX und distY sind 0, wenn es keine Überschneidung in dieser Richtung gibt
           // ansonsten enthalten sie den Abstand der Objekte in dieser Richtung.
           if(distX != 0 && distY != 0) {
@@ -81,9 +85,23 @@ class PhysicsSystem extends EntityProcessingSystem {
           pos.x -= distX;
           pos.y -= distY;
           
+          
+          
           // Wenn das Objekt auf dem Boden ist, onFloor setzen
-          if(distY > 0)
+          if(distY > 0) {
             physicsMapper.get(e).onFloor = true;
+          }
+          
+          if(distY != 0) {
+            if(vel.vy.abs() < 0.001)
+              vel.vy = 0;
+            vel.vy *= -1 * collMapper.get(other).bounciness;
+          }
+          if(distX != 0) {
+            if(vel.vx.abs() < 0.001)
+              vel.vx = 0;
+            vel.vx *= -1 * collMapper.get(other).bounciness;
+          }
         }
       });
     }
