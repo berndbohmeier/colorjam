@@ -14,7 +14,7 @@ class CircleFactory extends EntityFactory {
   Entity build(World world, Map<String, dynamic> args) {
     Sprite sprite = new Sprite();
     sprite.graphics.circle(args[ARG_RADIUS],args[ARG_RADIUS], args[ARG_RADIUS]);
-    sprite.graphics.strokeColor(Color.Black, 5);
+    sprite.graphics.strokeColor(Color.Black, 3);
     sprite.graphics.fillColor(0xFFFFFFFF);
     Entity entity = world.createEntity()
       ..addComponent(new TypeComponent("Circle"))
