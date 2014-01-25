@@ -2,8 +2,6 @@ part of colorjam;
 
 // Example Factory that creates a circle
 class CircleFactory extends EntityFactory {
-  static const String ARG_X = "x";
-  static const String ARG_Y = "y";
   static const String ARG_VX = "vx";
   static const String ARG_VY = "vy";
   static const String ARG_RADIUS = "r";
@@ -22,7 +20,7 @@ class CircleFactory extends EntityFactory {
                     args[ARG_COLOR_B] as int
     ));
     Entity entity = world.createEntity()
-      ..addComponent(new PositionComponent(args[ARG_X], args[ARG_Y]))
+      ..addComponent(new PositionComponent.fromJson(args))
       ..addComponent(new VelocityComponent(args[ARG_VX], args[ARG_VY]))
       ..addComponent(new SpriteComponent(sprite))
       ..addComponent(new PhysicsComponent())

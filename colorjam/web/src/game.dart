@@ -66,8 +66,8 @@ class Game {
           "entities":[
             {
               "type":"Circle",
-              "x":50,
-              "y":300,
+              "${PositionComponent.ARG_X}":50,
+              "${PositionComponent.ARG_Y}":300,
               "r":10,
               "vx":0.01,
               "vy":0,
@@ -77,8 +77,8 @@ class Game {
             },
             {
               "type":"Circle",
-              "x":100,
-              "y":300,
+              "${PositionComponent.ARG_X}":50,
+              "${PositionComponent.ARG_Y}":300,
               "r":10,
               "vx":0.1,
               "vy":-0.5,

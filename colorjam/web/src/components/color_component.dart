@@ -1,6 +1,10 @@
 part of colorjam;
 
 class ColorComponent extends Component {
+  static const String ARG_R = "color_r";
+  static const String ARG_G = "color_g";
+  static const String ARG_B = "color_b";
+  
   int colorcode;
   
   ColorComponent(int r, int g, int b) {
@@ -12,6 +16,19 @@ class ColorComponent extends Component {
   }
   
   ColorComponent.fromInt(this.colorcode);
+  
+  ColorCompnent.fromJson(Map<String, dynamic> args) {
+    if(!args.containsKey(ARG_R))
+        throw new ArgumentError("Missing argument $ARG_R");
+    
+    if(!args.containsKey(ARG_G))
+      throw new ArgumentError("Missing argument $ARG_G");
+    
+    if(!args.containsKey(ARG_B))
+      throw new ArgumentError("Missing argument $ARG_B");
+    
+    this(args[ARG_R] as int, args[ARG_R] as int, args[ARG_R] as int);
+  }
   
   int get a => (colorcode >> 24) & 255;
   int get r => (colorcode >> 16) & 255;
