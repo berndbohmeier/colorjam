@@ -3,6 +3,7 @@ library colorjam;
 
 import 'dart:html' as html;
 import 'dart:convert';
+import 'dart:math' as math;
 import 'package:stagexl/stagexl.dart';
 import 'package:dartemis/dartemis.dart';
 

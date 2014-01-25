@@ -25,9 +25,10 @@ class WallFactory extends EntityFactory {
         ..addComponent(new PositionComponent(left + (right-left)/2, top + (bottom-top)/2))
         ..addComponent(new VelocityComponent(0,0))
         ..addComponent(new SpriteComponent(sprite))
+        ..addComponent(new ColorComponent.fromJson(args))
         ..addComponent(new ColliderComponent(bounciness: args[ARG_BOUNCINESS]))
-        ..addComponent(new GeometryComponent(right - left, bottom - top))
-        ..addToWorld();
+        ..addComponent(new GeometryComponent(right - left, bottom - top));
+    
     return entity;
   }
 }

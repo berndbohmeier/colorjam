@@ -3,7 +3,7 @@ part of colorjam;
 class ColliderSystem extends EntitySystem {
   ReadOnlyBag<Entity> entities;
   
-  ColliderSystem() : super(Aspect.getAspectForAllOf([GeometryComponent, ColliderComponent]));
+  ColliderSystem() : super(Aspect.getAspectForAllOf([GeometryComponent, ColliderComponent, ColorComponent]));
   
   
   bool checkProcessing() => true;
