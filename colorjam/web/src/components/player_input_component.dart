@@ -11,5 +11,5 @@ class PlayerInputComponent extends Component{
   html.KeyCode rightCode;
   html.KeyCode jumpCode;
   
-  
+  PlayerInputComponent(this.leftCode, this.rightCode,this.jumpCode);
 }
