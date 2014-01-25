@@ -95,7 +95,7 @@ class Game {
   
   void loadLevel(String levelname){
     if(szene!=null)szene.deactivate();
-    szene = new LevelSzene(levelManager.levelMap(levelname), world, mainsprite);
+    szene = new LevelScene(levelManager.levelMap(levelname), world, mainsprite);
     szene.init();
     szene.activate();
   }

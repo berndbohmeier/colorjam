@@ -4,11 +4,11 @@ part of colorjam;
 
 
 
-class LevelSzene extends WorldSzene{
+class LevelScene extends WorldScene{
   String level;
   
   
-  LevelSzene(this.level, World world, DisplayObjectContainer headcontainer) : super(headcontainer);
+  LevelScene(this.level, World world, DisplayObjectContainer headcontainer) : super(headcontainer);
   
   
   void init(){
