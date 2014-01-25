@@ -69,7 +69,7 @@ class Game {
               {
               "type":"ColorChanger",
               "${PositionComponent.ARG_X}":50,
-              "${PositionComponent.ARG_Y}":200,
+              "${PositionComponent.ARG_Y}":480,
               "color_r":255,
               "color_g":0,
               "color_b":0
