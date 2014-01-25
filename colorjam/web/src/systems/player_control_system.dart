@@ -34,8 +34,12 @@ class PlayerControlSystem extends EntityProcessingSystem{
     }
     
     if(input.jumpKeyPressed){
-      control.doJump();
+      control.jump = true;
+    } else {
+      control.jump = false;
     }
+      
+  
     
     //input.leftKeyPressed = false;
     //input.rightKeyPressed = false;
