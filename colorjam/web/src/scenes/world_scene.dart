@@ -12,6 +12,7 @@ abstract class WorldScene extends Scene{
   
   void init(){
     world = new World();
+    world.addSystem(new RemoveEntitiesSystem());
   }
   
   
@@ -19,6 +20,4 @@ abstract class WorldScene extends Scene{
     world.delta = ms;
     world.process();
   }
-  
-  
 }

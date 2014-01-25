@@ -47,10 +47,9 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     spr.sprite.x = pos.x - geom.width/2;
     spr.sprite.y = pos.y - geom.height/2;
     
-    int alpha = math.max(
-                      math.max(playerColor.nr/255*color.nr,
-                               playerColor.ng/255*color.ng),
-                               playerColor.nb/255*color.nb).round();
+    int alpha = math.max(math.min(playerColor.r, color.r),
+                               math.min(playerColor.g, color.g)),
+                               math.min(playerColor.b, color.b)).round();
 
     spr.sprite.filters = [
                 new ColorMatrixFilter(
