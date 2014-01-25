@@ -1,6 +1,6 @@
 part of colorjam;
 
-class SpriteRenderSystem extends EntityProcessingSystem {
+class SpriteRenderSystem extends IntervalEntityProcessingSystem {
   DisplayObjectContainer dbc;
   
   ComponentMapper<PositionComponent> posMapper;
@@ -8,7 +8,7 @@ class SpriteRenderSystem extends EntityProcessingSystem {
   ComponentMapper<SpriteComponent> spriteMapper;
   ComponentMapper<ColorComponent> colorMapper;
   
-  SpriteRenderSystem(this.dbc) : super(Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
+  SpriteRenderSystem(this.dbc) : super(16, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
   
   
   void initialize() {
@@ -59,6 +59,7 @@ class SpriteRenderSystem extends EntityProcessingSystem {
                                      playerColor.g,
                                      alpha))
     ];
+    spr.sprite.removeCache();
     spr.sprite.applyCache(-5, -5, spr.sprite.width+5, spr.sprite.height+5);
   }
   
