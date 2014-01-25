@@ -6,10 +6,12 @@ import 'package:stagexl/stagexl.dart';
 import 'package:dartemis/dartemis.dart';
 
 part "src/entity_factory.dart";
+part "src/game.dart";
 part "src/components/position_component.dart";
 part "src/components/velocity_component.dart";
 part "src/components/physics_component.dart";
-part "src/components/color_component.dart";
+part "src/systems/render_system.dart";
+
 part "src/components/geometry_component.dart";
 part "src/components/sprite_component.dart";
 
@@ -24,15 +26,10 @@ void main() {
   RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
 
-  ColorComponent cc = new ColorComponent.fromRGBA(255, 255, 0, 66);
-  // draw a red circle
-  var shape = new Shape();
-  shape.graphics.circle(100, 100, 60);
-  shape.graphics.fillColor(cc.colorcode);
-  
-  Sprite gamesprite = new Sprite();
-  stage.addChild(gamesprite);
-  gamesprite.addChild(shape);
+  Game game = new Game(stage);
+  game.init();
+  game.createSomeTestEntities();
+  game.start();
   
   
   
