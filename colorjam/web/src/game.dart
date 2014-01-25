@@ -49,6 +49,7 @@ class Game {
    * only for testing
    */
   void createSomeTestEntities(){
+    /*
     Sprite sprite = new Sprite();
     sprite.graphics.circle(0, 0, 20 );
     sprite.graphics.fillColor(Color.Red);
@@ -56,9 +57,21 @@ class Game {
       ..addComponent(new PositionComponent(50, 50))
       ..addComponent(new VelocityComponent(0.01, 0))
       ..addComponent(new SpriteComponent(sprite))
-      ..addComponent(new PhysicsComponent())
-      ..addComponent(new GeometryComponent(40, 40))
-      ..addToWorld();
+      ..addToWorld();*/
+    new LevelParser(world)
+      ..parse(
+        """{
+          "type":"Circle",
+          "x":50,
+          "y":50,
+          "r":10,
+          "vx":0.01,
+          "vy":0,
+          "cr":255,
+          "cg":0,
+          "cb":0
+        }"""
+    );
   }
   
   /**

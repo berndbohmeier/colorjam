@@ -2,11 +2,13 @@ library colorjam;
 
 
 import 'dart:html' as html;
+import 'dart:convert';
 import 'package:stagexl/stagexl.dart';
 import 'package:dartemis/dartemis.dart';
 
 part "src/entity_factory.dart";
 part "src/game.dart";
+part "src/level_parser.dart";
 
 // Components
 part "src/components/position_component.dart";
@@ -15,11 +17,10 @@ part "src/components/physics_component.dart";
 part "src/components/collider_component.dart";
 part "src/components/geometry_component.dart";
 part "src/components/sprite_component.dart";
-
-
 part "src/components/player_control_component.dart";
 part "src/components/player_input_component.dart";
-
+// Factories
+part "src/factories/circle_factory.dart";
 // Systems
 part "src/systems/movement_system.dart";
 part "src/systems/physics_system.dart";

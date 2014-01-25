@@ -2,11 +2,11 @@ part of colorjam;
 
 class EntityFactory {
   static final Map<String, EntityFactory> _factories = {
-    "Entity" : new EntityFactory._()
+    "Entity" : new EntityFactory._(),
+    "Circle" : new CircleFactory._()
   };
   
-  EntityFactory._() {}
-  
+  EntityFactory._() {} 
   /**
    *  Returns an EntityFactory that can
    *  create entities of type entityType.
