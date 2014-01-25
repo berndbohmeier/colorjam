@@ -5,15 +5,18 @@ class EditorSystem extends EntityProcessingSystem {
   ComponentMapper<SpriteComponent> spriteMapper;
   ComponentMapper<PositionComponent> posMapper;
   ComponentMapper<GeometryComponent> geomMapper;
+  ComponentMapper<TypeComponent> typeMapper;
+  ComponentMapper<ColorComponent> colorMapper;
+  ComponentMapper<ColliderComponent> colliderMapper;
   
   Map<Entity, EventStreamSubscription> subscriptionMap = new Map<Entity, EventStreamSubscription>();
   Entity selectedEntity;
-  EditorSystem(this.stage) : super(Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent]));
+  EditorSystem(this.container) : super(Aspect.getAspectForAllOf([TypeComponent, PositionComponent, GeometryComponent, SpriteComponent]));
   
   bool addWallActive = false;
   Entity created;
   
-  Stage stage;
+  DisplayObjectContainer container;
   
   bool inGame = false;
   
@@ -23,6 +26,9 @@ class EditorSystem extends EntityProcessingSystem {
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
     geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
+    typeMapper = new ComponentMapper<TypeComponent>(TypeComponent, world);
+    colorMapper = new ComponentMapper<ColorComponent>(ColorComponent, world);
+    colliderMapper = new ComponentMapper<ColliderComponent>(ColliderComponent, world);
     html.querySelector("#addwall").onClick.listen((e) {
       
       addWall();
@@ -38,13 +44,13 @@ class EditorSystem extends EntityProcessingSystem {
     overAll.y = -5000;
     overAll.graphics.rect(0, 0, 10000, 10000);
     overAll.graphics.fillColor(0xFF);
-    stage.addChild(overAll);
+    container.addChild(overAll);
     
-    stage.onMouseDown.listen((e) {
+    container.onMouseDown.listen((e) {
       onMouseDown(e);
     });
     
-    stage.onMouseUp.listen((e) {
+    container.onMouseUp.listen((e) {
       onMouseUp(e);
     });
     
@@ -52,7 +58,7 @@ class EditorSystem extends EntityProcessingSystem {
   
   void play() {
     inGame = !inGame;
-    
+    html.querySelector("#textout").text = toJson();
   }
   
   void onMouseDown(MouseEvent e) {
@@ -64,6 +70,7 @@ class EditorSystem extends EntityProcessingSystem {
         sprite.graphics.fillColor(0xFF00FF00);
         
         created = world.createEntity()
+            ..addComponent(new TypeComponent("Wall"))
             ..addComponent(new PositionComponent(clickPosition.x, clickPosition.y))
             ..addComponent(new VelocityComponent(0,0))
             ..addComponent(new SpriteComponent(sprite))
@@ -107,12 +114,13 @@ class EditorSystem extends EntityProcessingSystem {
     sprite.onMouseUp.listen((MouseEvent event) {
       selectedEntity = null;
     });
-    
+    entities.add(e);
   }
   
   void removed(Entity e) {
     if(subscriptionMap[e] != null)
       subscriptionMap[e].cancel();
+    entities.remove(e);
   }
   
   void begin() {
@@ -129,8 +137,8 @@ class EditorSystem extends EntityProcessingSystem {
       GeometryComponent geom = geomMapper.get(created);
       SpriteComponent spriteComp = spriteMapper.get(created);
       
-      geom.height = (stage.mouseY - pos.y).abs() * 2;
-      geom.width = (stage.mouseX - pos.x).abs() * 2;
+      geom.height = (container.stage.mouseY - pos.y).abs() * 2;
+      geom.width = (container.stage.mouseX - pos.x).abs() * 2;
       
       spriteComp.sprite.graphics.clear();
       spriteComp.sprite.graphics.rect(0,0,geom.width, geom.height);
@@ -143,17 +151,50 @@ class EditorSystem extends EntityProcessingSystem {
     
   }
   
-  void processEntities(ReadOnlyBag<Entity> entities) {
-    this.entities = entities;
-  }
   
-  ReadOnlyBag<Entity> entities;
+  
+  Bag<Entity> entities = new Bag();
   
   
   String toJson() {
     StringBuffer sb = new StringBuffer();
+
     entities.forEach((entity) {
       
+      String type = typeMapper.get(entity).type;
+      
+      switch(type) {
+        case "Wall":
+          
+          ColorComponent cc = colorMapper.getSafe(entity);
+          PositionComponent pos = posMapper.get(entity);
+          GeometryComponent geom = geomMapper.get(entity);
+          ColliderComponent collider = colliderMapper.get(entity);
+          num top = pos.y - geom.height/2;
+          num bottom = pos.y + geom.height/2;
+          num left = pos.x - geom.width/2;
+          num right = pos.x + geom.width/2;
+          sb.writeln("\"type\":\"Wall\",");
+          sb.writeln("\"top\":$top,");
+          sb.writeln("\"left\":$left,");
+          sb.writeln("\"bottom\":$bottom,");
+          sb.writeln("\"right\":$right,");
+          if(cc != null)
+            sb.writeln(cc.toJson() + ",");
+          sb.writeln("\"bounciness\":${collider.bounciness}");
+          break;
+        case "Player":
+          
+          ColorComponent cc = colorMapper.getSafe(entity);
+          PositionComponent pos = posMapper.get(entity);
+          sb.write(pos.toJson());
+          if(cc != null)
+            sb.writeln(",\n" + cc.toJson() + ",");
+          
+          break;
+      }
     });
+    
+    return sb.toString();
   }
 }

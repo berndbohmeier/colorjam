@@ -23,6 +23,13 @@ class PositionComponent extends Component {
     position = new Vector(args[ARG_X] as num, args[ARG_Y] as num);
   }
   
+  String toJson() {
+    StringBuffer sb = new StringBuffer();
+    sb.writeln("\"$ARG_X\":$x,");
+    sb.write("\"$ARG_Y\":$y");
+    return sb.toString();
+  }
+  
   num get x => position.x;
   num get y => position.y;
   

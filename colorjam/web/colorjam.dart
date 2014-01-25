@@ -36,11 +36,11 @@ part "src/systems/player_control_system.dart";
 part "src/systems/player_input_system.dart";
 part "src/systems/player_movement_system.dart";
 part "src/systems/editor_system.dart";
-//szenes
+//scenes
 part "src/scenes/scene.dart";
 part "src/scenes/level_scene.dart";
 part "src/scenes/world_scene.dart";
-
+part "src/scenes/editor_scene.dart";
 
 
 
