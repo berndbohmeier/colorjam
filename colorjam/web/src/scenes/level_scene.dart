@@ -14,6 +14,8 @@ class LevelScene extends WorldScene{
   void init(){
     super.init();
     ///dartemis
+    
+    EntitySystem colorcollectsystem = new CollectEntitiesSystem(Aspect.getAspectForAllOf([ColorDecayComponent])); 
     world
             ..addSystem(new MovementSystem())
             ..addSystem(new ColliderSystem())
@@ -22,6 +24,8 @@ class LevelScene extends WorldScene{
             ..addSystem(new PlayerMovementSystem())
             ..addSystem(new PhysicsSystem())
             ..addSystem(new ColorDecaySystem())
+            ..addSystem(colorcollectsystem)
+            ..addSystem(new ColorChangeSystem(colorcollectsystem))
             ..addSystem(new SpriteRenderSystem(container))
             
             ..addManager(new TagManager());

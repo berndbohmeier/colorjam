@@ -48,4 +48,6 @@ abstract class InteractionSystem extends EntitySystem{
   
   
   void processInteraction(Entity entity1, Entity entity2);
+  
+  bool checkProcessing() => true;
 }
