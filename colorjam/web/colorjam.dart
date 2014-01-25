@@ -16,11 +16,20 @@ part "src/components/collider_component.dart";
 part "src/components/geometry_component.dart";
 part "src/components/sprite_component.dart";
 
+
+part "src/components/player_control_component.dart";
+part "src/components/player_input_component.dart";
+
 // Systems
 part "src/systems/movement_system.dart";
 part "src/systems/physics_system.dart";
 part "src/systems/collider_system.dart";
 part "src/systems/render_system.dart";
+part "src/systems/player_control_system.dart";
+part "src/systems/player_input_system.dart";
+
+
+
 
 void main() {
 // setup the Stage and RenderLoop 
