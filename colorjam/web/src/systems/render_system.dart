@@ -57,7 +57,7 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
       else
         spr.sprite.filters[0] = new ColorMatrixFilter(filterMatrixList[0]);
       
-      if(player != null) {
+      if(color.vanishing && player != null) {
         ColorComponent playerColor = colorMapper.get(player);
         int alpha = math.max(math.max(math.min(playerColor.r, color.r),
                                       math.min(playerColor.g, color.g)),
