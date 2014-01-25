@@ -11,6 +11,7 @@ part "src/components/velocity_component.dart";
 part "src/components/physics_component.dart";
 part "src/components/color_component.dart";
 part "src/components/geometry_component.dart";
+part "src/components/sprite_component.dart";
 
 void main() {
 // setup the Stage and RenderLoop 
