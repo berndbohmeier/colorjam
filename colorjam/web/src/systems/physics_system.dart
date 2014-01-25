@@ -8,6 +8,8 @@ class PhysicsSystem extends EntityProcessingSystem {
   ComponentMapper<GeometryComponent> geomMapper;
   ComponentMapper<PhysicsComponent> physicsMapper;
   ComponentMapper<ColliderComponent> collMapper;
+  ComponentMapper<ColorComponent> colorMapper;
+  
   ColliderSystem colliderSystem;
   
   PhysicsSystem() : super(Aspect.getAspectForAllOf([PositionComponent, VelocityComponent, GeometryComponent, PhysicsComponent]));
@@ -18,6 +20,8 @@ class PhysicsSystem extends EntityProcessingSystem {
     geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
     physicsMapper = new ComponentMapper<PhysicsComponent>(PhysicsComponent, world);
     collMapper = new ComponentMapper<ColliderComponent>(ColliderComponent, world);
+    colorMapper = new ComponentMapper<ColorComponent>(ColorComponent, world);
+    
     colliderSystem = world.getSystem(ColliderSystem);
   }
   
@@ -27,7 +31,7 @@ class PhysicsSystem extends EntityProcessingSystem {
     
     PositionComponent pos = posMapper.get(e);
     GeometryComponent geom = geomMapper.get(e);
-    
+    ColorComponent color = colorMapper.get(e);
     
     Rectangle rect = new Rectangle(pos.x - geom.width/2,
         pos.y - geom.height/2,
@@ -37,7 +41,12 @@ class PhysicsSystem extends EntityProcessingSystem {
     if(colliderSystem.entities != null) {
       colliderSystem.entities.forEach((other) {
         
+        // check color
+        ColorComponent otherColor = colorMapper.get(other);
+        if(!((otherColor.r > 0 && color.r > 0) || (otherColor.g > 0 && color.g > 0) || (otherColor.b > 0 && color.b > 0)))
+          return;
         
+        // check for collision
         PositionComponent otherPos = posMapper.get(other);
         GeometryComponent otherGeom = geomMapper.get(other);
         

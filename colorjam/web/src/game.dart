@@ -44,9 +44,9 @@ class Game {
               "r":10,
               "vx":0.01,
               "vy":0,
-              "cr":255,
-              "cg":0,
-              "cb":0
+              "color_r":255,
+              "color_g":0,
+              "color_b":0
             },
             {
               "type":"Circle",
@@ -55,14 +55,17 @@ class Game {
               "r":10,
               "vx":0.1,
               "vy":-0.5,
-              "cr":0,
-              "cg":255,
-              "cb":0
+              "color_r":0,
+              "color_g":255,
+              "color_b":0
             },
             {
               "type":"Player",
               "${PositionComponent.ARG_X}":100,
-              "${PositionComponent.ARG_Y}":100
+              "${PositionComponent.ARG_Y}":100,
+              "color_r":255,
+              "color_g":255,
+              "color_b":255
              },
             {
               "type":"Wall",
