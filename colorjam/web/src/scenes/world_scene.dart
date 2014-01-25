@@ -3,12 +3,12 @@ part of colorjam;
 
 
 
-abstract class WorldSzene extends Scene{
+abstract class WorldScene extends Scene{
   
   World world;
   
   
-  WorldSzene(DisplayObjectContainer headcontainer) : super(headcontainer);
+  WorldScene(DisplayObjectContainer headcontainer) : super(headcontainer);
   
   void init(){
     world = new World();
