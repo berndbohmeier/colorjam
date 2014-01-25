@@ -5,6 +5,7 @@ class ColorComponent extends Component {
   static const String ARG_G = "color_g";
   static const String ARG_B = "color_b";
   
+  bool vanishing = true;
   
   int get colorcode => (255 << 24) | (nr.round() << 16) | (ng << 8) | nb;
   
