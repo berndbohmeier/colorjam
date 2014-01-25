@@ -13,4 +13,12 @@ class PositionComponent extends Component {
   
   num get x => position.x;
   num get y => position.y;
+  
+  void set x (num nx) {
+    position = new Vector(nx, y);
+  }
+  
+  void set y (num ny) {
+    position = new Vector(x, ny);
+  }
 }
