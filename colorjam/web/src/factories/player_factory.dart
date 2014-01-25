@@ -18,7 +18,7 @@ class PlayerFactory extends EntityFactory {
         ..addComponent(new PhysicsComponent())
         ..addComponent(new GeometryComponent(30, 30))
         ..addComponent(new PlayerControlComponent())
-        ..addComponent(new PlayerInputComponent(html.KeyCode.LEFT, html.KeyCode.RIGHT, html.KeyCode.UP));
+        ..addComponent(new PlayerInputComponent(html.KeyCode.LEFT, html.KeyCode.RIGHT, html.KeyCode.UP))
         ..addToWorld();
     
     return entity;
