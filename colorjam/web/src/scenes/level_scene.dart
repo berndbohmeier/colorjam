@@ -8,7 +8,7 @@ class LevelScene extends WorldScene{
   String level;
   
   
-  LevelScene(this.level, World world, DisplayObjectContainer headcontainer) : super(headcontainer);
+  LevelScene(this.level, DisplayObjectContainer headcontainer) : super(headcontainer);
   
   
   void init(){
@@ -21,7 +21,9 @@ class LevelScene extends WorldScene{
             ..addSystem(new PlayerControlSystem())
             ..addSystem(new PlayerMovementSystem())
             ..addSystem(new PhysicsSystem())
-            ..addSystem(new SpriteRenderSystem(container));
+            ..addSystem(new SpriteRenderSystem(container))
+            
+            ..addManager(new TagManager());
     
     
     world.initialize();
