@@ -50,8 +50,6 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     Entity player = (world.getManager(TagManager) as TagManager)
                         .getEntity(PlayerFactory.TAG_PLAYER);
     
-      ColorComponent playerColor = colorMapper.get(player);
-
       storeColorMatrix(filterMatrixList[0], color.nr,color.ng, color.nb, 255);
       
       if(spr.sprite.filters.isEmpty)
@@ -60,6 +58,7 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
         spr.sprite.filters[0] = new ColorMatrixFilter(filterMatrixList[0]);
       
       if(player != null) {
+        ColorComponent playerColor = colorMapper.get(player);
         int alpha = math.max(math.max(math.min(playerColor.r, color.r),
                                       math.min(playerColor.g, color.g)),
                                       math.min(playerColor.b, color.b)).round();
