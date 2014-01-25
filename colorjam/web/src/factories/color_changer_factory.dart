@@ -6,9 +6,25 @@ class ColorChangerFactory extends EntityFactory {
   
   Entity build(World world, Map<String, dynamic> args) {
     Sprite sprite = new Sprite();
-    sprite.graphics.rect(0, 0, 30, 30);
-    sprite.graphics.strokeColor(Color.Black, 2);
-    sprite.graphics.fillColor(0xFFFFFFFF);
+    //sprite.graphics.rect(0, 0, 30, 30);
+    //sprite.graphics.strokeColor(Color.Black, 2);
+    //sprite.graphics.fillColor(0xFFFFFFFF);
+    Bitmap bitmap = new Bitmap(resourceManager.getBitmapData("colorchanger1"));
+    sprite.addChild(bitmap);
+    sprite.width = bitmap.width.round();
+    sprite.height = bitmap.height.round();
+    int counter = 0;
+    int img = 1;
+    sprite.addEventListener(Event.ENTER_FRAME, (e) {
+      
+      counter = (counter + 1) % 5;
+      if(counter == 0) {
+        bitmap.bitmapData = resourceManager.getBitmapData("colorchanger${img + 1}");
+       
+        img = (img + 1) % 3;
+        
+      }
+    });
     
     ColorComponent cp = new ColorComponent.fromJson(args);
     cp.vanishing = false;
@@ -19,7 +35,7 @@ class ColorChangerFactory extends EntityFactory {
         ..addComponent(cp)
         ..addComponent(new ColorChangeComponent())
         ..addComponent(new SpriteComponent(sprite))
-        ..addComponent(new GeometryComponent(40, 40));
+        ..addComponent(new GeometryComponent(sprite.width, sprite.height));
     
     return entity;
   }
