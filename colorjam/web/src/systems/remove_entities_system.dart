@@ -11,7 +11,6 @@ class RemoveEntitiesSystem extends IntervalEntityProcessingSystem {
   }
   void processEntity(Entity e) {
     if(_posMapper.get(e).position.y > MAX_Y) {
-      print("Deleting $e");
       e.deleteFromWorld();
     }
   }
