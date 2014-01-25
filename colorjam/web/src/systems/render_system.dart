@@ -10,6 +10,8 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
   
   SpriteRenderSystem(this.dbc) : super(16, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
   
+  List<num> matA = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0];
+  List<num> matB = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0];
   
   void initialize() {
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
@@ -47,28 +49,26 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     spr.sprite.x = pos.x - geom.width/2;
     spr.sprite.y = pos.y - geom.height/2;
     
-    int alpha = math.max(math.min(playerColor.r, color.r),
-                               math.min(playerColor.g, color.g)),
-                               math.min(playerColor.b, color.b)).round();
+    int alpha = math.max(math.max(math.min(playerColor.r, color.r),
+                                  math.min(playerColor.g, color.g)),
+                                  math.min(playerColor.b, color.b)).round();
 
+    storeColorMatrix(matA, color.nr,color.nb, color.ng, 255);
+    storeColorMatrix(matB, playerColor.nr, playerColor.nb,
+        
+                           playerColor.ng, alpha);
     spr.sprite.filters = [
-                new ColorMatrixFilter(
-                      getColorMatrix(color.nr,color.nb, color.ng, 255)),
-                new ColorMatrixFilter(
-                      getColorMatrix(playerColor.nr,
-                                     playerColor.nb,
-                                     playerColor.ng,
-                                     alpha))
+                new ColorMatrixFilter(matA),
+                new ColorMatrixFilter(matB)
     ];
     
     spr.sprite.refreshCache();
-   
   }
   
-  List<num> getColorMatrix(int r, int g, int b, int a) {
-    return [r/255, 0, 0, 0, 0,
-            0, g/255, 0, 0, 0,
-            0, 0, b/255, 0, 0,
-            0, 0, 0, a/255, 0];
+  List<num> storeColorMatrix(List<num> matrix, int r, int g, int b, int a) {
+    matrix[0] = r/255;
+    matrix[6] = g/255;
+    matrix[12] = b/255;
+    matrix[18] = a/255;
   }
 }
