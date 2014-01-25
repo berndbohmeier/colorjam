@@ -7,9 +7,9 @@ class PlayerInputComponent extends Component{
   bool rightKeyPressed = false;
   bool jumpKeyPressed = false;
   
-  html.KeyCode leftCode;
-  html.KeyCode rightCode;
-  html.KeyCode jumpCode;
+  int leftCode;
+  int rightCode;
+  int jumpCode;
   
   PlayerInputComponent(this.leftCode, this.rightCode,this.jumpCode);
 }
