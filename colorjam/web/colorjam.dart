@@ -24,6 +24,7 @@ part "src/components/player_input_component.dart";
 part "src/components/color_component.dart";
 part "src/components/type_component.dart";
 part "src/components/color_change_component.dart";
+part "src/components/color_decay_component.dart";
 
 // Factories
 part "src/factories/circle_factory.dart";
@@ -40,6 +41,8 @@ part "src/systems/player_movement_system.dart";
 part "src/systems/editor_system.dart";
 part "src/systems/interaction_system.dart";
 part "src/systems/collect_entities_system.dart";
+part "src/systems/color_decay_system.dart";
+
 
 //scenes
 part "src/scenes/scene.dart";
