@@ -10,6 +10,11 @@ class PlayerControlSystem extends EntityProcessingSystem{
   ComponentMapper<PlayerInputComponent> inputMapper; 
   
   
+  void initialize() {
+    controlMapper = new ComponentMapper<PlayerControlComponent>(PlayerControlComponent, world);
+    inputMapper = new ComponentMapper<PlayerInputComponent>(PlayerInputComponent, world);
+  }
+  
   void processEntity(Entity entity){
     PlayerControlComponent control = controlMapper.get(entity);
     PlayerInputComponent input = inputMapper.get(entity);

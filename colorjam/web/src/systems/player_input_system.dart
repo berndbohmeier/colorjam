@@ -20,6 +20,10 @@ class InputControlSystem extends EntitySystem{
     dbc.onKeyDown.listen(_onKeyDown);
     dbc.onKeyUp.listen(_onKeyUp);
     
+    
+   inputMapper = new ComponentMapper<PlayerInputComponent>(PlayerInputComponent, world);
+    
+    
   }
   
   void processEntities(ReadOnlyBag<Entity> entities){
