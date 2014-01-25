@@ -30,6 +30,7 @@ part "src/components/color_decay_component.dart";
 part "src/factories/circle_factory.dart";
 part "src/factories/player_factory.dart";
 part "src/factories/wall_factory.dart";
+part "src/factories/color_changer_factory.dart";
 // Systems
 part "src/systems/movement_system.dart";
 part "src/systems/physics_system.dart";
@@ -41,7 +42,9 @@ part "src/systems/player_movement_system.dart";
 part "src/systems/editor_system.dart";
 part "src/systems/interaction_system.dart";
 part "src/systems/collect_entities_system.dart";
-part "src/systems/color_decay_system.dart";part "src/systems/remove_entities_system.dart";
+part "src/systems/color_decay_system.dart";
+part "src/systems/remove_entities_system.dart";
+part "src/systems/color_change_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";
