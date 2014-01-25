@@ -70,8 +70,8 @@ class Game {
               "${PositionComponent.ARG_X}":100,
               "${PositionComponent.ARG_Y}":100,
               "color_r":0,
-              "color_g":255,
-              "color_b":0
+              "color_g":0,
+              "color_b":255
              },
               {
               "type":"ColorChanger",
@@ -81,6 +81,14 @@ class Game {
               "color_g":0,
               "color_b":0
              },
+              {
+              "type":"ColorChanger",
+              "${PositionComponent.ARG_X}":300,
+              "${PositionComponent.ARG_Y}":480,
+              "color_r":0,
+              "color_g":0,
+              "color_b":255
+             },
             {
               "type":"Wall",
               "top":500,
@@ -88,10 +96,23 @@ class Game {
               "bottom": 530,
               "right": 500,
               "color_r": 0,
-              "color_g": 255,
+              "color_g": 0,
               "color_b": 255,
               "bounciness":0
+            }, 
+            {
+              "type":"Wall",
+              "top":500,
+              "left": 500,
+              "bottom": 530,
+              "right": 600,
+              "color_r": 255,
+              "color_g": 0,
+              "color_b": 0,
+              "bounciness":0
             }
+
+
           ]
         }"""});
     
