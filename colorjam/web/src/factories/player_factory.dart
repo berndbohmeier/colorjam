@@ -19,6 +19,7 @@ class PlayerFactory extends EntityFactory {
         ..addComponent(new SpriteComponent(sprite))
         ..addComponent(new PhysicsComponent())
         ..addComponent(new GeometryComponent(30, 30))
+        ..addComponent(new ColorDecayComponent())
         ..addComponent(new PlayerControlComponent())
         ..addComponent(new PlayerInputComponent(html.KeyCode.LEFT, html.KeyCode.RIGHT, html.KeyCode.UP));
     

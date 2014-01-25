@@ -43,7 +43,7 @@ class PhysicsSystem extends EntityProcessingSystem {
         
         // check color
         ColorComponent otherColor = colorMapper.get(other);
-        if(!((otherColor.r > 0 && color.r > 0) || (otherColor.g > 0 && color.g > 0) || (otherColor.b > 0 && color.b > 0)))
+        if(!((otherColor.nr > 0 && color.nr > 0) || (otherColor.ng > 0 && color.ng > 0) || (otherColor.nb > 0 && color.nb > 0)))
           return;
         
         // check for collision
