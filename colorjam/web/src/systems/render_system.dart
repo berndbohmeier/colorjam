@@ -51,17 +51,15 @@ class SpriteRenderSystem extends EntityProcessingSystem {
                                          255 - color.b + playerColor.b)).round();
     
     spr.sprite.filters = [
-                new ColorMatrixFilter.grayscale()
-                //new ColorMatrixFilter([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0])
-                          /*
                 new ColorMatrixFilter(
-                      getColorMatrix(color.r,color.b, color.g, 255))/*,
+                      getColorMatrix(color.r,color.b, color.g, 255)),
                 new ColorMatrixFilter(
                       getColorMatrix(playerColor.r,
                                      playerColor.b,
                                      playerColor.g,
-                                     alpha))*/*/
+                                     alpha))
     ];
+    spr.sprite.applyCache(-5, -5, spr.sprite.width+5, spr.sprite.height+5);
   }
   
   List<num> getColorMatrix(int r, int g, int b, int a) {
