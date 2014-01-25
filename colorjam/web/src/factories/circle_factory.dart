@@ -20,6 +20,7 @@ class CircleFactory extends EntityFactory {
                     args[ARG_COLOR_B] as int
     ));
     Entity entity = world.createEntity()
+      ..addComponent(new TypeComponent("Circle"))
       ..addComponent(new PositionComponent.fromJson(args))
       ..addComponent(new VelocityComponent(args[ARG_VX], args[ARG_VY]))
       ..addComponent(new SpriteComponent(sprite))
