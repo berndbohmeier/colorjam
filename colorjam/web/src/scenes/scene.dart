@@ -3,13 +3,13 @@ part of colorjam;
 
 
 
-abstract class Szene{
+abstract class Scene{
   
   
   DisplayObjectContainer headcontainer;
   DisplayObjectContainer container;
   
-  Szene(this.headcontainer){
+  Scene(this.headcontainer){
     container = new Sprite();
   }
   

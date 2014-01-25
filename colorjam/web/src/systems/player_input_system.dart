@@ -28,20 +28,7 @@ class InputControlSystem extends EntitySystem{
   
   void processEntities(ReadOnlyBag<Entity> entities){
     
-    keycodesup.forEach((int code){
-      entities.forEach((Entity entity){
-        PlayerInputComponent input = inputMapper.get(entity);
-        if(input.leftCode == code){
-          input.leftKeyPressed = false;
-        }
-        if(input.rightCode == code){
-          input.rightKeyPressed = false;
-        }
-        if(input.jumpCode == code){
-          input.jumpKeyPressed = false;
-        }
-      });
-    });
+    
     
     
     keycodesdown.forEach((int code){
@@ -59,7 +46,20 @@ class InputControlSystem extends EntitySystem{
       });
     });
     
-   
+    keycodesup.forEach((int code){
+      entities.forEach((Entity entity){
+        PlayerInputComponent input = inputMapper.get(entity);
+        if(input.leftCode == code){
+          input.leftKeyPressed = false;
+        }
+        if(input.rightCode == code){
+          input.rightKeyPressed = false;
+        }
+        if(input.jumpCode == code){
+          input.jumpKeyPressed = false;
+        }
+      });
+    });
     
     keycodesdown.clear();
     keycodesup.clear();
