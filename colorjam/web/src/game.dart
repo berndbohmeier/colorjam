@@ -31,6 +31,8 @@ class Game {
     ///dartemis
     world = new World()
             ..addSystem(new MovementSystem())
+            ..addSystem(new ColliderSystem())
+            ..addSystem(new PhysicsSystem())
             ..addSystem(new SpriteRenderSystem(mainsprite));
     
     
@@ -54,6 +56,8 @@ class Game {
       ..addComponent(new PositionComponent(50, 50))
       ..addComponent(new VelocityComponent(0.01, 0))
       ..addComponent(new SpriteComponent(sprite))
+      ..addComponent(new PhysicsComponent())
+      ..addComponent(new GeometryComponent(40, 40))
       ..addToWorld();
   }
   
