@@ -10,8 +10,9 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
   
   SpriteRenderSystem(this.dbc) : super(16, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
   
-  List<num> matA = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0];
-  List<num> matB = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0];
+  List<List<num>> filterMatrixList = [
+                    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0],
+                    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0]];
   
   void initialize() {
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
@@ -41,27 +42,37 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     PositionComponent pos = posMapper.get(entity);
     SpriteComponent spr = spriteMapper.get(entity);
     GeometryComponent geom = geomMapper.get(entity);
-    ColorComponent color = colorMapper.get(entity);
-    ColorComponent playerColor =
-        colorMapper.get((world.getManager(TagManager) as TagManager)
-                                .getEntity(PlayerFactory.TAG_PLAYER));
     
     spr.sprite.x = pos.x - geom.width/2;
     spr.sprite.y = pos.y - geom.height/2;
     
-    int alpha = math.max(math.max(math.min(playerColor.r, color.r),
-                                  math.min(playerColor.g, color.g)),
-                                  math.min(playerColor.b, color.b)).round();
-
-    storeColorMatrix(matA, color.nr,color.nb, color.ng, 255);
-    storeColorMatrix(matB, playerColor.nr, playerColor.nb,
-        
-                           playerColor.ng, alpha);
-    spr.sprite.filters = [
-                new ColorMatrixFilter(matA),
-                new ColorMatrixFilter(matB)
-    ];
+    ColorComponent color = colorMapper.get(entity);
+    Entity player = (world.getManager(TagManager) as TagManager)
+                        .getEntity(PlayerFactory.TAG_PLAYER);
     
+      ColorComponent playerColor = colorMapper.get(player);
+
+      storeColorMatrix(filterMatrixList[0], color.nr,color.ng, color.nb, 255);
+      
+      if(spr.sprite.filters.isEmpty)
+        spr.sprite.filters.add(new ColorMatrixFilter(filterMatrixList[0]));
+      else
+        spr.sprite.filters[0] = new ColorMatrixFilter(filterMatrixList[0]);
+      
+      if(player != null) {
+        int alpha = math.max(math.max(math.min(playerColor.r, color.r),
+                                      math.min(playerColor.g, color.g)),
+                                      math.min(playerColor.b, color.b)).round();
+    
+        storeColorMatrix(filterMatrixList[1], playerColor.nr, playerColor.ng,
+                                              playerColor.nb, alpha);
+        
+        if(spr.sprite.filters.length < 2)
+          spr.sprite.filters.add(new ColorMatrixFilter(filterMatrixList[1]));
+        else
+          spr.sprite.filters[1] = new ColorMatrixFilter(filterMatrixList[1]);
+      }
+
     spr.sprite.refreshCache();
   }
   
