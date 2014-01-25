@@ -39,6 +39,9 @@ class Game {
     resourceManager.addBitmapData("player3", "images/40x65Typ/Typ_3.png");
     resourceManager.addBitmapData("player4", "images/40x65Typ/Typ_4.png");
 
+    resourceManager.addBitmapData("colorchanger1", "images/colorchanger/colorchanger1.png");
+    resourceManager.addBitmapData("colorchanger2", "images/colorchanger/colorchanger2.png");
+    resourceManager.addBitmapData("colorchanger3", "images/colorchanger/colorchanger3.png");
     
     
     levelManager = new LevelManager({"default":"""{
