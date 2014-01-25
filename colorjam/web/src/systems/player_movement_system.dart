@@ -9,8 +9,8 @@ class PlayerMovementSystem extends EntityProcessingSystem{
   PlayerMovementSystem() : super(Aspect.getAspectForAllOf([VelocityComponent, PlayerControlComponent, PhysicsComponent]));
   
   
-  num jumpspeed = 0.7;
-  num runspeed = 0.5;
+  num jumpspeed = 0.4;
+  num runspeed = 0.3;
   
   
   ComponentMapper<VelocityComponent> velMapper;
@@ -45,6 +45,7 @@ class PlayerMovementSystem extends EntityProcessingSystem{
     
     if(con.jump && phys.onFloor){
       vel.vy = -jumpspeed;
+      con.jump = false;
     }
   }
 }

@@ -10,6 +10,7 @@ part "src/entity_factory.dart";
 part "src/game.dart";
 part "src/level_parser.dart";
 
+
 // Components
 part "src/components/position_component.dart";
 part "src/components/velocity_component.dart";
@@ -32,6 +33,9 @@ part "src/systems/render_system.dart";
 part "src/systems/player_control_system.dart";
 part "src/systems/player_input_system.dart";
 part "src/systems/player_movement_system.dart";
+//szenes
+part "src/szenes/szene.dart";
+part "src/szenes/level_szene.dart";
 
 
 

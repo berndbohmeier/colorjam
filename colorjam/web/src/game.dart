@@ -28,6 +28,7 @@ class Game {
     ///stagexl
     mainsprite = new Sprite();
     stage.addChild(mainsprite);
+    stage.focus = mainsprite;
     
     
     
@@ -35,6 +36,9 @@ class Game {
     world = new World()
             ..addSystem(new MovementSystem())
             ..addSystem(new ColliderSystem())
+            ..addSystem(new InputControlSystem(mainsprite))
+            ..addSystem(new PlayerControlSystem())
+            ..addSystem(new PlayerMovementSystem())
             ..addSystem(new PhysicsSystem())
             ..addSystem(new SpriteRenderSystem(mainsprite));
     
@@ -99,7 +103,7 @@ class Game {
               "top":500,
               "left": 20,
               "bottom": 530,
-              "right": 200,
+              "right": 500,
               "color_r": 0,
               "color_g": 255,
               "color_b": 255,
