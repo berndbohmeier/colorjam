@@ -60,15 +60,18 @@ class ColorComponent extends Component {
   
   void set r (num r) {
     if(r<0)r=0;
+    if(r>255)r=255;
     _r=r;
   }
   
   void set g (num g) {
     if(g<0)g=0;
+    if(g>255)g=255;
     _g=g;
   }
   
   void set b (num b) {
+    if(b>255)b=255;
     if(b<0)b=0;
     _b=b;
   }
