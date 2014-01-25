@@ -7,6 +7,7 @@ class Game {
   
   Game(this.stage);
   
+ 
   Scene szene;
   
   LevelManager levelManager;
@@ -96,7 +97,8 @@ class Game {
   
   void loadLevel(String levelname){
     if(szene!=null)szene.deactivate();
-    szene = new LevelScene(levelManager.levelMap(levelname), mainsprite);
+    //szene = new LevelScene(levelManager.levelMap(levelname), mainsprite);
+    szene = new EditorScene(levelManager.levelMap(levelname), mainsprite);
     szene.init();
     szene.activate();
   }

@@ -8,6 +8,7 @@ class EditorSystem extends EntityProcessingSystem {
   ComponentMapper<TypeComponent> typeMapper;
   ComponentMapper<ColorComponent> colorMapper;
   ComponentMapper<ColliderComponent> colliderMapper;
+  ComponentMapper<VelocityComponent> velMapper;
   
   Map<Entity, EventStreamSubscription> subscriptionMap = new Map<Entity, EventStreamSubscription>();
   Entity selectedEntity;
@@ -20,7 +21,7 @@ class EditorSystem extends EntityProcessingSystem {
   
   bool inGame = false;
   
-  
+  int clickTime = 0;
   
   void initialize() {
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
@@ -29,6 +30,7 @@ class EditorSystem extends EntityProcessingSystem {
     typeMapper = new ComponentMapper<TypeComponent>(TypeComponent, world);
     colorMapper = new ComponentMapper<ColorComponent>(ColorComponent, world);
     colliderMapper = new ComponentMapper<ColliderComponent>(ColliderComponent, world);
+    velMapper = new ComponentMapper<VelocityComponent>(VelocityComponent, world);
     html.querySelector("#addwall").onClick.listen((e) {
       
       addWall();
@@ -58,6 +60,10 @@ class EditorSystem extends EntityProcessingSystem {
   
   void play() {
     inGame = !inGame;
+    
+  }
+  
+  void update() {
     html.querySelector("#textout").text = toJson();
   }
   
@@ -66,14 +72,15 @@ class EditorSystem extends EntityProcessingSystem {
       if(created == null) {
         Vector clickPosition = new Vector(e.stageX, e.stageY);
         Sprite sprite = new Sprite();
-        sprite.graphics.rect(0,0,300,300);
-        sprite.graphics.fillColor(0xFF00FF00);
-        
+        sprite.graphics.rect(0,0,0,0);
+        sprite.graphics.fillColor(0xFFFFFFFF);
+        sprite.graphics.strokeColor(Color.Black, 3);
         created = world.createEntity()
             ..addComponent(new TypeComponent("Wall"))
             ..addComponent(new PositionComponent(clickPosition.x, clickPosition.y))
             ..addComponent(new VelocityComponent(0,0))
             ..addComponent(new SpriteComponent(sprite))
+            ..addComponent(new ColorComponent(255,255,255))
             ..addComponent(new ColliderComponent(bounciness: 0))
             ..addComponent(new GeometryComponent(300,300))
             ..addToWorld();
@@ -105,29 +112,125 @@ class EditorSystem extends EntityProcessingSystem {
   void added(Entity e) {
     SpriteComponent spriteComponent = spriteMapper.get(e);
     PositionComponent pos = posMapper.get(e);
+    TypeComponent type = typeMapper.get(e);
+    ColorComponent color = colorMapper.get(e);
+    ColliderComponent collider = colliderMapper.get(e);
+    VelocityComponent vel = velMapper.get(e);
     Sprite sprite = spriteComponent.sprite;
+    
+    
     
     subscriptionMap[e] = sprite.onMouseDown.listen((MouseEvent event) {
       selectedEntity = e;
+      clickTime = new DateTime.now().millisecondsSinceEpoch;
+      
+      html.querySelector("#typeInput").attributes["value"] = type.type;
+      html.ElementList res = html.querySelectorAll(".removable");
+      res.forEach((element) => element.remove());
+      
+      Map<String, Function> setter = new Map<String, Function>();
+      Map<String, String> values = new Map<String, String>();
+      switch(type.type) {
+        case "Wall":
+          values["color_r"] = color.r.toString();
+          setter["color_r"] = (s) {
+            color.r = int.parse(s);
+          };
+          values["color_g"] = color.g.toString();
+          setter["color_g"] = (s) {
+            color.g = int.parse(s);
+          };
+          values["color_b"] = color.b.toString();
+          setter["color_b"] = (s) {
+            color.b = int.parse(s);
+          };
+          values["bounciness"] = collider.bounciness.toString();
+          setter["bounciness"] = (s) {
+            collider.bounciness = int.parse(s);
+          };
+          break;
+        case "Player":
+          values["color_r"] = color.r.toString();
+          setter["color_r"] = (s) {
+            color.r = int.parse(s);
+          };
+          values["color_g"] = color.g.toString();
+          setter["color_g"] = (s) {
+            color.g = int.parse(s);
+          };
+          values["color_b"] = color.b.toString();
+          setter["color_b"] = (s) {
+            color.b = int.parse(s);
+          };
+          break;
+        case "Circle":
+          values["color_r"] = color.r.toString();
+          setter["color_r"] = (s) {
+            color.r = int.parse(s);
+          };
+          values["color_g"] = color.g.toString();
+          setter["color_g"] = (s) {
+            color.g = int.parse(s);
+          };
+          values["color_b"] = color.b.toString();
+          setter["color_b"] = (s) {
+            color.b = int.parse(s);
+          };
+          values["velocity_x"] = vel.vx.toString();
+          setter["velocity_x"] = (s) {
+            vel.vx = num.parse(s);
+          };
+          values["velocity_y"] = vel.vy.toString();
+          setter["velocity_y"] = (s) {
+            vel.vy = num.parse(s);
+          };
+          break;
+      }
+      
+      values.forEach((key, value) {
+        html.querySelector("#inspector table").appendHtml("<tr class='removable'><th>$key</th><td><input id='prop_$key' value='$value' /></td></tr>");
+        html.querySelector("#prop_$key").onChange.listen((e) {
+          
+          setter[key]((html.querySelector("#prop_$key") as html.InputElement).value);
+          update();
+        });
+      });
+      
+      html.querySelector("#inspector").appendHtml("<button id='removeEntity' class='removable'>Remove Item</button>");
+      html.querySelector("#removeEntity").onClick.listen((event) {
+        
+        subscriptionMap[e].cancel();
+        subscriptionMap[e] = null;
+        selectedEntity = null;
+        clickTime = 0;
+        world.deleteEntity(e);
+        entities.remove(e);
+        update();
+      });
     });
     
     sprite.onMouseUp.listen((MouseEvent event) {
       selectedEntity = null;
+      clickTime = 0;
+      update();
     });
     entities.add(e);
+   
   }
   
   void removed(Entity e) {
     if(subscriptionMap[e] != null)
       subscriptionMap[e].cancel();
     entities.remove(e);
+    update();
   }
   
   void begin() {
-    if(selectedEntity != null) {
+    if(selectedEntity != null && new DateTime.now().millisecondsSinceEpoch - clickTime > 200) {
       SpriteComponent spriteComponent = spriteMapper.get(selectedEntity);
       PositionComponent pos = posMapper.get(selectedEntity);
       Sprite sprite = spriteComponent.sprite;
+      
       pos.x = sprite.stage.mouseX;
       pos.y = sprite.stage.mouseY;
     }
@@ -142,7 +245,8 @@ class EditorSystem extends EntityProcessingSystem {
       
       spriteComp.sprite.graphics.clear();
       spriteComp.sprite.graphics.rect(0,0,geom.width, geom.height);
-      spriteComp.sprite.graphics.fillColor(0xFF00FF00);
+      spriteComp.sprite.graphics.fillColor(0xFFFFFFFF);
+      spriteComp.sprite.graphics.strokeColor(Color.Black, 3);
     }
   }
   
@@ -162,9 +266,12 @@ class EditorSystem extends EntityProcessingSystem {
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
+      if(!type.contains(new RegExp("(Wall)|(Player)")))
+          return;
+      sb.writeln("{");
       
       switch(type) {
-        case "Wall":
+       case "Wall":
           
           ColorComponent cc = colorMapper.getSafe(entity);
           PositionComponent pos = posMapper.get(entity);
@@ -183,18 +290,20 @@ class EditorSystem extends EntityProcessingSystem {
             sb.writeln(cc.toJson() + ",");
           sb.writeln("\"bounciness\":${collider.bounciness}");
           break;
-        case "Player":
+       case "Player":
           
           ColorComponent cc = colorMapper.getSafe(entity);
           PositionComponent pos = posMapper.get(entity);
+          sb.writeln("\"type\":\"Player\",");
           sb.write(pos.toJson());
           if(cc != null)
-            sb.writeln(",\n" + cc.toJson() + ",");
+            sb.writeln(",\n" + cc.toJson());
           
           break;
       }
+      sb.writeln("},");
     });
-    
-    return sb.toString();
+    String output = sb.toString();
+    return output.substring(0, output.length - 2);
   }
 }

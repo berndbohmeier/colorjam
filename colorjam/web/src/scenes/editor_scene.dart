@@ -8,7 +8,7 @@ class EditorScene extends WorldScene{
   String level;
   
   
-  EditorScene(this.level, World world, DisplayObjectContainer headcontainer) : super(headcontainer);
+  EditorScene(this.level, DisplayObjectContainer headcontainer) : super(headcontainer);
   
   
   void init(){
@@ -16,7 +16,8 @@ class EditorScene extends WorldScene{
     ///dartemis
     world
             ..addSystem(new EditorSystem(container))
-            ..addSystem(new SpriteRenderSystem(container));
+            ..addSystem(new SpriteRenderSystem(container))
+            ..addManager(new TagManager());
     
     
     world.initialize();
