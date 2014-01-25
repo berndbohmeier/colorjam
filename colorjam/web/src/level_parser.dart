@@ -9,9 +9,11 @@ class LevelParser {
    * add them to the world.
    */
   void parse(String json) {
-    Map data = JSON.decode(json);
-    new EntityFactory.forType(data["type"])
-      .build(world, data)
-      .addToWorld();
+    List<Map<String, dynamic>> entities = JSON.decode(json)["entities"];
+    for(Map<String, dynamic> data in entities) {
+      new EntityFactory.forType(data["type"])
+        .build(world, data)
+        .addToWorld();
+    }
   }
 }

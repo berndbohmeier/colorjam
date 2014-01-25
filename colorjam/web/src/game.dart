@@ -61,15 +61,30 @@ class Game {
     new LevelParser(world)
       ..parse(
         """{
-          "type":"Circle",
-          "x":50,
-          "y":50,
-          "r":10,
-          "vx":0.01,
-          "vy":0,
-          "cr":255,
-          "cg":0,
-          "cb":0
+          "entities":[
+            {
+              "type":"Circle",
+              "x":50,
+              "y":300,
+              "r":10,
+              "vx":0.01,
+              "vy":0,
+              "cr":255,
+              "cg":0,
+              "cb":0
+            },
+            {
+              "type":"Circle",
+              "x":100,
+              "y":300,
+              "r":10,
+              "vx":0.1,
+              "vy":-0.5,
+              "cr":0,
+              "cg":255,
+              "cb":0
+            }
+          ]
         }"""
     );
   }
