@@ -24,7 +24,7 @@ class CircleFactory extends EntityFactory {
       ..addComponent(new VelocityComponent(args[ARG_VX], args[ARG_VY]))
       ..addComponent(new SpriteComponent(sprite))
       ..addComponent(new PhysicsComponent())
-      ..addComponent(new GeometryComponent(args[ARG_RADIUS], args[ARG_RADIUS]));
+      ..addComponent(new GeometryComponent(args[ARG_RADIUS]*2, args[ARG_RADIUS]*2));
     
     return entity;
   }
