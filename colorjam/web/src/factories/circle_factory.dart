@@ -13,7 +13,7 @@ class CircleFactory extends EntityFactory {
   
   Entity build(World world, Map<String, dynamic> args) {
     Sprite sprite = new Sprite();
-    sprite.graphics.circle(0, 0, args[ARG_RADIUS]);
+    sprite.graphics.circle(args[ARG_RADIUS],args[ARG_RADIUS], args[ARG_RADIUS]);
     sprite.graphics.fillColor(rgbToInt(
                     args[ARG_COLOR_R] as int,
                     args[ARG_COLOR_G] as int, 
