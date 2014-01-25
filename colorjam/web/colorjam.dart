@@ -6,6 +6,9 @@ import 'package:stagexl/stagexl.dart';
 import 'package:dartemis/dartemis.dart';
 
 part "src/entity_factory.dart";
+part "src/components/position_component.dart";
+part "src/components/velocity_component.dart";
+part "src/components/physics_component.dart";
 
 void main() {
 // setup the Stage and RenderLoop 
