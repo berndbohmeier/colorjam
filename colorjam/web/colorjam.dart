@@ -41,8 +41,7 @@ part "src/systems/player_movement_system.dart";
 part "src/systems/editor_system.dart";
 part "src/systems/interaction_system.dart";
 part "src/systems/collect_entities_system.dart";
-part "src/systems/color_decay_system.dart";
-
+part "src/systems/color_decay_system.dart";part "src/systems/remove_entities_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";

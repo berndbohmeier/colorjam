@@ -62,9 +62,9 @@ class Game {
               "type":"Player",
               "${PositionComponent.ARG_X}":100,
               "${PositionComponent.ARG_Y}":100,
-              "color_r":255,
-              "color_g":255,
-              "color_b":255
+              "color_r":150,
+              "color_g":0,
+              "color_b":150
              },
             {
               "type":"Wall",
