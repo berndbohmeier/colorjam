@@ -52,7 +52,7 @@ part "src/scenes/level_scene.dart";
 part "src/scenes/world_scene.dart";
 part "src/scenes/editor_scene.dart";
 
-
+ResourceManager resourceManager = new ResourceManager();
 
 void main() {
 // setup the Stage and RenderLoop 

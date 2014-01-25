@@ -32,6 +32,13 @@ class Game {
     stage.addChild(mainsprite);
     stage.focus = mainsprite;
     
+    // loading
+    
+    resourceManager.addBitmapData("player1", "images/40x65Typ/Typ_1.png");
+    resourceManager.addBitmapData("player2", "images/40x65Typ/Typ_2.png");
+    resourceManager.addBitmapData("player3", "images/40x65Typ/Typ_3.png");
+    resourceManager.addBitmapData("player4", "images/40x65Typ/Typ_4.png");
+
     
     
     levelManager = new LevelManager({"default":"""{
@@ -96,8 +103,10 @@ class Game {
     
     stage.onEnterFrame.listen(onEnterFrame);
     
+    resourceManager.load().then((m) {
+      loadLevel("default");
+    });
     
-    loadLevel("default");
     
     
     
