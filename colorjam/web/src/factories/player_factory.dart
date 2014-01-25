@@ -8,7 +8,8 @@ class PlayerFactory extends EntityFactory {
   Entity build(World world, Map<String, dynamic> args) {
     Sprite sprite = new Sprite();
     sprite.graphics.rect(0, 0, 30, 30);
-    sprite.graphics.fillColor(0xFF00FFFF);
+    sprite.graphics.strokeColor(Color.Black, 2);
+    sprite.graphics.fillColor(0xFFFFFFFF);
     
     Entity entity = world.createEntity()
         ..addComponent(new TypeComponent("Player"))
