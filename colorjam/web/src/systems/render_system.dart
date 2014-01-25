@@ -26,6 +26,8 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     
     dbc.addChild(sprite);
     processEntity(entity);
+    sprite.removeCache();
+    sprite.applyCache(-5, -5, sprite.width+5, sprite.height+5);
   }
   
   void removed(Entity entity){
@@ -59,8 +61,9 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
                                      playerColor.ng,
                                      alpha))
     ];
-    spr.sprite.removeCache();
-    spr.sprite.applyCache(-5, -5, spr.sprite.width+5, spr.sprite.height+5);
+    
+    spr.sprite.refreshCache();
+   
   }
   
   List<num> getColorMatrix(int r, int g, int b, int a) {
