@@ -13,6 +13,8 @@ part "src/components/color_component.dart";
 part "src/components/geometry_component.dart";
 part "src/components/sprite_component.dart";
 
+part "src/systems/movement_system.dart";
+
 void main() {
 // setup the Stage and RenderLoop 
   var canvas = html.querySelector('#stage');
