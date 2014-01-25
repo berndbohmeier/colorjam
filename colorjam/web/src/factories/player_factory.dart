@@ -11,6 +11,7 @@ class PlayerFactory extends EntityFactory {
     sprite.graphics.fillColor(0xFF00FFFF);
     
     Entity entity = world.createEntity()
+        ..addComponent(new TypeComponent("Player"))
         ..addComponent(new PositionComponent.fromJson(args))
         ..addComponent(new VelocityComponent(0, 0))
         ..addComponent(new SpriteComponent(sprite))
