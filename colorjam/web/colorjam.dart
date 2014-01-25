@@ -9,6 +9,7 @@ part "src/entity_factory.dart";
 part "src/components/position_component.dart";
 part "src/components/velocity_component.dart";
 part "src/components/physics_component.dart";
+part "src/components/color_component.dart";
 
 void main() {
 // setup the Stage and RenderLoop 
@@ -19,10 +20,11 @@ void main() {
   RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
 
+  ColorComponent cc = new ColorComponent.fromRGBA(255, 255, 0, 66);
   // draw a red circle
   var shape = new Shape();
   shape.graphics.circle(100, 100, 60);
-  shape.graphics.fillColor(Color.Red);
+  shape.graphics.fillColor(cc.colorcode);
   
   Sprite gamesprite = new Sprite();
   stage.addChild(gamesprite);
