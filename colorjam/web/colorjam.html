@@ -13,14 +13,25 @@
       <li><button id="playbutton">Play</button></li>
       <li><button id="addwall">Add wall</button></li>
     </ul>
+    <div id="content">
+      
+      
+      <div id="sample_container_id">
+        <canvas id="stage" width="800" height="600"></canvas>
+      </div>
+      
+      <div id="inspector">
+        <table>
+          <tr><th width="100">Type:</th><td width="100"><input type="text" id="typeInput" /></td></tr>
+        </table>
+        <br /><br />
+        <textarea rows="15" cols="30" id="textout"></textarea>
+      </div>
     
-    <div id="sample_container_id">
-      <canvas id="stage" width="800" height="600"></canvas>
+	    
+	    
+	    <script type="application/dart" src="colorjam.dart"></script>
+	    <script src="packages/browser/dart.js"></script>
     </div>
-    
-    <textarea rows="15" cols="100" id="textout"></textarea>
-
-    <script type="application/dart" src="colorjam.dart"></script>
-    <script src="packages/browser/dart.js"></script>
   </body>
 </html>
