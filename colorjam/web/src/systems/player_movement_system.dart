@@ -26,8 +26,8 @@ class PlayerMovementSystem extends EntityProcessingSystem{
   }
   
   void processEntity(Entity entity){
-    VelocityComponent vel = velmapper.get(entity);
-    PlayerControlComponent con = controlmapper.get(entity);
+    VelocityComponent vel = velMapper.get(entity);
+    PlayerControlComponent con = controlMapper.get(entity);
     PhysicsComponent phys = physicsMapper.get(entity);
     
     switch(con.direction){
