@@ -3,7 +3,8 @@ part of colorjam;
 class EntityFactory {
   static final Map<String, EntityFactory> _factories = {
     "Entity" : new EntityFactory._(),
-    "Circle" : new CircleFactory._()
+    "Circle" : new CircleFactory._(),
+    "Wall" : new WallFactory._()
   };
   
   EntityFactory._() {} 

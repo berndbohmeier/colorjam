@@ -85,6 +85,17 @@ class Game {
               "cr":0,
               "cg":255,
               "cb":0
+            },
+            {
+              "type":"Wall",
+              "top":100,
+              "left": 20,
+              "bottom": 130,
+              "right": 200,
+              "color_r": 0,
+              "color_g": 255,
+              "color_b": 255,
+              "bounciness":0
             }
           ]
         }"""

@@ -17,7 +17,7 @@ class ColorComponent extends Component {
   
   ColorComponent.fromInt(this.colorcode);
   
-  ColorCompnent.fromJson(Map<String, dynamic> args) {
+  ColorComponent.fromJson(Map<String, dynamic> args) {
     if(!args.containsKey(ARG_R))
         throw new ArgumentError("Missing argument $ARG_R");
     
@@ -27,7 +27,7 @@ class ColorComponent extends Component {
     if(!args.containsKey(ARG_B))
       throw new ArgumentError("Missing argument $ARG_B");
     
-    this(args[ARG_R] as int, args[ARG_R] as int, args[ARG_R] as int);
+    colorcode = (255 << 24) | (args[ARG_R] << 16) | (args[ARG_G] << 8) | args[ARG_B];
   }
   
   int get a => (colorcode >> 24) & 255;

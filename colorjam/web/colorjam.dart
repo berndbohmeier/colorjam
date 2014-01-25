@@ -19,6 +19,7 @@ part "src/components/geometry_component.dart";
 part "src/components/sprite_component.dart";
 part "src/components/player_control_component.dart";
 part "src/components/player_input_component.dart";
+part "src/components/color_component.dart";
 // Factories
 part "src/factories/circle_factory.dart";
 part "src/factories/player_factory.dart";
