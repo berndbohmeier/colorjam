@@ -30,7 +30,7 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     dbc.addChild(sprite);
     processEntity(entity);
     sprite.removeCache();
-    sprite.applyCache(-5, -5, sprite.width+5, sprite.height+5);
+    sprite.applyCache(-5, -5, sprite.width.round()+5, sprite.height.round()+5);
   }
   
   void removed(Entity entity){
