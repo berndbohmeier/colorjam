@@ -88,9 +88,9 @@ class Game {
             },
             {
               "type":"Wall",
-              "top":100,
+              "top":500,
               "left": 20,
-              "bottom": 130,
+              "bottom": 530,
               "right": 200,
               "color_r": 0,
               "color_g": 255,

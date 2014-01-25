@@ -58,7 +58,7 @@ class PhysicsSystem extends EntityProcessingSystem {
           num t2 = rect.y;
           num l2 = rect.x;
           num r2 = rect.x + rect.width;
-          print("b2: $b2, t2: $t2, b1: $b1, t1: $t1");
+          
           num distX = 0;
           num distY = 0;
           if(r1 > r2 && r2 > l1 && l1 > l2)
@@ -70,8 +70,7 @@ class PhysicsSystem extends EntityProcessingSystem {
           else if(b1 > b2 && b2 > t1 && t1 > t2)
             distY = b2 - t1;
           
-          print("x: $distX");
-          print("y: $distY");
+          
           // distX und distY sind 0, wenn es keine Überschneidung in dieser Richtung gibt
           // ansonsten enthalten sie den Abstand der Objekte in dieser Richtung.
           if(distX != 0 && distY != 0) {
