@@ -28,6 +28,7 @@ part "src/systems/collider_system.dart";
 part "src/systems/render_system.dart";
 part "src/systems/player_control_system.dart";
 part "src/systems/player_input_system.dart";
+part "src/systems/player_movement_system.dart";
 
 
 
