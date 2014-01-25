@@ -30,6 +30,14 @@ class ColorComponent extends Component {
     colorcode = (255 << 24) | (args[ARG_R] << 16) | (args[ARG_G] << 8) | args[ARG_B];
   }
   
+  String toJson() {
+    StringBuffer sb = new StringBuffer();
+    sb.writeln("\"$ARG_R\":$r,");
+    sb.writeln("\"$ARG_G\":$g,");
+    sb.write("\"$ARG_B\":$b");
+    return sb.toString();
+  }
+  
   int get a => (colorcode >> 24) & 255;
   int get r => (colorcode >> 16) & 255;
   int get g => (colorcode >> 8) & 255;
