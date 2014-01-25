@@ -25,3 +25,17 @@ h1, p {
   text-align: center;
   margin-top: 140px;
 }
+
+ul#menubar {
+	position: absolute;
+	top: 0px;
+	left: 150px;
+}
+
+ul#menubar li {
+	display: inline;
+}
+
+ul#menubar li button.pressed {
+  background-color: #fdd;
+}
