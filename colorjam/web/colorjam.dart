@@ -22,6 +22,7 @@ part "src/components/player_input_component.dart";
 // Factories
 part "src/factories/circle_factory.dart";
 part "src/factories/player_factory.dart";
+part "src/factories/wall_factory.dart";
 // Systems
 part "src/systems/movement_system.dart";
 part "src/systems/physics_system.dart";
