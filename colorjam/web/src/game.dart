@@ -17,6 +17,9 @@ class Game {
   
   bool run = false;
   
+  num frametime = 10;
+  num simtime = 0;
+  
   /**
    * inits the world and the stage
    */
@@ -87,6 +90,11 @@ class Game {
               "cb":0
             },
             {
+              "type":"Player",
+              "${PositionComponent.ARG_X}":100,
+              "${PositionComponent.ARG_Y}":100
+             },
+            {
               "type":"Wall",
               "top":500,
               "left": 20,
@@ -137,11 +145,16 @@ class Game {
   
   
   void onEnterFrame(EnterFrameEvent event){
-    world.delta = event.passedTime*1000;
+    num time = event.passedTime*1000;
+    simtime+=time;
     if(run){
-      world.process();
+      while(simtime>frametime){
+        world.delta = frametime;
+        world.process();
+        simtime -= frametime;
+      }
+      
     }
-
-   }
+  }
   
 }
