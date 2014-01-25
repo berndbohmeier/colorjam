@@ -1,13 +1,13 @@
 part of colorjam;
 
-class Position extends Component {
+class PositionComponent extends Component {
   Vector position;
   
-  Position(num x, num y) {
+  PositionComponent(num x, num y) {
     position = new Vector(x, y);
   }
   
-  Position.fromVector(Vector pos) {
+  PositionComponent.fromVector(Vector pos) {
     position = pos;
   }
   
