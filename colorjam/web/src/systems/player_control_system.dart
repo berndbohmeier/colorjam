@@ -19,23 +19,27 @@ class PlayerControlSystem extends EntityProcessingSystem{
     PlayerControlComponent control = controlMapper.get(entity);
     PlayerInputComponent input = inputMapper.get(entity);
     
+    
     if(input.leftKeyPressed){
       control.direction = -1;
     }else{
-      if(input.rightKeyPressed){
-        control.direction = 1;
-      }else{
-        control.direction = 0;
-      }
+      
+    }
+    if(input.rightKeyPressed){
+      control.direction = 1;
+    }
+    
+    if(!input.rightKeyPressed && !input.leftKeyPressed){
+      control.direction = 0;
     }
     
     if(input.jumpKeyPressed){
       control.doJump();
     }
     
-    input.leftKeyPressed = false;
-    input.rightKeyPressed = false;
-    input.jumpKeyPressed = false;
+    //input.leftKeyPressed = false;
+    //input.rightKeyPressed = false;
+    //input.jumpKeyPressed = false;
     
   }
   

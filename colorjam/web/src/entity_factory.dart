@@ -4,7 +4,8 @@ class EntityFactory {
   static final Map<String, EntityFactory> _factories = {
     "Entity" : new EntityFactory._(),
     "Circle" : new CircleFactory._(),
-    "Wall" : new WallFactory._()
+    "Wall" : new WallFactory._(),
+    "Player" : new PlayerFactory._()
   };
   
   EntityFactory._() {} 
