@@ -7,15 +7,20 @@ import 'package:dartemis/dartemis.dart';
 
 part "src/entity_factory.dart";
 part "src/game.dart";
+
+// Components
 part "src/components/position_component.dart";
 part "src/components/velocity_component.dart";
 part "src/components/physics_component.dart";
-part "src/systems/render_system.dart";
-
+part "src/components/collider_component.dart";
 part "src/components/geometry_component.dart";
 part "src/components/sprite_component.dart";
 
+// Systems
 part "src/systems/movement_system.dart";
+part "src/systems/physics_system.dart";
+part "src/systems/collider_system.dart";
+part "src/systems/render_system.dart";
 
 void main() {
 // setup the Stage and RenderLoop 
