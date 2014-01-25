@@ -23,7 +23,8 @@ class CircleFactory extends EntityFactory {
       ..addComponent(new SpriteComponent(sprite))
       ..addComponent(new PhysicsComponent())
       ..addComponent(new GeometryComponent(args[ARG_RADIUS]*2, args[ARG_RADIUS]*2))
-      ..addComponent(new ColorComponent.fromJson(args))    
+      ..addComponent(new ColorComponent.fromJson(args));
+    
     return entity;
   }
   
