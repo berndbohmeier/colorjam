@@ -66,10 +66,12 @@ class InputControlSystem extends EntitySystem{
   }
   
   void _onKeyDown(KeyboardEvent kevent){
+    kevent.stopPropagation();
     keycodesdown.add(kevent.keyCode);
   }
   
   void _onKeyUp(KeyboardEvent kevent){
+    kevent.stopPropagation();
     keycodesup.add(kevent.keyCode);
     
    
