@@ -36,6 +36,7 @@ part "src/systems/player_movement_system.dart";
 //szenes
 part "src/szenes/szene.dart";
 part "src/szenes/level_szene.dart";
+part "src/szenes/world_szene.dart";
 
 
 
