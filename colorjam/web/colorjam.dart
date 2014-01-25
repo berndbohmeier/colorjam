@@ -9,6 +9,7 @@ import 'package:dartemis/dartemis.dart';
 part "src/entity_factory.dart";
 part "src/game.dart";
 part "src/level_parser.dart";
+part "src/level_manager.dart";
 
 
 // Components
@@ -34,9 +35,9 @@ part "src/systems/player_control_system.dart";
 part "src/systems/player_input_system.dart";
 part "src/systems/player_movement_system.dart";
 //szenes
-part "src/szenes/szene.dart";
-part "src/szenes/level_szene.dart";
-part "src/szenes/world_szene.dart";
+part "src/scenes/scene.dart";
+part "src/scenes/level_scene.dart";
+part "src/scenes/world_scene.dart";
 
 
 
@@ -52,7 +53,6 @@ void main() {
 
   Game game = new Game(stage);
   game.init();
-  game.createSomeTestEntities();
   game.start();
   
   
