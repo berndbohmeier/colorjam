@@ -9,6 +9,7 @@ if(!isset($_SESSION['counter_ip']))
    {
     
    $counterstand += 1;
+   rewind($datei);
    fwrite($datei, $counterstand);
    $_SESSION['counter_ip'] = true;
    }
