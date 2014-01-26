@@ -17,6 +17,7 @@ class GoalFactory extends EntityFactory {
     Entity e = super.build(world, args)
       ..addComponent(new TypeComponent("Goal"))
       ..addComponent(new PositionComponent.fromJson(args))
+      ..addComponent(new ColliderComponent.reversed())
       ..addComponent(cp)
       ..addComponent(new GoalComponent())
       ..addComponent(new GeometryComponent(WIDTH, HEIGHT))
