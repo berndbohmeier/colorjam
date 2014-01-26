@@ -6,6 +6,6 @@ part of colorjam;
 class ColorDecayComponent extends Component{
   
   
-    num time = 10;
+    num time = 16;
   
 }

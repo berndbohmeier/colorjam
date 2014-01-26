@@ -71,7 +71,7 @@ class Game {
               "${PositionComponent.ARG_Y}":130,
               "color_r":0,
               "color_g":0,
-              "color_b":50
+              "color_b":255
              },
             {
               "type":"Goal",
