@@ -22,6 +22,8 @@ class Game {
   num frametime = 10;
   num simtime = 0;
   
+  int currentLevel = 0;
+  
   /**
    * inits the world and the stage
    */
@@ -44,7 +46,30 @@ class Game {
     resourceManager.addBitmapData("colorchanger3", "images/colorchanger/colorchanger3.png");
     
     
-    levelManager = new LevelManager({"default":"""{
+    levelManager = new LevelManager([
+          """{
+          "entities":[
+            {
+              "type":"Wall",
+              "top":500,
+              "left": 20,
+              "bottom": 530,
+              "right": 500,
+              "color_r": 0,
+              "color_g": 0,
+              "color_b": 255,
+              "bounciness":0
+            },
+            {
+              "type":"Player",
+              "${PositionComponent.ARG_X}":130,
+              "${PositionComponent.ARG_Y}":130,
+              "color_r":0,
+              "color_g":0,
+              "color_b":255
+             }
+          ]}""",
+          """{
           "entities":[
             {
               "type":"Circle",
@@ -128,29 +153,24 @@ class Game {
 
 
           ]
-        }"""});
-    
-    
-    
-    
+        }"""]);
     
     ///combine artemis and stage
     
-    
-    
     resourceManager.load().then((m) {
-      loadLevel("default");
+      loadLevel(0);
       stage.onEnterFrame.listen(onEnterFrame);
     });
-    
-    
-    
-    
   }
   
-  void loadLevel(String levelname){
+  void loadNextLevel() {
+    szene.deactivate();
+    loadLevel(++currentLevel);
+  }
+  
+  void loadLevel(int id){
     if(szene!=null)szene.deactivate();
-    szene = new LevelScene(levelManager.levelMap(levelname), mainsprite);
+    szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
     //szene = new EditorScene(levelManager.levelMap(levelname), mainsprite);
     szene.init();
     szene.activate();
@@ -167,7 +187,6 @@ class Game {
     run = false;
   }
   
-  
   void onEnterFrame(EnterFrameEvent event){
     num time = event.passedTime*1000;
     simtime+=time;
@@ -176,7 +195,6 @@ class Game {
         szene.update(frametime);
         simtime -= frametime;
       }
-      
     }
   }
   

@@ -6,11 +6,11 @@ part of colorjam;
 
 
 class LevelManager {
-  Map<String, String> levels = new Map<String, String>();
+  List<String> _levels = new List<String>();
   
   
-  LevelManager(this.levels);
-  LevelManager.empty();
+  LevelManager(this._levels);
+  //LevelManager.empty();
   
-  String levelMap(String levelname) => levels[levelname];
+  String getLevel(int index) => index >= _levels.length ? null : _levels[index];
 }
