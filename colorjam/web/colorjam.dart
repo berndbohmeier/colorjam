@@ -69,6 +69,8 @@ void main() {
   Stage stage = new Stage('myStage', canvas);
   
   
+
+  
   RenderLoop renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
 

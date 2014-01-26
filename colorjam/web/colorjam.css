@@ -19,6 +19,7 @@ h1, p {
   border: 1px solid #ccc;
   background-color: #fff;
   float: left;
+  overflow: auto;
 }
 
 #sample_text_id {
@@ -62,4 +63,8 @@ ul#menubar li button.pressed {
 
 #inspector table th {
 	width: 100px;
+}
+
+.editor {
+	visibility: hidden;
 }
