@@ -68,3 +68,27 @@ ul#menubar li button.pressed {
 .editor {
 	visibility: hidden;
 }
+
+#footline {
+	clear: both;
+	color: #FDFDFD;
+	background-color: darkgrey;
+	width: 103%;
+	display: block;
+	height: 140px;
+	overflow: hidden;
+	margin-left: -15px;
+	border-top: 30px solid #F8F8F8;
+	padding: 25px;
+	text-align: center;
+	
+}
+
+a {
+	color: #444;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #666;
+}
