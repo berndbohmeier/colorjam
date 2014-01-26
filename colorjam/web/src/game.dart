@@ -223,6 +223,13 @@ class Game {
     scene.activate();
   }
   
+  void restartLevel() {
+    scene.deactivate();
+    scene = scenes["level"];
+    scene.init();
+    scene.activate();
+  }
+  
   /**
    * starts the world system
    */
