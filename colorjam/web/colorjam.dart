@@ -30,12 +30,14 @@ part "src/components/color_decay_component.dart";
 part "src/factories/circle_factory.dart";
 part "src/factories/player_factory.dart";
 part "src/factories/wall_factory.dart";
+part "src/factories/door_factory.dart";
 part "src/factories/color_changer_factory.dart";
 // Systems
 part "src/systems/movement_system.dart";
 part "src/systems/physics_system.dart";
 part "src/systems/collider_system.dart";
 part "src/systems/render_system.dart";
+part "src/systems/color_render_system.dart";
 part "src/systems/player_control_system.dart";
 part "src/systems/player_input_system.dart";
 part "src/systems/player_movement_system.dart";
