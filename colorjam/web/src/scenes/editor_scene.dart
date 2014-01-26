@@ -87,13 +87,13 @@ class EditorScene extends WorldScene{
   void activate() {
     super.activate();
     html.querySelectorAll(".editor").forEach((e) => (e as html.Element).style.visibility = "visible");
-    
+    html.querySelector("#sample_container_id").style.overflow = "scroll";
   }
   
   void deactivate() {
     super.deactivate();
     html.querySelectorAll(".editor").forEach((e) => (e as html.Element).style.visibility = "hidden");
-    
+    html.querySelector("#sample_container_id").style.overflow = "hidden";
   }
   
 }

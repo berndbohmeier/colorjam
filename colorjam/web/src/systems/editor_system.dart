@@ -301,7 +301,7 @@ class EditorSystem extends EntityProcessingSystem {
   String toJson() {
     StringBuffer sb = new StringBuffer();
 
-    sb.writeln("{)
+    sb.writeln("{");
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
