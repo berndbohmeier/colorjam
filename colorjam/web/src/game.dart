@@ -168,8 +168,9 @@ class Game {
     ///combine artemis and stage
     
     resourceManager.load().then((m) {
-      loadLevel(0);
+      scenes["gameoverscene"] = new GameOverScene(this, mainsprite);
       loadEditor();
+      loadLevel(0);
       stage.onEnterFrame.listen(onEnterFrame);
     });
   }
@@ -188,7 +189,7 @@ class Game {
     if(scenes["level"]!=null){
       scenes["level"].deactivate();
     }
-    scenes["level"] = new LevelScene(code, loadNextLevel,this, mainsprite);
+    scenes["level"] = new LevelScene(code, this, mainsprite);
     
     scenes["level"].init();
     switchToSzene("level");
@@ -202,12 +203,11 @@ class Game {
       
     
     switchToSzene("editor");
-    
   }
   
   void switchToSzene(String scenename){
     if(scene!=null){
-      scene.deactivate;
+      scene.deactivate();
     }
     scene = scenes[scenename];
     scene.activate();
@@ -216,7 +216,7 @@ class Game {
   
   void switchToSzeneWithInit(String scenename){
     if(scene!=null){
-      scene.deactivate;
+      scene.deactivate();
     }
     scene = scenes[scenename];
     scene.init();

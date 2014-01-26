@@ -2,10 +2,9 @@ part of colorjam;
 
 typedef void loadNextScene();
 class LevelScene extends WorldScene{
-  loadNextScene callback;
   String level;
   
-  LevelScene(this.level, this.callback, Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
+  LevelScene(this.level, Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
   
   void init(){
     super.init();
@@ -23,7 +22,8 @@ class LevelScene extends WorldScene{
       ..addSystem(colorCollectSystem)
       ..addSystem(new ColorChangeSystem(colorCollectSystem))
       ..addSystem(playerCollectSystem)
-      ..addSystem(new GoalSystem(playerCollectSystem, callback))
+      ..addSystem(new GoalSystem(playerCollectSystem, game.loadNextLevel))
+      ..addSystem(new GameOverSystem(onGameOver))
       ..addSystem(new ColorRenderSystem())
       ..addSystem(new ScrollSystem(headcontainer))
       ..addSystem(new SpriteRenderSystem(container))
@@ -33,5 +33,8 @@ class LevelScene extends WorldScene{
     new LevelParser(world).parse(level);
   }
   
+  void onGameOver() {
+    game.switchToSzene("gameoverscene");
+  }
   
 }

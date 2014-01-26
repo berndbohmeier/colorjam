@@ -55,6 +55,7 @@ part "src/systems/goal_system.dart";
 part "src/systems/player_collect_system.dart";
 part "src/systems/color_collect_system.dart";
 part "src/systems/scroll_system.dart";
+part "src/systems/game_over_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";
