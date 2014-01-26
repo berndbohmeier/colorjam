@@ -1,3 +1,20 @@
+<?php
+session_start();
+$datei = fopen("counter.txt","r+");
+$counterstand = fgets($datei, 10);
+
+
+
+if(!isset($_SESSION['counter_ip']))
+   {
+    
+   $counterstand += 1;
+   fwrite($datei, $counterstand);
+   $_SESSION['counter_ip'] = true;
+   }
+
+fclose($datei);
+?>
 <!DOCTYPE html>
 
 <html>
@@ -45,7 +62,8 @@
     <div id="footline">
       ColorJam, created within the GlobalGameJam 2014 by Bernd Bohmeier, Max Maag, Sebastian Müthrath and Simon Weiler at KOM, TU Darmstadt, Germany.<br />
       The game, the source code and all assets are published under the Creative Commons BY-NC-SA 3.0 licence.<br />
-      You can get the source code under <a href="http://code.google.com/p/colorjam/">http://code.google.com/p/colorjam/</a>
+      You can get the source code under <a href="http://code.google.com/p/colorjam/">http://code.google.com/p/colorjam/</a><br />
+      People visited this site: <?php echo $counterstand; ?>
     </div>
   </body>
 </html>
