@@ -47,6 +47,8 @@ class Game {
     
     resourceManager.addBitmapData("door", "images/door/door.png");
     
+    resourceManager.addBitmapData("goal", "images/gate/gate0.png");
+    
     
     levelManager = new LevelManager([
           """{
@@ -178,8 +180,8 @@ class Game {
     if(szene!=null)
       szene.deactivate();
     
-    szene = new EditorScene(mainsprite);
-    //szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
+    //szene = new EditorScene(mainsprite);
+    szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
     
     szene.init();
     szene.activate();
