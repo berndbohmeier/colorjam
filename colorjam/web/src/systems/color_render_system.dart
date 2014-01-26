@@ -5,9 +5,9 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
   ComponentMapper<SpriteComponent> spriteMapper;
   ComponentMapper<ColorComponent> colorMapper;
   
+  bool globalVanishing = true;
   
-  
-  ColorRenderSystem() : super(100, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
+  ColorRenderSystem({this.globalVanishing : true}) : super(100, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
   
   List<List<num>> filterMatrixList = [
                     [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0],
@@ -45,7 +45,7 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
       else
         spr.sprite.filters[0] = new ColorMatrixFilter(filterMatrixList[0]);
       
-      if(color.vanishing && player != null) {
+      if(globalVanishing && color.vanishing && player != null) {
         ColorComponent playerColor = colorMapper.get(player);
         int alpha = math.max(math.max(math.min(playerColor.r, color.r),
                                       math.min(playerColor.g, color.g)),

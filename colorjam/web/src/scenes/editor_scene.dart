@@ -16,6 +16,7 @@ class EditorScene extends WorldScene{
     ///dartemis
     world
             ..addSystem(new EditorSystem(container))
+            ..addSystem(new ColorRenderSystem(globalVanishing: false) )
             ..addSystem(new SpriteRenderSystem(container))
             ..addManager(new TagManager());
     
