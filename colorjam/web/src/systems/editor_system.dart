@@ -22,6 +22,8 @@ class EditorSystem extends EntityProcessingSystem {
   Entity created;
   
   DisplayObjectContainer container;
+  
+  html.TextAreaElement textArea;
  
   
   int clickTime = 0;
@@ -47,6 +49,11 @@ class EditorSystem extends EntityProcessingSystem {
     html.querySelector("#adddoor").onClick.listen((e) {
       addDoor();
     });
+    html.querySelector("#recreate").onClick.listen((e) {
+      recreate();
+    });
+    
+    textArea = html.querySelector("#textout");
     Sprite overAll = new Sprite();
     overAll.width = 10000;
     overAll.height = 10000;
@@ -70,8 +77,15 @@ class EditorSystem extends EntityProcessingSystem {
     game.loadLevelCode(toJson());
   }
   
+  void recreate() {
+    game.loadEditorFromCode(textArea.value);
+  }
+  
+  
+  
   void update() {
-    html.querySelector("#textout").text = toJson();
+    textArea = html.querySelector("#textout");
+    textArea.value = toJson();
   }
   
   void onMouseDown(MouseEvent e) {
@@ -119,7 +133,7 @@ class EditorSystem extends EntityProcessingSystem {
       .addToWorld();
   }
   
-  void added(Entity e) {
+  void inserted(Entity e) {
     SpriteComponent spriteComponent = spriteMapper.get(e);
     PositionComponent pos = posMapper.get(e);
     TypeComponent type = typeMapper.get(e);
@@ -299,14 +313,22 @@ class EditorSystem extends EntityProcessingSystem {
   
   
   String toJson() {
+    bool firstEntity = true;
     StringBuffer sb = new StringBuffer();
 
-    sb.writeln("{");
+
+    sb.writeln("""{"entities":[""");
+
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
       if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)|(Goal)")))
           return;
+      if(firstEntity){
+        firstEntity=false;
+      }else {
+        sb.writeln(",");
+      }
       sb.writeln("{");
       
       switch(type) {
@@ -354,9 +376,9 @@ class EditorSystem extends EntityProcessingSystem {
              sb.writeln(",\n" + cc.toJson());
          break;
       }
-      sb.writeln("},");
+      sb.writeln("}");
     });
-    String output = sb.toString();
-    return output.substring(0, output.length - 2);
+    sb.writeln( " ]} ");
+    return sb.toString();
   }
 }

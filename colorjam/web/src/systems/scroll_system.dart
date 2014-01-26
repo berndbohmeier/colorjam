@@ -14,10 +14,10 @@ class ScrollSystem extends EntityProcessingSystem {
     num centery = -pos.y + 300;
     
     if((centerx - head.x).abs() > 200) {
-      head.x = centerx + (centerx - head.x).sign * 200;
+      head.x = centerx + (centerx - head.x)/(centerx - head.x).abs() * 200;
     }
     if((centery - head.y).abs() > 200) {
-      head.y = centery + (centery - head.y).sign * 200;
+      head.y = centery + (centery - head.y)/(centerx - head.x).abs() * 200;
     }
   }
 }

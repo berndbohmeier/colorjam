@@ -170,7 +170,7 @@ class Game {
     resourceManager.load().then((m) {
       scenes["gameoverscene"] = new GameOverScene(this, mainsprite);
       loadEditor();
-      loadLevel(0);
+      //loadLevel(0);
       stage.onEnterFrame.listen(onEnterFrame);
     });
   }
@@ -205,8 +205,22 @@ class Game {
     switchToSzene("editor");
   }
   
+  void loadEditorFromCode(String code){
+    
+    if(scenes["editor"]!=null)scenes["editor"].deactivate();
+    
+    scenes["editor"] = new EditorScene.fromCode(this,mainsprite, code);
+    
+    switchToSzeneWithInit("editor");
+    
+  }
+  
+  
+  
+  
   void switchToSzene(String scenename){
     if(scene!=null){
+
       scene.deactivate();
     }
     scene = scenes[scenename];
@@ -216,6 +230,7 @@ class Game {
   
   void switchToSzeneWithInit(String scenename){
     if(scene!=null){
+
       scene.deactivate();
     }
     scene = scenes[scenename];
