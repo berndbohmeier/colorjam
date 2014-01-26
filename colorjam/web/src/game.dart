@@ -8,7 +8,8 @@ class Game {
   Game(this.stage);
   
  
-  Scene szene;
+  Map<String, Scene> scenes = new Map<String, Scene>();
+  Scene scene;
   
   LevelManager levelManager;
   
@@ -168,6 +169,7 @@ class Game {
     
     resourceManager.load().then((m) {
       loadLevel(0);
+      loadEditor();
       stage.onEnterFrame.listen(onEnterFrame);
     });
   }
@@ -177,14 +179,47 @@ class Game {
   }
   
   void loadLevel(int id){
-    if(szene!=null)
-      szene.deactivate();
+    loadLevelCode(levelManager.getLevel(id));
+  }
+  
+  
+  void loadLevelCode(String code){
+    if(scenes["level"]!=null){
+      scenes["level"].deactivate();
+    }
+    scenes["level"] = new LevelScene(code, loadNextLevel, mainsprite);
     
-    //szene = new EditorScene(mainsprite);
-    szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
+    scenes["level"].init();
+    switchToSzene("level");
+  }
+  
+  void loadEditor(){
+    if(scenes["editor"]==null){
+      scenes["editor"] = new EditorScene(mainsprite);
+      scenes["editor"].init();
+    }
+      
     
-    szene.init();
-    szene.activate();
+    switchToSzene("editor");
+    
+  }
+  
+  void switchToSzene(String scenename){
+    if(scene!=null){
+      scene.deactivate;
+    }
+    scene = scenes[scenename];
+    scene.activate();
+  }
+  
+  
+  void switchToSzeneWithInit(String scenename){
+    if(scene!=null){
+      scene.deactivate;
+    }
+    scene = scenes[scenename];
+    scene.init();
+    scene.activate();
   }
   
   /**
@@ -203,7 +238,7 @@ class Game {
     simtime+=time;
     if(run){
       while(simtime>frametime){
-        szene.update(frametime);
+        scene.update(frametime);
         simtime -= frametime;
       }
     }
