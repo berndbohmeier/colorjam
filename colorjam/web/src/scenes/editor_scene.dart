@@ -6,10 +6,35 @@ part of colorjam;
 
 class EditorScene extends WorldScene{
   
+  String levelcode =  """{
+      "entities":[
+      {
+      "type":"Player",
+      "${PositionComponent.ARG_X}":50,
+  "${PositionComponent.ARG_Y}":300,
+  "color_r":255,
+  "color_g":0,
+  "color_b":0
+  },
+  {
+  "type":"Goal",
+  "${PositionComponent.ARG_X}":100,
+  "${PositionComponent.ARG_Y}":300,
+  "color_r":0,
+  "color_g":0,
+  "color_b":255
+  }
+      ]
+    }
+    """
+  ;
   
+  bool fromCod = false;
   
   EditorScene(Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
-  
+  EditorScene.fromCode(Game game, DisplayObjectContainer headcontainer, this.levelcode) : super(game, headcontainer){
+    fromCod = true;
+  }
   
   void init(){
     super.init();
@@ -36,29 +61,7 @@ class EditorScene extends WorldScene{
       ..addComponent(new GeometryComponent(20, 20))
       ..addToWorld();*/
     new LevelParser(world)
-      ..parse(
-        """{
-          "entities":[
-            {
-              "type":"Player",
-              "${PositionComponent.ARG_X}":50,
-              "${PositionComponent.ARG_Y}":300,
-              "color_r":255,
-              "color_g":0,
-              "color_b":0
-            },
-            {
-              "type":"Goal",
-              "${PositionComponent.ARG_X}":100,
-              "${PositionComponent.ARG_Y}":300,
-              "color_r":0,
-              "color_g":0,
-              "color_b":255
-            }
-          ]
-        }
-        """
-    );
+      ..parse(levelcode);
     /*
     Sprite sprite2 = new Sprite();
     sprite2.graphics.rect(0, 0, 250, 40);
@@ -81,6 +84,10 @@ class EditorScene extends WorldScene{
         ..addToWorld();
         
     */
+    
+    if(fromCod){
+      print("init from code");
+    }
   
   }
   
@@ -93,6 +100,7 @@ class EditorScene extends WorldScene{
   void deactivate() {
     super.deactivate();
     html.querySelectorAll(".editor").forEach((e) => (e as html.Element).style.visibility = "hidden");
+
     html.querySelector("#sample_container_id").style.overflow = "hidden";
   }
   
