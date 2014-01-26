@@ -25,7 +25,7 @@ abstract class Scene{
   void deactivate(){
     if(!active)
       return;
-    
+
     headcontainer.removeChild(container);
     active = false;
   }
