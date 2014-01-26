@@ -68,10 +68,10 @@ ResourceManager resourceManager = new ResourceManager();
 
 void main() {
 // setup the Stage and RenderLoop 
-  var canvas = html.querySelector('#stage');
+  html.Element canvas = html.querySelector('#stage');
   Stage stage = new Stage('myStage', canvas);
   
-  
+  canvas.focus();
 
   
   RenderLoop renderLoop = new RenderLoop();
