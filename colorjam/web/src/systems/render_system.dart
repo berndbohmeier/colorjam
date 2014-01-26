@@ -40,8 +40,8 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     SpriteComponent spr = spriteMapper.get(entity);
     GeometryComponent geom = geomMapper.get(entity);
     
-    spr.sprite.x = pos.x - geom.width/2;
-    spr.sprite.y = pos.y - geom.height/2;
+    spr.sprite.x = pos.x - spr.width/2;
+    spr.sprite.y = pos.y - spr.height/2;
     
   }
 }

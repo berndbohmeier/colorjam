@@ -275,6 +275,8 @@ class EditorSystem extends EntityProcessingSystem {
       geom.width = (container.stage.mouseX - pos.x).abs() * 2;
       spriteComp.sprite.width = geom.width;
       spriteComp.sprite.height = geom.height;
+      spriteComp.width = geom.width;
+      spriteComp.height = geom.height;
       spriteComp.sprite.removeCache();
       spriteComp.sprite.applyCache(-7, -5, spriteComp.sprite.width.round()+7, spriteComp.sprite.height.round()+5);
       
