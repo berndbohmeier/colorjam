@@ -4,7 +4,7 @@ part of colorjam;
 
 
 abstract class Scene{
-  
+  bool active = false;
   Game game;
   DisplayObjectContainer headcontainer;
   DisplayObjectContainer container;
@@ -15,11 +15,19 @@ abstract class Scene{
   
   
   void activate(){
+    if(active)
+      return;
+    
     headcontainer.addChild(container);
+    active = true;
   }
   
   void deactivate(){
+    if(!active)
+      return;
+    
     headcontainer.removeChild(container);
+    active = false;
   }
   
   /**
