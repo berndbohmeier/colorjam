@@ -18,9 +18,9 @@ class ColorDecaySystem extends EntityProcessingSystem{
     ColorComponent col = colorMapper.get(e);
     ColorDecayComponent coldecay = coldecayMapper.get(e);
     
-    col.r = (col.r-world.delta/coldecay.time/10);
-    col.g = (col.g-world.delta/coldecay.time/10);
-    col.b = (col.b-world.delta/coldecay.time/10);
+    col.r = (col.r-world.delta/coldecay.time);
+    col.g = (col.g-world.delta/coldecay.time);
+    col.b = (col.b-world.delta/coldecay.time);
     
   }
 }
