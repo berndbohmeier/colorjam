@@ -25,6 +25,7 @@ class LevelScene extends WorldScene{
       ..addSystem(playerCollectSystem)
       ..addSystem(new GoalSystem(playerCollectSystem, callback))
       ..addSystem(new ColorRenderSystem())
+      ..addSystem(new ScrollSystem(headcontainer))
       ..addSystem(new SpriteRenderSystem(container))
 
       ..addManager(new TagManager());
