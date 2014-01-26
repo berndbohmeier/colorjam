@@ -52,13 +52,13 @@ ul#menubar li button.pressed {
 }
 
 #inspector {
-	width: 210px;
+	width: 350px;
 	display: inline;
 	padding-left: 20px;
 }
 
-#inspector table {
-	width: 200px;
+#inspector table input {
+  width: 100px;
 }
 
 #inspector table th {

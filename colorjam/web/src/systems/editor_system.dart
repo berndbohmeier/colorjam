@@ -227,7 +227,7 @@ class EditorSystem extends EntityProcessingSystem {
       }
       
       values.forEach((key, value) {
-        html.querySelector("#inspector table").appendHtml("<tr class='removable'><th>$key</th><td><input id='prop_$key' value='$value' /></td></tr>");
+        html.querySelector("#inspector table tr.first").insertAdjacentHtml("afterEnd","<tr class='removable'><th>$key</th><td><input id='prop_$key' value='$value' /></td></tr>");
         html.querySelector("#prop_$key").onChange.listen((e) {
           
           setter[key]((html.querySelector("#prop_$key") as html.InputElement).value);
