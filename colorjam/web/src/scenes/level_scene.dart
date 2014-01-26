@@ -26,6 +26,7 @@ class LevelScene extends WorldScene{
             ..addSystem(new ColorDecaySystem())
             ..addSystem(colorcollectsystem)
             ..addSystem(new ColorChangeSystem(colorcollectsystem))
+            ..addSystem(new ColorRenderSystem() )
             ..addSystem(new SpriteRenderSystem(container))
             
             ..addManager(new TagManager());

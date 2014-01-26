@@ -70,8 +70,8 @@ class Game {
             },
             {
               "type":"Player",
-              "${PositionComponent.ARG_X}":100,
-              "${PositionComponent.ARG_Y}":100,
+              "${PositionComponent.ARG_X}":130,
+              "${PositionComponent.ARG_Y}":130,
               "color_r":0,
               "color_g":0,
               "color_b":255
@@ -113,6 +113,17 @@ class Game {
               "color_g": 0,
               "color_b": 0,
               "bounciness":0
+            },
+             {
+              "type":"Door",
+              "top":450,
+              "left": 350,
+              "bottom": 500,
+              "right": 400,
+              "color_r": 255,
+              "color_g": 0,
+              "color_b": 0,
+              "bounciness":0
             }
 
 
@@ -125,10 +136,11 @@ class Game {
     
     ///combine artemis and stage
     
-    stage.onEnterFrame.listen(onEnterFrame);
+    
     
     resourceManager.load().then((m) {
       loadLevel("default");
+      stage.onEnterFrame.listen(onEnterFrame);
     });
     
     
