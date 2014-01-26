@@ -235,7 +235,7 @@ class EditorSystem extends EntityProcessingSystem {
         });
       });
       
-      html.querySelector("#inspector").appendHtml("<button id='removeEntity' class='removable'>Remove Item</button>");
+      html.querySelector("#inspector table").insertAdjacentHtml("afterEnd","<button id='removeEntity' class='removable'>Remove Item</button>");
       
       if(type.type == "Player" || type.type == "Goal")
         html.querySelector("#removeEntity").hidden = true;

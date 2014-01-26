@@ -23,12 +23,18 @@
       </div>
       
       <div class="editor" id="inspector">
-        <table>
-          <tr><th width="100">Type:</th><td width="100"><input type="text" id="typeInput" /></td></tr>
-        </table>
+        <div id="upperInspector">
+	        <h4>Inspector:</h4>
+	        <table>
+	          <tr><th width="100">Type:</th><td width="100"><input type="text" id="typeInput" disabled/></td></tr>
+	        </table>
+        </div>
         <br /><br />
-        <textarea rows="15" cols="30" id="textout"></textarea>
-        <button id="recreate">Recreate</button>
+        <div id="lowerInspector">
+	        <h4>Level code:</h4>
+	        <textarea rows="15" cols="30" id="textout"></textarea><br />
+	        <button id="recreate">Recreate</button>
+        </div>
       </div>
     
 	    
