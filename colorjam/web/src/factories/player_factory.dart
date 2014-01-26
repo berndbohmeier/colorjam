@@ -20,9 +20,10 @@ class PlayerFactory extends EntityFactory {
       bitmap.visible = false;
       sprite.width = bitmap.width.round();
       sprite.height = bitmap.height.round();
-      
+      spriteComponent.width = sprite.width;
+      spriteComponent.height = sprite.height;
     }
-
+    
     spriteComponent.bitMaps[0].visible=true;
     PlayerControlComponent pcc = new PlayerControlComponent();
     int counter = 0;

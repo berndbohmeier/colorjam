@@ -45,6 +45,8 @@ class Game {
     resourceManager.addBitmapData("colorchanger2", "images/colorchanger/colorchanger2.png");
     resourceManager.addBitmapData("colorchanger3", "images/colorchanger/colorchanger3.png");
     
+    resourceManager.addBitmapData("door", "images/door/door.png");
+    
     
     levelManager = new LevelManager([
           """{
@@ -112,7 +114,7 @@ class Game {
               {
               "type":"ColorChanger",
               "${PositionComponent.ARG_X}":50,
-              "${PositionComponent.ARG_Y}":480,
+              "${PositionComponent.ARG_Y}":450,
               "color_r":255,
               "color_g":0,
               "color_b":0
@@ -120,7 +122,7 @@ class Game {
               {
               "type":"ColorChanger",
               "${PositionComponent.ARG_X}":300,
-              "${PositionComponent.ARG_Y}":480,
+              "${PositionComponent.ARG_Y}":450,
               "color_r":0,
               "color_g":0,
               "color_b":255
@@ -149,14 +151,11 @@ class Game {
             },
              {
               "type":"Door",
-              "top":450,
-              "left": 350,
-              "bottom": 500,
-              "right": 400,
+              "${PositionComponent.ARG_X}":450,
+              "${PositionComponent.ARG_Y}":450,
               "color_r": 255,
               "color_g": 0,
-              "color_b": 0,
-              "bounciness":0
+              "color_b": 0
             }
 
 
@@ -179,8 +178,8 @@ class Game {
     if(szene!=null)
       szene.deactivate();
     
-    //szene = new EditorScene(mainsprite);
-    szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
+    szene = new EditorScene(mainsprite);
+    //szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
     
     szene.init();
     szene.activate();

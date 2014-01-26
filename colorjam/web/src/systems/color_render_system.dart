@@ -47,9 +47,12 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
       
       if(globalVanishing && color.vanishing && player != null) {
         ColorComponent playerColor = colorMapper.get(player);
-        int alpha = math.max(math.max(math.min(playerColor.r, color.r),
-                                      math.min(playerColor.g, color.g)),
+        int alpha = 255;
+        if(color.alpha){
+          alpha = math.max(math.max(math.min(playerColor.r, color.r),math.min(playerColor.g, color.g)),
                                       math.min(playerColor.b, color.b)).round();
+        }
+                                      
     
         storeColorMatrix(filterMatrixList[1], playerColor.nr, playerColor.ng,
                                               playerColor.nb, alpha);
