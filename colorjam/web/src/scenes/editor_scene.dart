@@ -5,10 +5,10 @@ part of colorjam;
 
 
 class EditorScene extends WorldScene{
-  String level;
   
   
-  EditorScene(this.level, DisplayObjectContainer headcontainer) : super(headcontainer);
+  
+  EditorScene(DisplayObjectContainer headcontainer) : super(headcontainer);
   
   
   void init(){
@@ -37,7 +37,27 @@ class EditorScene extends WorldScene{
       ..addToWorld();*/
     new LevelParser(world)
       ..parse(
-        level
+        """{
+          "entities":[
+            {
+              "type":"Player",
+              "${PositionComponent.ARG_X}":50,
+              "${PositionComponent.ARG_Y}":300,
+              "color_r":255,
+              "color_g":0,
+              "color_b":0
+            },
+            {
+              "type":"Goal",
+              "${PositionComponent.ARG_X}":100,
+              "${PositionComponent.ARG_Y}":300,
+              "color_r":255,
+              "color_g":255,
+              "color_b":255
+            }
+          ]
+        }
+        """
     );
     /*
     Sprite sprite2 = new Sprite();
