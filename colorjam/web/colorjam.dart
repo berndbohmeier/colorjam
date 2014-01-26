@@ -63,6 +63,10 @@ part "src/scenes/level_scene.dart";
 part "src/scenes/world_scene.dart";
 part "src/scenes/editor_scene.dart";
 part "src/scenes/game_over_scene.dart";
+part "src/scenes/main_menu_scene.dart";
+
+// ui
+part "src/ui/button.dart";
 
 ResourceManager resourceManager = new ResourceManager();
 

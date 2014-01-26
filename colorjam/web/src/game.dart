@@ -3,8 +3,6 @@ part of colorjam;
 
 
 class Game {
-  
-  
   Game(this.stage);
   
  
@@ -168,10 +166,13 @@ class Game {
     ///combine artemis and stage
     
     resourceManager.load().then((m) {
+      scenes["mainmenu"] = new MainMenuScene(this, mainsprite);
       scenes["gameoverscene"] = new GameOverScene(this, mainsprite);
       loadEditor();
       //loadLevel(0);
+      switchToSzeneWithInit("mainmenu");
       stage.onEnterFrame.listen(onEnterFrame);
+      mainsprite.onKeyDown.listen((KeyboardEvent e) { if(e.keyCode == html.KeyCode.ESC)  switchToSzene("mainmenu");});
     });
   }
   
