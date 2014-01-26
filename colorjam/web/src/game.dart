@@ -170,7 +170,7 @@ class Game {
     resourceManager.load().then((m) {
       scenes["gameoverscene"] = new GameOverScene(this, mainsprite);
       loadEditor();
-      //loadLevel(0);
+      loadLevel(0);
       stage.onEnterFrame.listen(onEnterFrame);
     });
   }
