@@ -159,7 +159,7 @@ class EditorSystem extends EntityProcessingSystem {
             collider.bounciness = int.parse(s);
           };
           break;
-        case "Player":
+        case "Player": case "Goal":
           values["color_r"] = color.r.toString();
           setter["color_r"] = (s) {
             color.r = int.parse(s);
@@ -301,7 +301,7 @@ class EditorSystem extends EntityProcessingSystem {
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
-      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)")))
+      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)|(Goal)")))
           return;
       sb.writeln("{");
       
@@ -325,11 +325,14 @@ class EditorSystem extends EntityProcessingSystem {
             sb.writeln(cc.toJson() + ",");
           sb.writeln("\"bounciness\":${collider.bounciness}");
           break;
-       case "Player":
+       case "Player": case "Goal":
           
           ColorComponent cc = colorMapper.getSafe(entity);
           PositionComponent pos = posMapper.get(entity);
-          sb.writeln("\"type\":\"Player\",");
+          if(type == "Player")
+            sb.writeln("\"type\":\"Player\",");
+          else
+            sb.writeln("\"type\":\"Goal\",");
           sb.write(pos.toJson());
           if(cc != null)
             sb.writeln(",\n" + cc.toJson());
