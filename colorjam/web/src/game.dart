@@ -48,6 +48,8 @@ class Game {
     
     resourceManager.addBitmapData("goal", "images/gate/gate0.png");
     
+    resourceManager.addBitmapData("logo", "images/logo.png");
+    
     
     levelManager = new LevelManager([
           """{
@@ -169,6 +171,7 @@ class Game {
       scenes["mainmenu"] = new MainMenuScene(this, mainsprite);
       scenes["gameoverscene"] = new GameOverScene(this, mainsprite);
       loadEditor();
+      //loadLevel(0);
       //loadLevel(0);
       switchToSzeneWithInit("mainmenu");
       stage.onEnterFrame.listen(onEnterFrame);
