@@ -15,6 +15,8 @@ class GameOverScene extends Scene {
     buttonLabel = new TextField("Restart", textFormat);
     button = new SimpleButton(buttonLabel, buttonLabel, buttonLabel, buttonLabel);
     button.onMouseClick.listen(restartLevel);
+    
+    button.y = 50;
     container.addChild(textField);
     container.addChild(button);
   }
