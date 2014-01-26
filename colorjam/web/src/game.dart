@@ -170,8 +170,10 @@ class Game {
   
   void loadLevel(int id){
     if(szene!=null)szene.deactivate();
+    
+    //szene = new EditorScene(mainsprite);
     szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
-    //szene = new EditorScene(levelManager.levelMap(levelname), mainsprite);
+    
     szene.init();
     szene.activate();
   }

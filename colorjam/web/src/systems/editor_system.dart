@@ -42,7 +42,9 @@ class EditorSystem extends EntityProcessingSystem {
     html.querySelector("#playbutton").onClick.listen((e) {
       play();
     });
-    
+    html.querySelector("#adddoor").onClick.listen((e) {
+      addDoor();
+    });
     Sprite overAll = new Sprite();
     overAll.width = 10000;
     overAll.height = 10000;
@@ -95,6 +97,7 @@ class EditorSystem extends EntityProcessingSystem {
     
     if(addWallActive) {
       Mouse.cursor = MouseCursor.AUTO;
+      
       html.querySelector("#addwall").className = "";
     } else {
       Mouse.cursor = MouseCursor.BUTTON;
@@ -106,6 +109,12 @@ class EditorSystem extends EntityProcessingSystem {
   void addColorChanger() {
     new EntityFactory.forType("ColorChanger")
       .build(world, {"position.x": 200, "position.y": 200, "color_r": 255, "color_g" : 0, "color_b" : 0})
+      .addToWorld();
+  }
+  
+  void addDoor() {
+    new EntityFactory.forType("Door")
+      .build(world, {"position.x": 200, "position.y": 200, "color_r": 0, "color_g" : 255, "color_b" : 0})
       .addToWorld();
   }
   
@@ -164,7 +173,7 @@ class EditorSystem extends EntityProcessingSystem {
             color.b = int.parse(s);
           };
           break;
-        case "ColorChanger":
+        case "ColorChanger": case "Door":
           values["color_r"] = color.r.toString();
           setter["color_r"] = (s) {
             color.r = int.parse(s);
@@ -212,16 +221,23 @@ class EditorSystem extends EntityProcessingSystem {
       });
       
       html.querySelector("#inspector").appendHtml("<button id='removeEntity' class='removable'>Remove Item</button>");
-      html.querySelector("#removeEntity").onClick.listen((event) {
+      
+      if(type.type == "Player" || type.type == "Goal")
+        html.querySelector("#removeEntity").hidden = true;
+      else {
+        html.querySelector("#removeEntity").hidden = false;
         
-        subscriptionMap[e].cancel();
-        subscriptionMap[e] = null;
-        selectedEntity = null;
-        clickTime = 0;
-        world.deleteEntity(e);
-        entities.remove(e);
-        update();
+        html.querySelector("#removeEntity").onClick.listen((event) {
+          
+          subscriptionMap[e].cancel();
+          subscriptionMap[e] = null;
+          selectedEntity = null;
+          clickTime = 0;
+          world.deleteEntity(e);
+          entities.remove(e);
+          update();
       });
+      }
     });
     
     sprite.onMouseUp.listen((MouseEvent event) {
@@ -285,7 +301,7 @@ class EditorSystem extends EntityProcessingSystem {
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
-      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)")))
+      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)")))
           return;
       sb.writeln("{");
       
@@ -319,10 +335,13 @@ class EditorSystem extends EntityProcessingSystem {
             sb.writeln(",\n" + cc.toJson());
           
           break;
-       case "ColorChanger":
+       case "ColorChanger": case "Door":
            ColorComponent cc = colorMapper.getSafe(entity);
            PositionComponent pos = posMapper.get(entity);
-           sb.writeln("\"type\":\"ColorChanger\",");
+           if(type == "Door")
+             sb.writeln("\"type\":\"Door\",");
+           else
+             sb.writeln("\"type\":\"ColorChanger\",");
            sb.write(pos.toJson());
            if(cc != null)
              sb.writeln(",\n" + cc.toJson());
