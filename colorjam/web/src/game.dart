@@ -71,7 +71,7 @@ class Game {
             {
               "type":"Goal",
               "${PositionComponent.ARG_X}":430,
-              "${PositionComponent.ARG_Y}":130,
+              "${PositionComponent.ARG_Y}":450,
               "color_r":0,
               "color_g":0,
               "color_b":255
@@ -172,12 +172,12 @@ class Game {
   }
   
   void loadNextLevel() {
-    szene.deactivate();
     loadLevel(++currentLevel);
   }
   
   void loadLevel(int id){
-    if(szene!=null)szene.deactivate();
+    if(szene!=null)
+      szene.deactivate();
     
     //szene = new EditorScene(mainsprite);
     szene = new LevelScene(levelManager.getLevel(id), loadNextLevel, mainsprite);
