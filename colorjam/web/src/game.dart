@@ -67,7 +67,15 @@ class Game {
               "color_r":0,
               "color_g":0,
               "color_b":255
-             }
+             },
+            {
+              "type":"Goal",
+              "${PositionComponent.ARG_X}":430,
+              "${PositionComponent.ARG_Y}":130,
+              "color_r":0,
+              "color_g":0,
+              "color_b":255
+            }
           ]}""",
           """{
           "entities":[
