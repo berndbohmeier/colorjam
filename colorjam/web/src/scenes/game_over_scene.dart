@@ -17,7 +17,11 @@ class GameOverScene extends Scene {
     button.onMouseClick.listen(restartLevel);
     container.addChild(textField);
     container.addChild(button);
-    centerInParent(textField);
+  }
+  
+  void activate() {
+    super.activate();
+    centerInParent(container);
   }
   
   void update(num ms) {}
@@ -28,7 +32,12 @@ class GameOverScene extends Scene {
   
   void centerInParent(DisplayObject obj) {
     DisplayObjectContainer parent = obj.parent;
-    obj.x = parent.x + parent.width/2 -obj.width/2;
-    obj.y = parent.y + parent.height/2 -obj.height/2;
+    print("container: ${obj.x}, ${obj.y}, ${obj.width}, ${obj.height}");
+    print("parent: ${parent.x}, ${parent.y}, ${parent.width}, ${parent.height}");
+    
+    obj.x = parent.width/2 -obj.width/2;
+    obj.y = parent.height/2 -obj.height/2;
+    
+    print("container: ${obj.x}, ${obj.y}, ${obj.width}, ${obj.height}");
   }
 }
