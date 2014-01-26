@@ -15,6 +15,7 @@ class EditorSystem extends EntityProcessingSystem {
   EditorSystem(this.container) : super(Aspect.getAspectForAllOf([TypeComponent, PositionComponent, GeometryComponent, SpriteComponent]));
   
   bool addWallActive = false;
+  
   Entity created;
   
   DisplayObjectContainer container;
@@ -34,6 +35,9 @@ class EditorSystem extends EntityProcessingSystem {
     html.querySelector("#addwall").onClick.listen((e) {
       
       addWall();
+    });
+    html.querySelector("#addcolorchanger").onClick.listen((e) {
+      addColorChanger();
     });
     html.querySelector("#playbutton").onClick.listen((e) {
       play();
@@ -71,20 +75,10 @@ class EditorSystem extends EntityProcessingSystem {
     if(addWallActive) {
       if(created == null) {
         Vector clickPosition = new Vector(e.stageX, e.stageY);
-        Sprite sprite = new Sprite();
-        sprite.graphics.rect(0,0,0,0);
-        sprite.graphics.fillColor(0xFFFFFFFF);
-        sprite.graphics.strokeColor(Color.Black, 3);
-        created = world.createEntity()
-            ..addComponent(new TypeComponent("Wall"))
-            ..addComponent(new PositionComponent(clickPosition.x, clickPosition.y))
-            ..addComponent(new VelocityComponent(0,0))
-            ..addComponent(new SpriteComponent(sprite))
-            ..addComponent(new ColorComponent(255,255,255))
-            ..addComponent(new ColliderComponent(bounciness: 0))
-            ..addComponent(new GeometryComponent(300,300))
-            ..addToWorld();
         
+        created = new EntityFactory.forType("Wall")
+          .build(world, {"left": clickPosition.x, "top": clickPosition.y, "right" : clickPosition.x + 30, "bottom" : clickPosition.y + 30, "color_r": 255, "color_g" : 255, "color_b" : 255, "bounciness": 0});
+        created.addToWorld();
       }
     }
   }
@@ -107,6 +101,12 @@ class EditorSystem extends EntityProcessingSystem {
       html.querySelector("#addwall").className = "pressed";
     }
     addWallActive = !addWallActive;
+  }
+  
+  void addColorChanger() {
+    new EntityFactory.forType("ColorChanger")
+      .build(world, {"position.x": 200, "position.y": 200, "color_r": 255, "color_g" : 0, "color_b" : 0})
+      .addToWorld();
   }
   
   void added(Entity e) {
@@ -151,6 +151,20 @@ class EditorSystem extends EntityProcessingSystem {
           };
           break;
         case "Player":
+          values["color_r"] = color.r.toString();
+          setter["color_r"] = (s) {
+            color.r = int.parse(s);
+          };
+          values["color_g"] = color.g.toString();
+          setter["color_g"] = (s) {
+            color.g = int.parse(s);
+          };
+          values["color_b"] = color.b.toString();
+          setter["color_b"] = (s) {
+            color.b = int.parse(s);
+          };
+          break;
+        case "ColorChanger":
           values["color_r"] = color.r.toString();
           setter["color_r"] = (s) {
             color.r = int.parse(s);
@@ -243,6 +257,10 @@ class EditorSystem extends EntityProcessingSystem {
       
       geom.height = (container.stage.mouseY - pos.y).abs() * 2;
       geom.width = (container.stage.mouseX - pos.x).abs() * 2;
+      spriteComp.sprite.width = geom.width;
+      spriteComp.sprite.height = geom.height;
+      spriteComp.sprite.removeCache();
+      spriteComp.sprite.applyCache(-7, -5, spriteComp.sprite.width.round()+7, spriteComp.sprite.height.round()+5);
       
       spriteComp.sprite.graphics.clear();
       spriteComp.sprite.graphics.rect(0,0,geom.width, geom.height);
@@ -267,7 +285,7 @@ class EditorSystem extends EntityProcessingSystem {
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
-      if(!type.contains(new RegExp("(Wall)|(Player)")))
+      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)")))
           return;
       sb.writeln("{");
       
@@ -301,6 +319,14 @@ class EditorSystem extends EntityProcessingSystem {
             sb.writeln(",\n" + cc.toJson());
           
           break;
+       case "ColorChanger":
+           ColorComponent cc = colorMapper.getSafe(entity);
+           PositionComponent pos = posMapper.get(entity);
+           sb.writeln("\"type\":\"ColorChanger\",");
+           sb.write(pos.toJson());
+           if(cc != null)
+             sb.writeln(",\n" + cc.toJson());
+         break;
       }
       sb.writeln("},");
     });
