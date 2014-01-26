@@ -92,3 +92,17 @@ a {
 a:hover {
 	color: #666;
 }
+
+#upperInspector {
+	background-color: #777;
+	padding: 5px;
+	display: block;
+	color: white;
+}
+
+#lowerInspector {
+	background-color: #777;
+	padding: 5px;
+	color: white;
+	display: block;
+}
