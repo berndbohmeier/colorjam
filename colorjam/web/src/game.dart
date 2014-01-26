@@ -703,7 +703,7 @@ class Game {
  ]} 
 
 """,
-/* bernd2 */
+/* bernd2 *//*
 """{"entities":[
 {
 "type":"Player",
@@ -744,7 +744,7 @@ class Game {
 "color_b":0
 }
  ]} 
-""",
+""",*/
 /* bernd3 */
 """
 {"entities":[
