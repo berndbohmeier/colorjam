@@ -175,10 +175,11 @@ class Game {
   }
   
   void loadNextLevel() {
-    loadLevel(++currentLevel);
+    loadLevel(currentLevel+1);
   }
   
   void loadLevel(int id){
+    currentLevel = id;
     loadLevelCode(levelManager.getLevel(id));
   }
   
