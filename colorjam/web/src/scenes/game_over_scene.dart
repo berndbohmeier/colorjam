@@ -8,23 +8,27 @@ class GameOverScene extends Scene {
   LevelScene level;
   
   void init() {
-    super.init();
+    //print("GOS init");
     textField = new TextField("You failed!", textFormat);
-    
-    print("${textField.width} x ${textField.height}");
+    //print("${textField.width} x ${textField.height}");
     
     buttonLabel = new TextField("Restart", textFormat);
     button = new SimpleButton(buttonLabel, buttonLabel, buttonLabel, buttonLabel);
     button.onMouseClick.listen(restartLevel);
     container.addChild(textField);
     container.addChild(button);
+    centerInParent(textField);
   }
   
-  void update(num ms) {
-    super.update(ms);
-  }
+  void update(num ms) {}
   
   void restartLevel(MouseEvent e) {
     game.restartLevel();
+  }
+  
+  void centerInParent(DisplayObject obj) {
+    DisplayObjectContainer parent = obj.parent;
+    obj.x = parent.x + parent.width/2 -obj.width/2;
+    obj.y = parent.y + parent.height/2 -obj.height/2;
   }
 }

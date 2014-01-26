@@ -34,7 +34,7 @@ class LevelScene extends WorldScene{
   }
   
   void onGameOver() {
-    game.switchToSzene("gameoverscene");
+    game.switchToSzeneWithInit("gameoverscene");
   }
   
 }
