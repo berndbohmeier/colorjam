@@ -53,6 +53,7 @@ class PlayerFactory extends EntityFactory {
     
     Entity entity = world.createEntity()
         ..addComponent(new TypeComponent("Player"))
+        ..addComponent(new PlayerComponent())
         ..addComponent(new PositionComponent.fromJson(args))
         ..addComponent(new VelocityComponent(0, 0))
         ..addComponent(new ColorComponent.fromJson(args))

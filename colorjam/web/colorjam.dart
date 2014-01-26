@@ -52,6 +52,8 @@ part "src/systems/color_decay_system.dart";
 part "src/systems/remove_entities_system.dart";
 part "src/systems/color_change_system.dart";
 part "src/systems/goal_system.dart";
+part "src/systems/player_collect_system.dart";
+part "src/systems/color_collect_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";

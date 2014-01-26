@@ -19,6 +19,7 @@ class GoalSystem extends InteractionSystem {
        (goalColor.ng == 0 || playerColor.g > 0) &&
        (goalColor.nb == 0 || playerColor.b > 0)) {
       
+      // reached goal
       callback();
     }
   }
