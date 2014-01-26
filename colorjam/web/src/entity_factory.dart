@@ -7,7 +7,8 @@ class EntityFactory {
     "Wall" : new WallFactory._(),
     "Player" : new PlayerFactory._(),
     "ColorChanger" : new ColorChangerFactory._(),
-    "Door" : new DoorFactory._()
+    "Door" : new DoorFactory._(),
+    "Goal" : new GoalFactory._()
   };
   
   EntityFactory._() {} 
