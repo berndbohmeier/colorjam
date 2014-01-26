@@ -181,7 +181,13 @@ class Game {
   
   void loadLevel(int id){
     currentLevel = id;
-    loadLevelCode(levelManager.getLevel(id));
+    if(scenes["level"]!=null){
+      scenes["level"].deactivate();
+    }
+    scenes["level"] = new LevelScene(levelManager.getLevel(id), this, mainsprite,false);
+    
+    scenes["level"].init();
+    switchToSzene("level");
   }
   
   
@@ -189,7 +195,7 @@ class Game {
     if(scenes["level"]!=null){
       scenes["level"].deactivate();
     }
-    scenes["level"] = new LevelScene(code, this, mainsprite);
+    scenes["level"] = new LevelScene(code, this, mainsprite,true);
     
     scenes["level"].init();
     switchToSzene("level");
