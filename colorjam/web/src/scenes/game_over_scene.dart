@@ -1,7 +1,7 @@
 part of colorjam;
 
 class GameOverScene extends Scene {
-  GameOverScene(Sprite headContainer, this.level) : super(headContainer);
+  GameOverScene(Game game, Sprite headContainer) : super(game, headContainer);
   TextFormat textFormat = new TextFormat("Arial", 20, Color.Black);
   TextField textField, buttonLabel;
   SimpleButton button = new SimpleButton();
@@ -25,8 +25,6 @@ class GameOverScene extends Scene {
   }
   
   void restartLevel(MouseEvent e) {
-    deactivate();
-    level.init();
-    level.activate();
+    game.restartLevel();
   }
 }

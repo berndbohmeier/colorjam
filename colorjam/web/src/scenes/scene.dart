@@ -15,7 +15,6 @@ abstract class Scene{
   
   
   void activate(){
-    print("activate");
     headcontainer.addChild(container);
   }
   
