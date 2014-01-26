@@ -5,7 +5,7 @@ class LevelScene extends WorldScene{
   loadNextScene callback;
   String level;
   
-  LevelScene(this.level, this.callback, DisplayObjectContainer headcontainer) : super(headcontainer);
+  LevelScene(this.level, this.callback, Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
   
   void init(){
     super.init();

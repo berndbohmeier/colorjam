@@ -8,14 +8,14 @@ class EditorScene extends WorldScene{
   
   
   
-  EditorScene(DisplayObjectContainer headcontainer) : super(headcontainer);
+  EditorScene(Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
   
   
   void init(){
     super.init();
     ///dartemis
     world
-            ..addSystem(new EditorSystem(container))
+            ..addSystem(new EditorSystem(game, container))
             ..addSystem(new ColorRenderSystem(globalVanishing: false) )
             ..addSystem(new SpriteRenderSystem(container))
             ..addManager(new TagManager());

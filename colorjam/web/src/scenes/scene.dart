@@ -5,11 +5,11 @@ part of colorjam;
 
 abstract class Scene{
   
-  
+  Game game;
   DisplayObjectContainer headcontainer;
   DisplayObjectContainer container;
   
-  Scene(this.headcontainer){
+  Scene(this.game, this.headcontainer){
     container = new Sprite();
   }
   
