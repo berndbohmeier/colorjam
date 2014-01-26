@@ -9,7 +9,7 @@ class PlayerMovementSystem extends EntityProcessingSystem{
   PlayerMovementSystem() : super(Aspect.getAspectForAllOf([VelocityComponent, PlayerControlComponent, PhysicsComponent]));
   
   
-  num jumpspeed = 0.4;
+  num jumpspeed = 0.7;
   num runspeed = 0.3;
   
   

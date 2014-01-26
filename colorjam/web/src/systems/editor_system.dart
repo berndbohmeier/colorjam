@@ -75,6 +75,8 @@ class EditorSystem extends EntityProcessingSystem {
   
   void play() {
     game.loadLevelCode(toJson());
+    html.Element canvas = html.querySelector('#stage');
+    canvas.focus();
   }
   
   void recreate() {

@@ -1,7 +1,7 @@
 part of colorjam;
 
 class PhysicsSystem extends EntityProcessingSystem {
-  Vector _gravity = new Vector(0, 0.000981);
+  Vector _gravity = new Vector(0, 0.001981);
   
   ComponentMapper<PositionComponent> posMapper;
   ComponentMapper<VelocityComponent> velMapper;
