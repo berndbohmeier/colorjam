@@ -401,17 +401,8 @@ class Game {
 "bounciness":0
 }
  ]} """,
- /* sebi2 */
+ /* sebi2 *//*
  """{"entities":[
-{
-"type":"Player",
-"position.x":50,
-"position.y":300,
-"color_r":255,
-"color_g":0,
-"color_b":0
-}
-,{"entities":[
 {
 "type":"Player",
 "position.x":50,
@@ -488,7 +479,7 @@ class Game {
 }
  ]} 
 
-""",
+""",*/
 /* sebi3 */
 """{"entities":[
 {
