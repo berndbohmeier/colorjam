@@ -8,7 +8,7 @@ abstract class WorldScene extends Scene{
   World world;
   
   
-  WorldScene(DisplayObjectContainer headcontainer) : super(headcontainer);
+  WorldScene(Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
   
   void init(){
     world = new World();

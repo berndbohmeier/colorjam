@@ -10,17 +10,19 @@ class EditorSystem extends EntityProcessingSystem {
   ComponentMapper<ColliderComponent> colliderMapper;
   ComponentMapper<VelocityComponent> velMapper;
   
+  
+  Game game;
+  
   Map<Entity, EventStreamSubscription> subscriptionMap = new Map<Entity, EventStreamSubscription>();
   Entity selectedEntity;
-  EditorSystem(this.container) : super(Aspect.getAspectForAllOf([TypeComponent, PositionComponent, GeometryComponent, SpriteComponent]));
+  EditorSystem(this.game, this.container) : super(Aspect.getAspectForAllOf([TypeComponent, PositionComponent, GeometryComponent, SpriteComponent]));
   
   bool addWallActive = false;
   
   Entity created;
   
   DisplayObjectContainer container;
-  
-  bool inGame = false;
+ 
   
   int clickTime = 0;
   
@@ -65,8 +67,7 @@ class EditorSystem extends EntityProcessingSystem {
   }
   
   void play() {
-    inGame = !inGame;
-    
+    game.loadLevelCode(toJson());
   }
   
   void update() {
@@ -202,11 +203,11 @@ class EditorSystem extends EntityProcessingSystem {
           };
           values["velocity_x"] = vel.vx.toString();
           setter["velocity_x"] = (s) {
-            vel.vx = num.parse(s);
+            vel.vx = double.parse(s);
           };
           values["velocity_y"] = vel.vy.toString();
           setter["velocity_y"] = (s) {
-            vel.vy = num.parse(s);
+            vel.vy = double.parse(s);
           };
           break;
       }
@@ -300,6 +301,7 @@ class EditorSystem extends EntityProcessingSystem {
   String toJson() {
     StringBuffer sb = new StringBuffer();
 
+    sb.writeln("{)
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;

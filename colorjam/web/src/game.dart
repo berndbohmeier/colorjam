@@ -188,7 +188,7 @@ class Game {
     if(scenes["level"]!=null){
       scenes["level"].deactivate();
     }
-    scenes["level"] = new LevelScene(code, loadNextLevel, mainsprite);
+    scenes["level"] = new LevelScene(code, loadNextLevel,this, mainsprite);
     
     scenes["level"].init();
     switchToSzene("level");
@@ -196,7 +196,7 @@ class Game {
   
   void loadEditor(){
     if(scenes["editor"]==null){
-      scenes["editor"] = new EditorScene(mainsprite);
+      scenes["editor"] = new EditorScene(this,mainsprite);
       scenes["editor"].init();
     }
       
