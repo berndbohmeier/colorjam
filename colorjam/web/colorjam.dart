@@ -73,7 +73,7 @@ ResourceManager resourceManager = new ResourceManager();
 void main() {
 // setup the Stage and RenderLoop 
   html.Element canvas = html.querySelector('#stage');
-  Stage stage = new Stage('myStage', canvas);
+  Stage stage = new Stage( canvas,  webGL:false, frameRate: 60);
   
   canvas.focus();
 

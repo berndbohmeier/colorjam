@@ -10,16 +10,16 @@ class EditorScene extends WorldScene{
       "entities":[
       {
       "type":"Player",
-      "${PositionComponent.ARG_X}":50,
-  "${PositionComponent.ARG_Y}":300,
+      "${PositionComponent.ARG_X}":300,
+  "${PositionComponent.ARG_Y}":800,
   "color_r":255,
   "color_g":0,
   "color_b":0
   },
   {
   "type":"Goal",
-  "${PositionComponent.ARG_X}":100,
-  "${PositionComponent.ARG_Y}":300,
+  "${PositionComponent.ARG_X}":400,
+  "${PositionComponent.ARG_Y}":800,
   "color_r":0,
   "color_g":0,
   "color_b":255
@@ -95,6 +95,8 @@ class EditorScene extends WorldScene{
     super.activate();
     html.querySelectorAll(".editor").forEach((e) => (e as html.Element).style.visibility = "visible");
     html.querySelector("#sample_container_id").style.overflow = "scroll";
+    html.querySelector("#sample_container_id").scrollTop = 800;
+    html.querySelector("#sample_container_id").scrollLeft = 0;
   }
   
   void deactivate() {
