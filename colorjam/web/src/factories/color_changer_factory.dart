@@ -25,6 +25,7 @@ class ColorChangerFactory extends EntityFactory {
     
     ColorComponent cp = new ColorComponent.fromJson(args);
     cp.vanishing = false;
+    cp.alpha = false;
     
     Entity entity = world.createEntity()
         ..addComponent(new TypeComponent("ColorChanger"))

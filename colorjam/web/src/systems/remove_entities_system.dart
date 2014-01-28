@@ -1,7 +1,7 @@
 part of colorjam;
 
 class RemoveEntitiesSystem extends IntervalEntityProcessingSystem {
-  static const MAX_Y = 1000;
+  static const MAX_Y = 1300;
   
   ComponentMapper<PositionComponent> _posMapper;
   RemoveEntitiesSystem() : super(16, Aspect.getAspectForAllOf([PositionComponent]));

@@ -23,6 +23,8 @@ class EditorSystem extends EntityProcessingSystem {
   
   DisplayObjectContainer container;
   
+  html.DivElement div;
+  
   html.TextAreaElement textArea;
  
   
@@ -52,14 +54,15 @@ class EditorSystem extends EntityProcessingSystem {
     html.querySelector("#recreate").onClick.listen((e) {
       recreate();
     });
+    div = html.querySelector("#sample_container_id");
     
     textArea = html.querySelector("#textout");
     Sprite overAll = new Sprite();
-    overAll.width = 10000;
-    overAll.height = 10000;
-    overAll.x = -5000;
-    overAll.y = -5000;
-    overAll.graphics.rect(0, 0, 10000, 10000);
+    overAll.width = 2000;
+    overAll.height = 2000;
+    overAll.x = 0;
+    overAll.y = 0;
+    overAll.graphics.rect(0, 0, 2000, 2000);
     overAll.graphics.fillColor(0xFF);
     container.addChild(overAll);
     
@@ -125,13 +128,13 @@ class EditorSystem extends EntityProcessingSystem {
   
   void addColorChanger() {
     new EntityFactory.forType("ColorChanger")
-      .build(world, {"position.x": 200, "position.y": 200, "color_r": 255, "color_g" : 0, "color_b" : 0})
+      .build(world, {"position.x": div.scrollLeft+ 200, "position.y": div.scrollTop + 200, "color_r": 255, "color_g" : 0, "color_b" : 0})
       .addToWorld();
   }
   
   void addDoor() {
     new EntityFactory.forType("Door")
-      .build(world, {"position.x": 200, "position.y": 200, "color_r": 0, "color_g" : 255, "color_b" : 0})
+      .build(world, {"position.x": div.scrollLeft+ 200, "position.y": div.scrollTop + 200, "color_r": 0, "color_g" : 255, "color_b" : 0})
       .addToWorld();
   }
   

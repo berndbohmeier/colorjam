@@ -18,7 +18,7 @@ class WallFactory extends EntityFactory {
     num bottom = args[ARG_BOTTOM] as num;
     Sprite sprite = new Sprite();
     sprite.graphics.rect(0,0,right - left, bottom - top);
-    sprite.graphics.strokeColor(Color.Black, 3);
+    sprite.graphics.strokeColor(Color.Black, 2);
     sprite.graphics.fillColor(0xFFFFFFFF);
     Entity entity = world.createEntity()
         ..addComponent(new TypeComponent("Wall"))

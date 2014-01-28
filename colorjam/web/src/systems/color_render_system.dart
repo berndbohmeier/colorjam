@@ -25,7 +25,7 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
     
     
     //sprite.removeCache();
-    sprite.applyCache(-5, -5, sprite.width.round()+5, sprite.height.round()+5);
+    sprite.applyCache(-2, -2, sprite.width.round()+4, sprite.height.round()+4 ,debugBorder:false);
   }
   
   void removed(Entity entity){
@@ -45,23 +45,37 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
       else
         spr.sprite.filters[0] = new ColorMatrixFilter(filterMatrixList[0]);
       
-      if(globalVanishing && color.vanishing && player != null) {
+      if(player != null && globalVanishing){
         ColorComponent playerColor = colorMapper.get(player);
+        
         int alpha = 255;
         if(color.alpha){
           alpha = math.max(math.max(math.min(playerColor.r, color.r),math.min(playerColor.g, color.g)),
-                                      math.min(playerColor.b, color.b)).round();
+              math.min(playerColor.b, color.b)).round();
+        }else{
+          alpha = 255;//math.max(playerColor.r, math.max(playerColor.g,playerColor.b)).round();
         }
-                                      
-    
-        storeColorMatrix(filterMatrixList[1], playerColor.nr, playerColor.ng,
-                                              playerColor.nb, alpha);
         
+        if(color.vanishing) {
+          
+          storeColorMatrix(filterMatrixList[1], playerColor.nr, playerColor.ng,
+              playerColor.nb, alpha);
+        }else{
+          storeAlphaMatrixMatrix(filterMatrixList[1], alpha);
+        }
         if(spr.sprite.filters.length < 2)
           spr.sprite.filters.add(new ColorMatrixFilter(filterMatrixList[1]));
         else
           spr.sprite.filters[1] = new ColorMatrixFilter(filterMatrixList[1]);
+      
+      
+      
+      
       }
+      
+      
+      
+     
 
     spr.sprite.refreshCache();
     
@@ -73,4 +87,11 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
     matrix[12] = b/255;
     matrix[18] = a/255;
   }
+  List<num> storeAlphaMatrixMatrix(List<num> matrix, int a) {
+    matrix[0] = 1;
+    matrix[6] = 1;
+    matrix[12] = 1;
+    matrix[18] = a/255;
+  }
+  
 }
