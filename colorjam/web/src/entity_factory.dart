@@ -1,17 +1,11 @@
 part of colorjam;
 
 class EntityFactory {
-  static final Map<String, EntityFactory> _factories = {
-    "Entity" : new EntityFactory._(),
-    "Circle" : new CircleFactory._(),
-    "Wall" : new WallFactory._(),
-    "Player" : new PlayerFactory._(),
-    "ColorChanger" : new ColorChangerFactory._(),
-    "Door" : new DoorFactory._(),
-    "Goal" : new GoalFactory._()
-  };
+  static Map<String, EntityFactory> _factories;
   
-  EntityFactory._() {} 
+  ResourceManager resourceManager;
+  
+  EntityFactory._(this.resourceManager) {} 
   /**
    *  Returns an EntityFactory that can
    *  create entities of type entityType.
@@ -31,4 +25,16 @@ class EntityFactory {
    */
   Entity build(World world, Map<String, dynamic> args)
     => world.createEntity();
+  
+  static void createFactories(ResourceManager rm){
+    _factories =  {
+      "Entity" : new EntityFactory._(rm),
+      "Circle" : new CircleFactory._(rm),
+      "Wall" : new WallFactory._(rm),
+      "Player" : new PlayerFactory._(rm),
+      "ColorChanger" : new ColorChangerFactory._(rm),
+      "Door" : new DoorFactory._(rm),
+      "Goal" : new GoalFactory._(rm)
+    };
+  }
 }

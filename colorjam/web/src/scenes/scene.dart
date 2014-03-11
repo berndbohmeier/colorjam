@@ -10,10 +10,14 @@ abstract class Scene{
   DisplayObjectContainer container;
   
   Scene(this.game, this.headcontainer){
-    container = new Sprite();
   }
   
   
+  /**
+   * is called when switching to this scene
+   * activate all stuff this szene need when it is displayed
+   * dont forget to call super.activate() when overriding this method
+   */
   void activate(){
     if(active)
       return;
@@ -22,6 +26,11 @@ abstract class Scene{
     active = true;
   }
   
+  /**
+   * is called when switching to another scene
+   * deactivate all stuff you activated in activate()
+   * dont forget to call super.deactivate() when overriding this method
+   */
   void deactivate(){
     if(!active)
       return;
@@ -33,7 +42,9 @@ abstract class Scene{
   /**
    * add elements to the szene
    */
-  void init();
+  void init(){
+    container = new Sprite();
+  }
   
   
   /**

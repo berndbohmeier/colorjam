@@ -8,7 +8,7 @@ class WallFactory extends EntityFactory {
   static const String ARG_BOUNCINESS = "bounciness";
 
   
-  WallFactory._() : super._();
+  WallFactory._(ResourceManager resourceManager) : super._(resourceManager);
   
   Entity build(World world, Map<String, dynamic> args) {
     ColorComponent colorComp = new ColorComponent.fromJson(args);
@@ -16,10 +16,12 @@ class WallFactory extends EntityFactory {
     num left = args[ARG_LEFT] as num;
     num right = args[ARG_RIGHT] as num;
     num bottom = args[ARG_BOTTOM] as num;
-    Sprite sprite = new Sprite();
-    sprite.graphics.rect(0,0,right - left, bottom - top);
-    sprite.graphics.strokeColor(Color.Black, 2);
-    sprite.graphics.fillColor(0xFFFFFFFF);
+    
+    
+    Sprite sprite = BitmapHelper.createRectangle((right-left).round(), (bottom-top).round());
+    
+    
+    
     Entity entity = world.createEntity()
         ..addComponent(new TypeComponent("Wall"))
         ..addComponent(new PositionComponent(left + (right-left)/2, top + (bottom-top)/2))
@@ -32,3 +34,5 @@ class WallFactory extends EntityFactory {
     return entity;
   }
 }
+
+

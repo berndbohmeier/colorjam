@@ -18,21 +18,26 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
     geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
+    
+    
+   
   }
   
   
   void inserted(Entity entity){
     
-    Sprite sprite = spriteMapper.get(entity).sprite;
+    DisplayObject dbo = spriteMapper.get(entity).dbo;
     
     
-    dbc.addChild(sprite);
+    if(dbo.parent==null){
+      dbc.addChild(dbo);
+    }
     processEntity(entity);
   }
   
   void removed(Entity entity){
-    Sprite sprite = spriteMapper.get(entity).sprite;
-    dbc.removeChild(sprite);
+    DisplayObject dbo = spriteMapper.get(entity).dbo;
+    dbo.removeFromParent();
   }
   
   void processEntity(Entity entity){
@@ -40,8 +45,13 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
     SpriteComponent spr = spriteMapper.get(entity);
     GeometryComponent geom = geomMapper.get(entity);
     
-    spr.sprite.x = pos.x - spr.width/2;
-    spr.sprite.y = pos.y - spr.height/2;
+    
+    if(spr.dbo is Animatable){
+      (spr.dbo as Animatable).advanceTime(world.delta/1000.0);
+    }
+    
+    spr.dbo.x = pos.x - spr.width/2;
+    spr.dbo.y = pos.y - spr.height/2;
     
   }
 }

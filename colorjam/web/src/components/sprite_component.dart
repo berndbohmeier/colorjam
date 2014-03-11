@@ -5,10 +5,15 @@ class SpriteComponent extends Component {
   num height = 0;
   
   
-  Sprite sprite;
-  List<Bitmap> bitMaps; 
-  SpriteComponent(this.sprite){
-    width = sprite.width;
-    height = sprite.height;
+
+  DisplayObject dbo;
+  
+  
+  
+  SpriteComponent(this.dbo){
+    
+    width = dbo.width;
+    height = dbo.height;
   }
+  
 }

@@ -2,4 +2,5 @@ name: colorjam
 dependencies:
   browser: any
   dartemis: any
-  stagexl: any
+  stagexl:
+    git: https://github.com/bp74/StageXL.git

@@ -5,27 +5,37 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
   ComponentMapper<SpriteComponent> spriteMapper;
   ComponentMapper<ColorComponent> colorMapper;
   
+  
   bool globalVanishing = true;
   
-  ColorRenderSystem({this.globalVanishing : true}) : super(100, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
+  
+  bool effectsOn = true;
+  
+  ColorRenderSystem({this.globalVanishing : true}) : super(16, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
   
   List<List<num>> filterMatrixList = [
-                    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0],
-                    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0]];
+                    [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+                    [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]];
+  List<num> offset = [0,0,0,0]; 
   
   void initialize() {
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
     colorMapper = new ComponentMapper<ColorComponent>(ColorComponent, world);
+   
   }
   
   
   void inserted(Entity entity){
     
-    Sprite sprite = spriteMapper.get(entity).sprite;
+    //Sprite sprite = spriteMapper.get(entity).sprite;
     
     
     //sprite.removeCache();
-    sprite.applyCache(-2, -2, sprite.width.round()+4, sprite.height.round()+4 ,debugBorder:false);
+    //sprite.applyCache(-2, -2, sprite.width.round()+4, sprite.height.round()+4 ,debugBorder:false);
+    
+    
+    
+    
   }
   
   void removed(Entity entity){
@@ -34,16 +44,18 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
   void processEntity(Entity entity){
     SpriteComponent spr = spriteMapper.get(entity);
     
+    
+    
     ColorComponent color = colorMapper.get(entity);
     Entity player = (world.getManager(TagManager) as TagManager)
                         .getEntity(PlayerFactory.TAG_PLAYER);
     
       storeColorMatrix(filterMatrixList[0], color.nr,color.ng, color.nb, 255);
       
-      if(spr.sprite.filters.isEmpty)
-        spr.sprite.filters.add(new ColorMatrixFilter(filterMatrixList[0]));
+      if(spr.dbo.filters.isEmpty)
+        spr.dbo.filters.add(new ColorMatrixFilter(filterMatrixList[0],offset));
       else
-        spr.sprite.filters[0] = new ColorMatrixFilter(filterMatrixList[0]);
+        spr.dbo.filters[0] = new ColorMatrixFilter(filterMatrixList[0],offset);
       
       if(player != null && globalVanishing){
         ColorComponent playerColor = colorMapper.get(player);
@@ -63,10 +75,10 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
         }else{
           storeAlphaMatrixMatrix(filterMatrixList[1], alpha);
         }
-        if(spr.sprite.filters.length < 2)
-          spr.sprite.filters.add(new ColorMatrixFilter(filterMatrixList[1]));
+        if(spr.dbo.filters.length < 2)
+          spr.dbo.filters.add(new ColorMatrixFilter(filterMatrixList[1],offset));
         else
-          spr.sprite.filters[1] = new ColorMatrixFilter(filterMatrixList[1]);
+          spr.dbo.filters[1] = new ColorMatrixFilter(filterMatrixList[1],offset);
       
       
       
@@ -75,23 +87,25 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
       
       
       
+      
+      
      
 
-    spr.sprite.refreshCache();
+    //spr.sprite.refreshCache();
     
   }
   
   List<num> storeColorMatrix(List<num> matrix, int r, int g, int b, int a) {
     matrix[0] = r/255;
-    matrix[6] = g/255;
-    matrix[12] = b/255;
-    matrix[18] = a/255;
+    matrix[5] = g/255;
+    matrix[10] = b/255;
+    matrix[15] = a/255;
   }
   List<num> storeAlphaMatrixMatrix(List<num> matrix, int a) {
     matrix[0] = 1;
-    matrix[6] = 1;
-    matrix[12] = 1;
-    matrix[18] = a/255;
+    matrix[5] = 1;
+    matrix[10] = 1;
+    matrix[15] = a/255;
   }
   
 }

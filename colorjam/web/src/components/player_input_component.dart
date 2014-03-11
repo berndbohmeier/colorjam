@@ -9,7 +9,8 @@ class PlayerInputComponent extends Component{
   
   int leftCode;
   int rightCode;
-  int jumpCode;
+  int jumpCode1;
+  int jumpCode2;
   
-  PlayerInputComponent(this.leftCode, this.rightCode,this.jumpCode);
+  PlayerInputComponent(this.leftCode, this.rightCode,this.jumpCode1, this.jumpCode2);
 }

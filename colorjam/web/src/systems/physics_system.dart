@@ -26,8 +26,9 @@ class PhysicsSystem extends EntityProcessingSystem {
   }
   
   void processEntity(Entity e) {
+    physicsMapper.get(e).onFloor = false;
     VelocityComponent vel = velMapper.get(e);
-    vel.velocity += _gravity.scale(world.delta);
+    
     
     PositionComponent pos = posMapper.get(e);
     GeometryComponent geom = geomMapper.get(e);
@@ -40,6 +41,7 @@ class PhysicsSystem extends EntityProcessingSystem {
     
     if(colliderSystem.entities != null) {
       colliderSystem.entities.forEach((other) {
+        
         
         // check color
         ColorComponent otherColor = colorMapper.get(other);
@@ -103,15 +105,24 @@ class PhysicsSystem extends EntityProcessingSystem {
           if(distY != 0) {
             if(vel.vy.abs() < 0.001)
               vel.vy = 0;
-            vel.vy *= -1 * collMapper.get(other).bounciness;
+            if(vel.vy*distY>0){
+              vel.vy *= -1 * collMapper.get(other).bounciness;
+            }
+           
           }
           if(distX != 0) {
             if(vel.vx.abs() < 0.001)
               vel.vx = 0;
-            vel.vx *= -1 * collMapper.get(other).bounciness;
+            if(vel.vx*distX>0){
+              vel.vx *= -1 * collMapper.get(other).bounciness;
+            }
+            
           }
         }
       });
+      
+      
     }
+    vel.velocity += _gravity.scale(world.delta);
   }
 }

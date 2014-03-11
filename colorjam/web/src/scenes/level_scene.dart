@@ -1,6 +1,8 @@
 part of colorjam;
 
 typedef void loadNextScene();
+
+
 class LevelScene extends WorldScene{
   String level;
   bool toEditor = false;
@@ -25,19 +27,20 @@ class LevelScene extends WorldScene{
       ..addSystem(new GoalSystem(playerCollectSystem, toEditor?game.loadEditor:game.loadNextLevel))
       ..addSystem(new GameOverSystem(onGameOver))
       ..addSystem(new ColorRenderSystem())
+      ..addSystem(new PlayerAnimationRenderSystem())
       ..addSystem(new ScrollSystem(container))
       ..addSystem(new SpriteRenderSystem(container))
 
       ..addManager(new TagManager());
     world.initialize();
-    new LevelParser(world).parse(level);
+    new LevelParser(world, game.resourceManager).parse(level);
   }
   
   void onGameOver() {
     if(toEditor){
       game.loadEditor();
     }else{
-      game.switchToSzeneWithInit("gameoverscene");
+      game.switchToSzene("gameoverscene");
     }
   }
   
