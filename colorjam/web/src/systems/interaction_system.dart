@@ -16,17 +16,18 @@ abstract class InteractionSystem extends EntitySystem{
   }
   
   
-  void processEntities(ReadOnlyBag<Entity> entities){
+  void processEntities(Iterable<Entity> entities){
     entities.forEach((entity1){
       
       PositionComponent pos1 = posMapper.get(entity1);
       GeometryComponent geom1 = geomMapper.get(entity1);
       
+     
       Rectangle rect1 = new Rectangle(pos1.x - geom1.width/2,
           pos1.y - geom1.height/2,
           geom1.width,
           geom1.height);
-      
+   
       system.entities.forEach((entity2){
         // check for collision
         PositionComponent pos2 = posMapper.get(entity2);

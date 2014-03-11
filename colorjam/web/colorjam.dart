@@ -11,6 +11,7 @@ part "src/entity_factory.dart";
 part "src/game.dart";
 part "src/level_parser.dart";
 part "src/level_manager.dart";
+part "src/bitmap_helper.dart";
 
 // Components
 part "src/components/position_component.dart";
@@ -56,6 +57,7 @@ part "src/systems/player_collect_system.dart";
 part "src/systems/color_collect_system.dart";
 part "src/systems/scroll_system.dart";
 part "src/systems/game_over_system.dart";
+part "src/systems/player_animation_render_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";
@@ -68,12 +70,12 @@ part "src/scenes/main_menu_scene.dart";
 // ui
 part "src/ui/button.dart";
 
-ResourceManager resourceManager = new ResourceManager();
+
 
 void main() {
-// setup the Stage and RenderLoop 
+  // setup the Stage and RenderLoop 
   html.Element canvas = html.querySelector('#stage');
-  Stage stage = new Stage( canvas,  webGL:false, frameRate: 60);
+  Stage stage = new Stage( canvas,  webGL:true, frameRate: 60);
   
   canvas.focus();
 

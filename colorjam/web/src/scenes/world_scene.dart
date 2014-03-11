@@ -8,9 +8,11 @@ abstract class WorldScene extends Scene{
   World world;
   
   
-  WorldScene(Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
+  
+  WorldScene(Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer)  ;
   
   void init(){
+    super.init();
     world = new World();
     world.addSystem(new RemoveEntitiesSystem());
   }

@@ -2,15 +2,10 @@ part of colorjam;
 
 class GoalFactory extends EntityFactory {
   static const WIDTH = 60, HEIGHT = 60;
-  GoalFactory._() : super._() {}
+  GoalFactory._(ResourceManager resourceManager) : super._(resourceManager) {}
   
   Entity build(World world, Map<String, dynamic> args) {
-    Sprite sprite = new Sprite();
-
-    Bitmap bitmap = new Bitmap(resourceManager.getBitmapData("goal"));
-    sprite.addChild(bitmap);
-    sprite.width = bitmap.width.round();
-    sprite.height = bitmap.height.round();
+    
     
     ColorComponent cp = new ColorComponent.fromJson(args);
     cp.alpha = false;
@@ -21,7 +16,7 @@ class GoalFactory extends EntityFactory {
       ..addComponent(cp)
       ..addComponent(new GoalComponent())
       ..addComponent(new GeometryComponent(WIDTH, HEIGHT))
-      ..addComponent(new SpriteComponent(sprite));
+      ..addComponent(new SpriteComponent(new Bitmap(resourceManager.getBitmapData("goal"))));
     
     return e;
   }

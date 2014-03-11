@@ -47,6 +47,5 @@ class PlayerMovementSystem extends EntityProcessingSystem{
       vel.vy = -jumpspeed;
       con.jump = false;
     }
-    phys.onFloor = false;
   }
 }

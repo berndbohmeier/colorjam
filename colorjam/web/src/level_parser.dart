@@ -2,7 +2,10 @@ part of colorjam;
 
 class LevelParser {
   World world;
-  LevelParser(this.world);
+  ResourceManager resourceManager;
+  LevelParser(this.world, this.resourceManager){
+    EntityFactory.createFactories(resourceManager);
+  }
   
   /**
    * Create entities from a json object and

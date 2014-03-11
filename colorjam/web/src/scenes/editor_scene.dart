@@ -60,7 +60,7 @@ class EditorScene extends WorldScene{
       ..addComponent(new PhysicsComponent())
       ..addComponent(new GeometryComponent(20, 20))
       ..addToWorld();*/
-    new LevelParser(world)
+    new LevelParser(world,game.resourceManager)
       ..parse(levelcode);
     /*
     Sprite sprite2 = new Sprite();

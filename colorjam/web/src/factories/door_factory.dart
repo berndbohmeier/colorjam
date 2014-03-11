@@ -3,14 +3,12 @@ part of colorjam;
 class DoorFactory extends EntityFactory {
 
   
-  DoorFactory._() : super._();
+  DoorFactory._(ResourceManager resourceManager) : super._(resourceManager);
   
   Entity build(World world, Map<String, dynamic> args) {
-    Sprite sprite = new Sprite();
-    Bitmap bitmap = new Bitmap(resourceManager.getBitmapData("door"));
-    sprite.addChild(bitmap);
-    sprite.width = bitmap.width.round();
-    sprite.height = bitmap.height.round();
+    
+    
+    
     
     ColorComponent cp = new ColorComponent.fromJson(args);
     cp.alpha = false;
@@ -18,10 +16,10 @@ class DoorFactory extends EntityFactory {
         ..addComponent(new TypeComponent("Door"))
         ..addComponent(new PositionComponent.fromJson(args))
         ..addComponent(new VelocityComponent(0,0))
-        ..addComponent(new SpriteComponent(sprite))
+        ..addComponent(new SpriteComponent(new Bitmap(resourceManager.getBitmapData("door"))))
         ..addComponent(cp)
         ..addComponent(new ColliderComponent.reversed())
-        ..addComponent(new GeometryComponent(30, sprite.height));
+        ..addComponent(new GeometryComponent(30, 100));
     
     return entity;
   }

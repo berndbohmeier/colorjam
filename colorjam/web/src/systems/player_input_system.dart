@@ -26,7 +26,7 @@ class InputControlSystem extends EntitySystem{
     
   }
   
-  void processEntities(ReadOnlyBag<Entity> entities){
+  void processEntities(Iterable<Entity> entities){
     
     
     
@@ -40,7 +40,7 @@ class InputControlSystem extends EntitySystem{
         if(input.rightCode == code){
           input.rightKeyPressed = true;
         }
-        if(input.jumpCode == code){
+        if(input.jumpCode1 == code || input.jumpCode2 == code){
           input.jumpKeyPressed = true;
         }
       });
@@ -55,7 +55,7 @@ class InputControlSystem extends EntitySystem{
         if(input.rightCode == code){
           input.rightKeyPressed = false;
         }
-        if(input.jumpCode == code){
+        if(input.jumpCode1 == code || input.jumpCode2 == code){
           input.jumpKeyPressed = false;
         }
       });

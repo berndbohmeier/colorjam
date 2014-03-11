@@ -9,18 +9,14 @@ class CircleFactory extends EntityFactory {
   static const String ARG_COLOR_G = "cg";
   static const String ARG_COLOR_B = "cb";
   
-  CircleFactory._() : super._();
+  CircleFactory._(ResourceManager resourceManager) : super._(resourceManager);
   
   Entity build(World world, Map<String, dynamic> args) {
-    Sprite sprite = new Sprite();
-    sprite.graphics.circle(args[ARG_RADIUS],args[ARG_RADIUS], args[ARG_RADIUS]);
-    sprite.graphics.strokeColor(Color.Black, 3);
-    sprite.graphics.fillColor(0xFFFFFFFF);
+    
     Entity entity = world.createEntity()
       ..addComponent(new TypeComponent("Circle"))
       ..addComponent(new PositionComponent.fromJson(args))
       ..addComponent(new VelocityComponent(args[ARG_VX], args[ARG_VY]))
-      ..addComponent(new SpriteComponent(sprite))
       ..addComponent(new PhysicsComponent())
       ..addComponent(new GeometryComponent(args[ARG_RADIUS]*2, args[ARG_RADIUS]*2))
       ..addComponent(new ColorComponent.fromJson(args));

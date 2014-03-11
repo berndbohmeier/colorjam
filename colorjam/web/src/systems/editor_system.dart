@@ -145,7 +145,10 @@ class EditorSystem extends EntityProcessingSystem {
     ColorComponent color = colorMapper.get(e);
     ColliderComponent collider = colliderMapper.get(e);
     VelocityComponent vel = velMapper.get(e);
-    Sprite sprite = spriteComponent.sprite;
+    Sprite sprite = new Sprite();
+    spriteComponent.dbo.removeFromParent();
+    sprite.addChild(spriteComponent.dbo);
+    container.addChild(sprite);
     
     
     
@@ -176,7 +179,7 @@ class EditorSystem extends EntityProcessingSystem {
           };
           values["bounciness"] = collider.bounciness.toString();
           setter["bounciness"] = (s) {
-            collider.bounciness = int.parse(s);
+            collider.bounciness = double.parse(s);
           };
           break;
         case "Player": case "Goal":
@@ -280,10 +283,10 @@ class EditorSystem extends EntityProcessingSystem {
     if(selectedEntity != null && new DateTime.now().millisecondsSinceEpoch - clickTime > 200) {
       SpriteComponent spriteComponent = spriteMapper.get(selectedEntity);
       PositionComponent pos = posMapper.get(selectedEntity);
-      Sprite sprite = spriteComponent.sprite;
+      DisplayObject dbo = spriteComponent.dbo;
       
-      pos.x = sprite.stage.mouseX;
-      pos.y = sprite.stage.mouseY;
+      pos.x = dbo.stage.mouseX;
+      pos.y = dbo.stage.mouseY;
     }
     
     if(addWallActive && created != null) {
@@ -293,17 +296,15 @@ class EditorSystem extends EntityProcessingSystem {
       
       geom.height = (container.stage.mouseY - pos.y).abs() * 2;
       geom.width = (container.stage.mouseX - pos.x).abs() * 2;
-      spriteComp.sprite.width = geom.width;
-      spriteComp.sprite.height = geom.height;
+  
+      
+      BitmapHelper.createRectangle(geom.width.round(), geom.height.round(), spriteComp.dbo as Sprite);
+     
       spriteComp.width = geom.width;
       spriteComp.height = geom.height;
-      spriteComp.sprite.removeCache();
-      spriteComp.sprite.applyCache(-7, -5, spriteComp.sprite.width.round()+7, spriteComp.sprite.height.round()+5);
       
-      spriteComp.sprite.graphics.clear();
-      spriteComp.sprite.graphics.rect(0,0,geom.width, geom.height);
-      spriteComp.sprite.graphics.fillColor(0xFFFFFFFF);
-      spriteComp.sprite.graphics.strokeColor(Color.Black, 3);
+      
+      
     }
   }
   
