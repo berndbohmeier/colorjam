@@ -40,6 +40,8 @@ abstract class InteractionSystem extends EntitySystem{
         
         if(rect1.intersects(rect2)){
           processInteraction(entity1, entity2);
+        }else {
+          processNonInteraction(entity1, entity2);
         }
           
       });
@@ -49,6 +51,7 @@ abstract class InteractionSystem extends EntitySystem{
   
   
   void processInteraction(Entity entity1, Entity entity2);
+  void processNonInteraction(Entity entity1,Entity entity2){}
   
   bool checkProcessing() => true;
 }
