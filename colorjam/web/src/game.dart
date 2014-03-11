@@ -50,7 +50,10 @@ class Game {
     
       ..addBitmapData("door", "images/door/door.png")
     
-      ..addBitmapData("goal", "images/gate/gate0.png")
+      ..addBitmapData("goal0", "images/gate/gate0.png")
+      ..addBitmapData("goal1", "images/gate/gate1.png")
+      ..addBitmapData("goal2", "images/gate/gate2.png")
+      ..addBitmapData("goal3", "images/gate/gate3.png")
     
       ..addBitmapData("logo", "images/logo.png")
     

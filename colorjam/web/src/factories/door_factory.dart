@@ -9,6 +9,8 @@ class DoorFactory extends EntityFactory {
     
     
     
+   
+    
     
     ColorComponent cp = new ColorComponent.fromJson(args);
     cp.alpha = false;

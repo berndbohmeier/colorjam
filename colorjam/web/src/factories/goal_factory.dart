@@ -7,6 +7,21 @@ class GoalFactory extends EntityFactory {
   Entity build(World world, Map<String, dynamic> args) {
     
     
+    
+    
+    List<BitmapData> bitmapDatas = new List<BitmapData>();
+           
+           for(int i = 0; i < 4; i++){
+             bitmapDatas.add(resourceManager.getBitmapData("goal${i}"));
+           }
+           
+           
+           
+           
+           
+    FlipBook flipBook = new FlipBook(bitmapDatas,40,false);
+    SpriteComponent sc = new SpriteComponent(flipBook);
+    
     ColorComponent cp = new ColorComponent.fromJson(args);
     cp.alpha = false;
     Entity e = super.build(world, args)
@@ -16,7 +31,7 @@ class GoalFactory extends EntityFactory {
       ..addComponent(cp)
       ..addComponent(new GoalComponent())
       ..addComponent(new GeometryComponent(WIDTH, HEIGHT))
-      ..addComponent(new SpriteComponent(new Bitmap(resourceManager.getBitmapData("goal"))));
+      ..addComponent(sc);
     
     return e;
   }
