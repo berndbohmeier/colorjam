@@ -3,6 +3,8 @@ part of colorjam;
 class PhysicsSystem extends EntityProcessingSystem {
   Vector _gravity = new Vector(0, 0.001981);
   
+  num forbiddenRange = 10;
+  
   ComponentMapper<PositionComponent> posMapper;
   ComponentMapper<VelocityComponent> velMapper;
   ComponentMapper<GeometryComponent> geomMapper;
@@ -27,6 +29,8 @@ class PhysicsSystem extends EntityProcessingSystem {
   
   void processEntity(Entity e) {
     physicsMapper.get(e).onFloor = false;
+    physicsMapper.get(e).velocity = null;
+    
     VelocityComponent vel = velMapper.get(e);
     
     
@@ -40,7 +44,7 @@ class PhysicsSystem extends EntityProcessingSystem {
         geom.height);
     
     if(colliderSystem.entities != null) {
-      colliderSystem.entities.forEach((other) {
+      colliderSystem.entities.forEach((Entity other) {
         
         
         // check color
@@ -72,15 +76,16 @@ class PhysicsSystem extends EntityProcessingSystem {
           
           num distX = 0;
           num distY = 0;
-          if(r1 > r2 && r2 > l1 && l1 > l2)
+          if(r1 > r2 /*&& r2 > l1 && l1 > l2*/)
             distX = r2 - l1;
-          else if(l2 > l1 && l2 < r1 && r1 < r2)
+          else if(l2 >= l1 /*&& l2 < r1 && r1 < r2*/)
             distX = l2 - r1;
-          if(b1 < b2 && b1 > t2 && t2 > t1)
+          if(b1 < b2 /*&& b1 > t2 && t2 > t1*/)
             distY = t2 - b1;
-          else if(b1 > b2 && b2 > t1 && t1 > t2)
+          else if(b1 >= b2 /*&& b2 > t1 && t1 > t2*/)
             distY = b2 - t1;
           
+        
           
           // distX und distY sind 0, wenn es keine Überschneidung in dieser Richtung gibt
           // ansonsten enthalten sie den Abstand der Objekte in dieser Richtung.
@@ -95,26 +100,49 @@ class PhysicsSystem extends EntityProcessingSystem {
           pos.x -= distX;
           pos.y -= distY;
           
-          
-          
+          //zerstören wenn zu weit drin
+          /*funtkioniert grad nicht!
+          if(distX.abs()> forbiddenRange || distY.abs()>forbiddenRange){
+            print("smacked : (${distX},$distY)");{
+              //e.deleteFromWorld();
+            }
+          }*/
+          VelocityComponent velocity = velMapper.getSafe(other);
           // Wenn das Objekt auf dem Boden ist, onFloor setzen
           if(distY > 0) {
             physicsMapper.get(e).onFloor = true;
+            
+            if(velocity!=null){
+              physicsMapper.get(e).velocity = new Vector(velocity.vx, velocity.vy);
+            }else{
+              physicsMapper.get(e).velocity = new Vector.zero();
+            }
           }
           
           if(distY != 0) {
-            if(vel.vy.abs() < 0.001)
+            if(vel.vy.abs() < 0.001){
               vel.vy = 0;
+            }
+             
             if(vel.vy*distY>0){
               vel.vy *= -1 * collMapper.get(other).bounciness;
+              if(velocity!=null){
+                    vel.vy += velocity.vy;
+              }
             }
            
           }
           if(distX != 0) {
-            if(vel.vx.abs() < 0.001)
-              vel.vx = 0;
+            if(vel.vx.abs() < 0.001){
+                vel.vx = 0;
+            }
+              
             if(vel.vx*distX>0){
               vel.vx *= -1 * collMapper.get(other).bounciness;
+              if(velocity!=null){
+                vel.vx += velocity.vx;
+                    
+              }
             }
             
           }

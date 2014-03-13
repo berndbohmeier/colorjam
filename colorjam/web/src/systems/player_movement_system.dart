@@ -30,21 +30,28 @@ class PlayerMovementSystem extends EntityProcessingSystem{
     PlayerControlComponent con = controlMapper.get(entity);
     PhysicsComponent phys = physicsMapper.get(entity);
     
+    Vector correction = new Vector.zero();
+    if(phys.velocity!=null){
+      correction = phys.velocity;
+    }
+    
+    
+    
     switch(con.direction){
       case 0:
-        vel.vx = 0;
+        vel.vx = 0+correction.x;
         break;
       case 1:
-        vel.vx = runspeed;
+        vel.vx = runspeed+correction.x;
         break;
       case -1:
-        vel.vx = -runspeed;
+        vel.vx = -runspeed+correction.x;
         break;
       
     }
     
     if(con.jump && phys.onFloor){
-      vel.vy = -jumpspeed;
+      vel.vy = -jumpspeed + correction.y;
       con.jump = false;
     }
   }

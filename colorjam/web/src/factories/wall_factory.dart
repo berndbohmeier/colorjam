@@ -25,7 +25,6 @@ class WallFactory extends EntityFactory {
     Entity entity = world.createEntity()
         ..addComponent(new TypeComponent("Wall"))
         ..addComponent(new PositionComponent(left + (right-left)/2, top + (bottom-top)/2))
-        ..addComponent(new VelocityComponent(0,0))
         ..addComponent(new SpriteComponent(sprite))
         ..addComponent(new ColorComponent.fromJson(args))
         ..addComponent(new ColliderComponent(bounciness: args[ARG_BOUNCINESS]))

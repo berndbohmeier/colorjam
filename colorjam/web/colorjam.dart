@@ -28,6 +28,7 @@ part "src/components/color_change_component.dart";
 part "src/components/color_decay_component.dart";
 part "src/components/goal_component.dart";
 part "src/components/player_component.dart";
+part "src/components/elevator_component.dart";
 
 // Factories
 part "src/factories/circle_factory.dart";
@@ -36,6 +37,7 @@ part "src/factories/wall_factory.dart";
 part "src/factories/door_factory.dart";
 part "src/factories/color_changer_factory.dart";
 part "src/factories/goal_factory.dart";
+part "src/factories/elevator_factory.dart";
 
 // Systems
 part "src/systems/movement_system.dart";
@@ -59,6 +61,7 @@ part "src/systems/scroll_system.dart";
 part "src/systems/game_over_system.dart";
 part "src/systems/player_animation_render_system.dart";
 part "src/systems/delayed_call_system.dart";
+part "src/systems/elevator_movement_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";

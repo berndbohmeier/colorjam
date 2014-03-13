@@ -34,7 +34,8 @@ class EntityFactory {
       "Player" : new PlayerFactory._(rm),
       "ColorChanger" : new ColorChangerFactory._(rm),
       "Door" : new DoorFactory._(rm),
-      "Goal" : new GoalFactory._(rm)
+      "Goal" : new GoalFactory._(rm),
+      "Elevator" : new ElevatorFactory._(rm)
     };
   }
 }
