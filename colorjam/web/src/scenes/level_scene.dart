@@ -17,6 +17,7 @@ class LevelScene extends WorldScene{
       ..addSystem(new InputControlSystem(headcontainer))
       ..addSystem(new PlayerControlSystem())
       ..addSystem(new PlayerMovementSystem())
+      ..addSystem(new ElevatorMovementSystem())
       ..addSystem(new MovementSystem())
       ..addSystem(new ColliderSystem())
       ..addSystem(new PhysicsSystem())

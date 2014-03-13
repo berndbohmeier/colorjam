@@ -31,6 +31,8 @@ class EditorScene extends WorldScene{
   
   bool fromCod = false;
   
+  EditorSystem editorsystem;
+  
   EditorScene(Game game, DisplayObjectContainer headcontainer) : super(game, headcontainer);
   EditorScene.fromCode(Game game, DisplayObjectContainer headcontainer, this.levelcode) : super(game, headcontainer){
     fromCod = true;
@@ -38,9 +40,10 @@ class EditorScene extends WorldScene{
   
   void init(){
     super.init();
+    editorsystem= new EditorSystem(game, container);
     ///dartemis
     world
-            ..addSystem(new EditorSystem(game, container))
+            ..addSystem(editorsystem)
             ..addSystem(new ColorRenderSystem(globalVanishing: false) )
             ..addSystem(new SpriteRenderSystem(container))
             ..addManager(new TagManager());
@@ -97,6 +100,8 @@ class EditorScene extends WorldScene{
     html.querySelector("#sample_container_id").style.overflow = "scroll";
     html.querySelector("#sample_container_id").scrollTop = 800;
     html.querySelector("#sample_container_id").scrollLeft = 0;
+    editorsystem.setUpInputs();
+    
   }
   
   void deactivate() {
@@ -106,6 +111,7 @@ class EditorScene extends WorldScene{
     html.querySelector("#sample_container_id").style.overflow = "hidden";
     html.querySelector("#sample_container_id").scrollTop = 0;
     html.querySelector("#sample_container_id").scrollLeft = 0;
+    editorsystem.cancelInputs();
   }
   
 }

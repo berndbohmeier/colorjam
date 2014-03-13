@@ -9,6 +9,7 @@ class EditorSystem extends EntityProcessingSystem {
   ComponentMapper<ColorComponent> colorMapper;
   ComponentMapper<ColliderComponent> colliderMapper;
   ComponentMapper<VelocityComponent> velMapper;
+  ComponentMapper<ElevatorComponent> elevatorMapper;
   
   
   Game game;
@@ -30,6 +31,42 @@ class EditorSystem extends EntityProcessingSystem {
   
   int clickTime = 0;
   
+  List subscriptions = new List();
+  
+  
+  void setUpInputs(){
+    subscriptions.add(html.querySelector("#addwall").onClick.listen((e) {
+          
+          addWall();
+        }));
+    subscriptions.add(html.querySelector("#addcolorchanger").onClick.listen((e) {
+          addColorChanger();
+        }));
+    subscriptions.add(html.querySelector("#playbutton").onClick.listen((e) {
+          play();
+        }));
+    subscriptions.add(html.querySelector("#adddoor").onClick.listen((e) {
+          addDoor();
+        }));
+    subscriptions.add(html.querySelector("#addelevator").onClick.listen((e) {
+              addElevator();
+            }));
+    subscriptions.add(html.querySelector("#recreate").onClick.listen((e) {
+          recreate();
+        }));
+        
+    subscriptions.add(container.onMouseDown.listen((e) {
+             onMouseDown(e);
+        }));
+    subscriptions.add(container.onMouseUp.listen((e) {
+           onMouseUp(e);
+        }));
+  }
+  
+  void cancelInputs(){
+    subscriptions.forEach((sub){sub.cancel();});
+  }
+  
   void initialize() {
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
@@ -38,22 +75,8 @@ class EditorSystem extends EntityProcessingSystem {
     colorMapper = new ComponentMapper<ColorComponent>(ColorComponent, world);
     colliderMapper = new ComponentMapper<ColliderComponent>(ColliderComponent, world);
     velMapper = new ComponentMapper<VelocityComponent>(VelocityComponent, world);
-    html.querySelector("#addwall").onClick.listen((e) {
-      
-      addWall();
-    });
-    html.querySelector("#addcolorchanger").onClick.listen((e) {
-      addColorChanger();
-    });
-    html.querySelector("#playbutton").onClick.listen((e) {
-      play();
-    });
-    html.querySelector("#adddoor").onClick.listen((e) {
-      addDoor();
-    });
-    html.querySelector("#recreate").onClick.listen((e) {
-      recreate();
-    });
+    elevatorMapper = new ComponentMapper<ElevatorComponent>(ElevatorComponent, world);
+    
     div = html.querySelector("#sample_container_id");
     
     textArea = html.querySelector("#textout");
@@ -66,18 +89,12 @@ class EditorSystem extends EntityProcessingSystem {
     overAll.graphics.fillColor(0xFF);
     container.addChild(overAll);
     
-    container.onMouseDown.listen((e) {
-      onMouseDown(e);
-    });
-    
-    container.onMouseUp.listen((e) {
-      onMouseUp(e);
-    });
+   
     
   }
   
   void play() {
-    game.loadLevelCode(toJson());
+    game.loadLevelCode(textArea.value);
     html.Element canvas = html.querySelector('#stage');
     canvas.focus();
   }
@@ -138,13 +155,21 @@ class EditorSystem extends EntityProcessingSystem {
       .addToWorld();
   }
   
+  void addElevator(){
+    new EntityFactory.forType("Elevator")
+          .build(world, {"position.x": div.scrollLeft+ 200, "position.y": div.scrollTop + 200, "color_r": 0,
+            "color_g" : 255, "color_b" : 0, "bounciness":0, "loop" : true, "speed":0.1, "waypoints":[[div.scrollLeft+ 200,div.scrollTop + 200]]})
+          .addToWorld();
+  }
+  
   void inserted(Entity e) {
-    SpriteComponent spriteComponent = spriteMapper.get(e);
-    PositionComponent pos = posMapper.get(e);
-    TypeComponent type = typeMapper.get(e);
-    ColorComponent color = colorMapper.get(e);
-    ColliderComponent collider = colliderMapper.get(e);
-    VelocityComponent vel = velMapper.get(e);
+    SpriteComponent spriteComponent = spriteMapper.getSafe(e);
+    PositionComponent pos = posMapper.getSafe(e);
+    TypeComponent type = typeMapper.getSafe(e);
+    ColorComponent color = colorMapper.getSafe(e);
+    ColliderComponent collider = colliderMapper.getSafe(e);
+    VelocityComponent vel = velMapper.getSafe(e);
+    ElevatorComponent elevator = elevatorMapper.getSafe(e);
     Sprite sprite = new Sprite();
     spriteComponent.dbo.removeFromParent();
     sprite.addChild(spriteComponent.dbo);
@@ -162,85 +187,78 @@ class EditorSystem extends EntityProcessingSystem {
       res.forEach((element) => element.remove());
       
       Map<String, Function> setter = new Map<String, Function>();
-      Map<String, String> values = new Map<String, String>();
-      switch(type.type) {
-        case "Wall":
-          values["color_r"] = color.r.toString();
-          setter["color_r"] = (s) {
-            color.r = int.parse(s);
-          };
-          values["color_g"] = color.g.toString();
-          setter["color_g"] = (s) {
-            color.g = int.parse(s);
-          };
-          values["color_b"] = color.b.toString();
-          setter["color_b"] = (s) {
-            color.b = int.parse(s);
-          };
-          values["bounciness"] = collider.bounciness.toString();
-          setter["bounciness"] = (s) {
-            collider.bounciness = double.parse(s);
-          };
-          break;
-        case "Player": case "Goal":
-          values["color_r"] = color.r.toString();
-          setter["color_r"] = (s) {
-            color.r = int.parse(s);
-          };
-          values["color_g"] = color.g.toString();
-          setter["color_g"] = (s) {
-            color.g = int.parse(s);
-          };
-          values["color_b"] = color.b.toString();
-          setter["color_b"] = (s) {
-            color.b = int.parse(s);
-          };
-          break;
-        case "ColorChanger": case "Door":
-          values["color_r"] = color.r.toString();
-          setter["color_r"] = (s) {
-            color.r = int.parse(s);
-          };
-          values["color_g"] = color.g.toString();
-          setter["color_g"] = (s) {
-            color.g = int.parse(s);
-          };
-          values["color_b"] = color.b.toString();
-          setter["color_b"] = (s) {
-            color.b = int.parse(s);
-          };
-          break;
-        case "Circle":
-          values["color_r"] = color.r.toString();
-          setter["color_r"] = (s) {
-            color.r = int.parse(s);
-          };
-          values["color_g"] = color.g.toString();
-          setter["color_g"] = (s) {
-            color.g = int.parse(s);
-          };
-          values["color_b"] = color.b.toString();
-          setter["color_b"] = (s) {
-            color.b = int.parse(s);
-          };
-          values["velocity_x"] = vel.vx.toString();
-          setter["velocity_x"] = (s) {
-            vel.vx = double.parse(s);
-          };
-          values["velocity_y"] = vel.vy.toString();
-          setter["velocity_y"] = (s) {
-            vel.vy = double.parse(s);
-          };
-          break;
+      Map<String, dynamic> values = new Map<String, dynamic>();
+      
+      if(color!=null){
+        
+      
+        values["color_r"] = color.r.toString();
+        setter["color_r"] = (s) {color.r = int.parse(s);};
+        
+        values["color_g"] = color.g.toString();
+        setter["color_g"] = (s) {color.g = int.parse(s);};
+        
+        values["color_b"] = color.b.toString();
+        setter["color_b"] = (s) {color.b = int.parse(s);};
       }
       
+      if(collider!=null){
+        values["bounciness"] = collider.bounciness.toString();
+        setter["bounciness"] = (s) {collider.bounciness = double.parse(s);};
+      }
+                
+      if(elevator!=null){
+        values["speed"] = elevator.speed.toString();
+        setter["speed"] = (s) {elevator.speed = double.parse(s);  };
+        
+        values["loop"] = elevator.loop;
+        setter["loop"] = (b) {elevator.loop = b;  };
+                  
+        values["waypoints"] = elevator.waypoints;
+        setter["waypoints"] = (i) {elevator.currentWaypoint = i;pos.position = new Vector(elevator.waypoints.elementAt(elevator.currentWaypoint).x, elevator.waypoints.elementAt(elevator.currentWaypoint).y) ; };            
+                    
+      }
+      
+      
       values.forEach((key, value) {
-        html.querySelector("#inspector table tr.first").insertAdjacentHtml("afterEnd","<tr class='removable'><th>$key</th><td><input id='prop_$key' value='$value' /></td></tr>");
-        html.querySelector("#prop_$key").onChange.listen((e) {
+        if(value is String){
+          html.querySelector("#inspector table tr.first").insertAdjacentHtml("afterEnd","<tr class='removable'><th>$key</th><td><input id='prop_$key' value='$value' /></td></tr>");
+          html.querySelector("#prop_$key").onChange.listen((e) {
+                              setter[key]((html.querySelector("#prop_$key") as html.InputElement).value);
+                              update();
+                            });
           
-          setter[key]((html.querySelector("#prop_$key") as html.InputElement).value);
-          update();
-        });
+          
+        }
+        if(value is bool){
+          html.querySelector("#inspector table tr.first").insertAdjacentHtml("afterEnd","<tr class='removable'><th>$key</th><td><input type='checkbox' id='prop_$key' name='$key'value='$key' ${value?"checked":""}/></td></tr>");
+          html.querySelector("#prop_$key").onChange.listen((e) {
+                                       setter[key]((html.querySelector("#prop_$key") as html.InputElement).checked);
+                                       update();
+                                     });
+        }
+        if(value is List){
+          StringBuffer sb = new StringBuffer();
+          for(int i = 0; i < (value as List).length; i++){
+            sb.write("<option value='$i' ${(i==elevator.currentWaypoint)?"selected":""} >$i</option>");  
+          }
+          html.querySelector("#inspector table tr.first").insertAdjacentHtml("afterEnd","<tr class='removable'><th>$key</th><td><select id='prop_$key'>${sb.toString()}</select><button id='prop_$key"+"_add' >+</button><button id='prop_$key"+"_del' >-</button></td></tr>");
+          html.querySelector("#prop_$key").onChange.listen((e) {
+                                                 setter[key]((html.querySelector("#prop_$key") as html.SelectElement).selectedIndex);
+                                               });
+          html.querySelector("#prop_$key"+"_add").onClick.listen((e){elevator.waypoints.add(new Vector(pos.x, pos.y));
+                                                                  elevator.currentWaypoint = elevator.waypoints.length-1;
+                                                                  (html.querySelector("#prop_$key") as html.SelectElement).children.add(new html.OptionElement(data:elevator.currentWaypoint.toString(), value : elevator.currentWaypoint.toString()));
+                                                                  (html.querySelector("#prop_$key") as html.SelectElement).selectedIndex = elevator.currentWaypoint;});
+          html.querySelector("#prop_$key"+"_del").onClick.listen((e){elevator.waypoints.removeLast();
+                                                                      elevator.currentWaypoint = elevator.waypoints.length-1;
+                                                                      (html.querySelector("#prop_$key") as html.SelectElement).children.removeLast();
+                                                                      (html.querySelector("#prop_$key") as html.SelectElement).selectedIndex = elevator.currentWaypoint;});
+          
+        }
+        
+        
+        
       });
       
       html.querySelector("#inspector table").insertAdjacentHtml("afterEnd","<button id='removeEntity' class='removable'>Remove Item</button>");
@@ -287,6 +305,12 @@ class EditorSystem extends EntityProcessingSystem {
       
       pos.x = dbo.stage.mouseX;
       pos.y = dbo.stage.mouseY;
+      
+      ElevatorComponent elevator = elevatorMapper.getSafe(selectedEntity);
+      if(elevator!=null){
+        elevator.waypoints[elevator.currentWaypoint] = new Vector(pos.x, pos.y);
+    
+      }
     }
     
     if(addWallActive && created != null) {
@@ -328,7 +352,7 @@ class EditorSystem extends EntityProcessingSystem {
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
-      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)|(Goal)")))
+      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)|(Goal)|Elevator")))
           return;
       if(firstEntity){
         firstEntity=false;
@@ -381,6 +405,19 @@ class EditorSystem extends EntityProcessingSystem {
            if(cc != null)
              sb.writeln(",\n" + cc.toJson());
          break;
+         case "Elevator":
+             ColorComponent cc = colorMapper.getSafe(entity);
+             PositionComponent pos = posMapper.get(entity);
+             ColliderComponent collider = colliderMapper.get(entity);
+             ElevatorComponent elevator = elevatorMapper.getSafe(entity);
+             sb.writeln("\"type\":\"Elevator\",");
+             sb.write(pos.toJson());
+             sb.writeln(",\n" + cc.toJson()+",");
+             sb.writeln("\"bounciness\":${collider.bounciness},");
+             sb.writeln(elevator.toJson());
+             break;
+                  
+         
       }
       sb.writeln("}");
     });
