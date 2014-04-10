@@ -38,7 +38,7 @@ class PhysicsSystem extends EntityProcessingSystem {
     GeometryComponent geom = geomMapper.get(e);
     ColorComponent color = colorMapper.get(e);
     
-    Rectangle rect = new Rectangle(pos.x - geom.width/2,
+    Rectangle<num> rect = new Rectangle(pos.x - geom.width/2,
         pos.y - geom.height/2,
         geom.width,
         geom.height);
@@ -56,7 +56,7 @@ class PhysicsSystem extends EntityProcessingSystem {
         PositionComponent otherPos = posMapper.get(other);
         GeometryComponent otherGeom = geomMapper.get(other);
         
-        Rectangle otherRect = new Rectangle(otherPos.x - otherGeom.width/2,
+        Rectangle<num> otherRect = new Rectangle(otherPos.x - otherGeom.width/2,
             otherPos.y - otherGeom.height/2,
             otherGeom.width,
             otherGeom.height);
@@ -76,15 +76,16 @@ class PhysicsSystem extends EntityProcessingSystem {
           
           num distX = 0;
           num distY = 0;
-          if(r1 > r2 /*&& r2 > l1 && l1 > l2*/)
+          //TODO take a closer look at this
+          if(r1 > r2 && r2 > l1 && l1 > l2)
             distX = r2 - l1;
-          else if(l2 >= l1 /*&& l2 < r1 && r1 < r2*/)
+          else if(l2 >= l1 && l2 < r1 && r1 < r2)
             distX = l2 - r1;
-          if(b1 < b2 /*&& b1 > t2 && t2 > t1*/)
+          if(b1 < b2 && b1 > t2 && t2 > t1)
             distY = t2 - b1;
-          else if(b1 >= b2 /*&& b2 > t1 && t1 > t2*/)
+          else if(b1 >= b2 && b2 > t1 && t1 > t2)
             distY = b2 - t1;
-          
+          //TODO
         
           
           // distX und distY sind 0, wenn es keine Überschneidung in dieser Richtung gibt
@@ -119,13 +120,15 @@ class PhysicsSystem extends EntityProcessingSystem {
             }
           }
           
+          num bounciness = math.max(collMapper.get(other).bounciness, physicsMapper.get(e).bounciness);
+          
           if(distY != 0) {
             if(vel.vy.abs() < 0.001){
               vel.vy = 0;
             }
              
             if(vel.vy*distY>0){
-              vel.vy *= -1 * collMapper.get(other).bounciness;
+              vel.vy *= -1 * bounciness;
               if(velocity!=null){
                     vel.vy += velocity.vy;
               }
@@ -138,7 +141,7 @@ class PhysicsSystem extends EntityProcessingSystem {
             }
               
             if(vel.vx*distX>0){
-              vel.vx *= -1 * collMapper.get(other).bounciness;
+              vel.vx *= -1 * bounciness;
               if(velocity!=null){
                 vel.vx += velocity.vx;
                     

@@ -54,6 +54,9 @@ class Game {
       ..addBitmapData("goal1", "images/gate/gate1.png")
       ..addBitmapData("goal2", "images/gate/gate2.png")
       ..addBitmapData("goal3", "images/gate/gate3.png")
+      
+      
+      ..addBitmapData("monster", "images/monster/monster.png")
     
       ..addBitmapData("logo", "images/logo.png")
     
@@ -77,13 +80,15 @@ class Game {
       ..addTextFile("simon0.lvl", "levels/simon0.lvl")
       ..addTextFile("simon1.lvl", "levels/simon1.lvl")
       ..addTextFile("simon2.lvl", "levels/simon2.lvl")
+      ..addTextFile("elevator1.lvl", "levels/elevator1.lvl")
+      ..addTextFile("portallevel.lvl", "levels/portallevel.lvl")
       
       ;//resourcemanager
       ///finish loading resources
     
     
     
-    List<String> levels = ["flat","simon0","simon1","simon2", "sebi1", "sebi3", "bernd1","bernd2", "bernd3","bernd5","bernd6", "max0","bernd4" ,"bernd7", "bernd8"];
+    List<String> levels = ["flat","simon0","simon1","simon2", "sebi1", "sebi3", "bernd1","bernd2", "bernd3","bernd5","bernd6", "max0","bernd4" ,"bernd7", "bernd8", "elevator1", "portallevel"];
     
     
     levelManager = new LevelManager(levels,resourceManager);

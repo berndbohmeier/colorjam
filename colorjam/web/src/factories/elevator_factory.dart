@@ -29,6 +29,7 @@ class ElevatorFactory extends EntityFactory {
         ..addComponent(new ColorComponent.fromJson(args))
         ..addComponent(new ColliderComponent(bounciness: args[ARG_BOUNCINESS]))
         ..addComponent(new ElevatorComponent.fromJson(args))
+        ..addComponent(new WaypointComponent.fromJson(args))
         ..addComponent(new GeometryComponent(width, height));
     
     return entity;

@@ -4,19 +4,17 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
   DisplayObjectContainer dbc;
   
   ComponentMapper<PositionComponent> posMapper;
-  ComponentMapper<GeometryComponent> geomMapper;
   ComponentMapper<SpriteComponent> spriteMapper;
   
   
   
   
-  SpriteRenderSystem(this.dbc) : super(16, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
+  SpriteRenderSystem(this.dbc) : super(16, Aspect.getAspectForAllOf([PositionComponent, SpriteComponent]));
   
  
   
   void initialize() {
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
-    geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
     spriteMapper = new ComponentMapper<SpriteComponent>(SpriteComponent, world);
     
     
@@ -43,7 +41,6 @@ class SpriteRenderSystem extends IntervalEntityProcessingSystem {
   void processEntity(Entity entity){
     PositionComponent pos = posMapper.get(entity);
     SpriteComponent spr = spriteMapper.get(entity);
-    GeometryComponent geom = geomMapper.get(entity);
     
     
     if(spr.dbo is Animatable){

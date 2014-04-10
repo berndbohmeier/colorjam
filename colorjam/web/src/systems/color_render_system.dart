@@ -11,7 +11,7 @@ class ColorRenderSystem extends IntervalEntityProcessingSystem {
   
   bool effectsOn = true;
   
-  ColorRenderSystem({this.globalVanishing : true}) : super(16, Aspect.getAspectForAllOf([PositionComponent, GeometryComponent, SpriteComponent, ColorComponent]));
+  ColorRenderSystem({this.globalVanishing : true}) : super(16, Aspect.getAspectForAllOf([PositionComponent,SpriteComponent, ColorComponent]));
   
   List<List<num>> filterMatrixList = [
                     [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],

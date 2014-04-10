@@ -8,11 +8,13 @@ abstract class InteractionSystem extends EntitySystem{
   
   
   ComponentMapper<PositionComponent> posMapper;
-  ComponentMapper<GeometryComponent> geomMapper;
+  ComponentMapper<InteractionComponent> interactionMapper;
+  ComponentMapper<GeometryComponent> geometryMapper;
   
   void initialize() {
     posMapper = new ComponentMapper<PositionComponent>(PositionComponent, world);
-    geomMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
+    geometryMapper = new ComponentMapper<GeometryComponent>(GeometryComponent, world);
+    interactionMapper = new ComponentMapper<InteractionComponent>(InteractionComponent, world);
   }
   
   
@@ -20,18 +22,18 @@ abstract class InteractionSystem extends EntitySystem{
     entities.forEach((entity1){
       
       PositionComponent pos1 = posMapper.get(entity1);
-      GeometryComponent geom1 = geomMapper.get(entity1);
+      InteractionComponent inter1 = interactionMapper.get(entity1);
       
      
-      Rectangle rect1 = new Rectangle(pos1.x - geom1.width/2,
-          pos1.y - geom1.height/2,
-          geom1.width,
-          geom1.height);
+      Rectangle rect1 = new Rectangle(pos1.x - inter1.width/2,
+          pos1.y - inter1.height/2,
+          inter1.width,
+          inter1.height);
    
       system.entities.forEach((entity2){
         // check for collision
         PositionComponent pos2 = posMapper.get(entity2);
-        GeometryComponent geom2 = geomMapper.get(entity2);
+        GeometryComponent geom2 = geometryMapper.get(entity2);
         
         Rectangle rect2 = new Rectangle(pos2.x - geom2.width/2,
             pos2.y - geom2.height/2,

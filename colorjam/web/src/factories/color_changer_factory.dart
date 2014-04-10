@@ -31,7 +31,7 @@ class ColorChangerFactory extends EntityFactory {
         ..addComponent(cp)
         ..addComponent(new ColorChangeComponent())
         ..addComponent(sc)
-        ..addComponent(new GeometryComponent(60, 80));
+        ..addComponent(new InteractionComponent(60, 80));
     
     return entity;
   }

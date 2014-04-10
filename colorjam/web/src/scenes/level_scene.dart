@@ -13,19 +13,24 @@ class LevelScene extends WorldScene{
     ///dartemis
     EntitySystem colorCollectSystem = new ColorCollectSystem();
     EntitySystem playerCollectSystem = new PlayerCollectSystem();
+    EntitySystem portalCollectSystem = new PortalCollectSystem();
     world
       ..addSystem(new InputControlSystem(headcontainer))
       ..addSystem(new PlayerControlSystem())
       ..addSystem(new PlayerMovementSystem())
       ..addSystem(new ElevatorMovementSystem())
+      ..addSystem(new MonsterMovementSystem())
       ..addSystem(new MovementSystem())
+      ..addSystem(portalCollectSystem)
+      ..addSystem(playerCollectSystem)
+      ..addSystem(new PortalSystem(playerCollectSystem,portalCollectSystem))
       ..addSystem(new ColliderSystem())
       ..addSystem(new PhysicsSystem())
       ..addSystem(new ColorDecaySystem())
       ..addSystem(colorCollectSystem)
       ..addSystem(new ColorChangeSystem(colorCollectSystem))
-      ..addSystem(playerCollectSystem)
       ..addSystem(new GoalSystem(playerCollectSystem, toEditor?game.loadEditor:game.loadNextLevel))
+      ..addSystem(new MonsterSystem(playerCollectSystem, onGameOver))
       ..addSystem(new GameOverSystem(onGameOver))
       ..addSystem(new ColorRenderSystem())
       ..addSystem(new PlayerAnimationRenderSystem())

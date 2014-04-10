@@ -33,12 +33,16 @@ class PlayerAnimationRenderSystem extends IntervalEntityProcessingSystem {
     PhysicsComponent physics = physicsMapper.get(entity);
     
     FlipBook flipBook = spr.dbo as FlipBook;
-    if(player.direction!=0 && !flipBook.playing && physics.onFloor){
-      flipBook.play();
+    
+    if(!flipBook.playing && physics.onFloor){
+      flipBook.gotoAndStop(2);
+      if(player.direction!=0){
+        flipBook.play();
+      }
     }
     
-    if((player.direction == 0 || !physics.onFloor) && flipBook.playing){
-      flipBook.stop();
+    if((player.direction == 0 || !physics.onFloor)){
+      flipBook.gotoAndStop(0);
     }
     
   }
