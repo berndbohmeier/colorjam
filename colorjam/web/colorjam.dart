@@ -29,15 +29,20 @@ part "src/components/color_decay_component.dart";
 part "src/components/goal_component.dart";
 part "src/components/player_component.dart";
 part "src/components/elevator_component.dart";
+part "src/components/monster_component.dart";
+part "src/components/waypoint_component.dart";
+part "src/components/interaction_component.dart";
+part "src/components/portal_component.dart";
 
 // Factories
-part "src/factories/circle_factory.dart";
+part "src/factories/monster_factory.dart";
 part "src/factories/player_factory.dart";
 part "src/factories/wall_factory.dart";
 part "src/factories/door_factory.dart";
 part "src/factories/color_changer_factory.dart";
 part "src/factories/goal_factory.dart";
 part "src/factories/elevator_factory.dart";
+part "src/factories/portal_factory.dart";
 
 // Systems
 part "src/systems/movement_system.dart";
@@ -62,6 +67,10 @@ part "src/systems/game_over_system.dart";
 part "src/systems/player_animation_render_system.dart";
 part "src/systems/delayed_call_system.dart";
 part "src/systems/elevator_movement_system.dart";
+part "src/systems/monster_system.dart";
+part "src/systems/monster_movement_system.dart";
+part "src/systems/portal_system.dart";
+part "src/systems/portal_collect_system.dart";
 
 //scenes
 part "src/scenes/scene.dart";

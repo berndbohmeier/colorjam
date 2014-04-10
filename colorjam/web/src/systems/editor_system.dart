@@ -10,13 +10,15 @@ class EditorSystem extends EntityProcessingSystem {
   ComponentMapper<ColliderComponent> colliderMapper;
   ComponentMapper<VelocityComponent> velMapper;
   ComponentMapper<ElevatorComponent> elevatorMapper;
+  ComponentMapper<WaypointComponent> waypointMapper;
+  ComponentMapper<PortalComponent> portalMapper;
   
   
   Game game;
   
   Map<Entity, EventStreamSubscription> subscriptionMap = new Map<Entity, EventStreamSubscription>();
   Entity selectedEntity;
-  EditorSystem(this.game, this.container) : super(Aspect.getAspectForAllOf([TypeComponent, PositionComponent, GeometryComponent, SpriteComponent]));
+  EditorSystem(this.game, this.container) : super(Aspect.getAspectForAllOf([TypeComponent, PositionComponent, SpriteComponent]));
   
   bool addWallActive = false;
   
@@ -51,6 +53,12 @@ class EditorSystem extends EntityProcessingSystem {
     subscriptions.add(html.querySelector("#addelevator").onClick.listen((e) {
               addElevator();
             }));
+    subscriptions.add(html.querySelector("#addmonster").onClick.listen((e) {
+                  addMonster();
+                }));
+    subscriptions.add(html.querySelector("#addportal").onClick.listen((e) {
+                  addPortal();
+                }));
     subscriptions.add(html.querySelector("#recreate").onClick.listen((e) {
           recreate();
         }));
@@ -76,6 +84,8 @@ class EditorSystem extends EntityProcessingSystem {
     colliderMapper = new ComponentMapper<ColliderComponent>(ColliderComponent, world);
     velMapper = new ComponentMapper<VelocityComponent>(VelocityComponent, world);
     elevatorMapper = new ComponentMapper<ElevatorComponent>(ElevatorComponent, world);
+    waypointMapper = new ComponentMapper<WaypointComponent>(WaypointComponent, world);
+    portalMapper = new ComponentMapper<PortalComponent>(PortalComponent, world);
     
     div = html.querySelector("#sample_container_id");
     
@@ -162,6 +172,20 @@ class EditorSystem extends EntityProcessingSystem {
           .addToWorld();
   }
   
+  void addMonster(){
+    new EntityFactory.forType("Monster")
+              .build(world, {"position.x": div.scrollLeft+ 200, "position.y": div.scrollTop + 200, "color_r": 255,
+                "color_g" : 0, "color_b" : 0, "vx" : 0.1, "vy":0.1,"loop" : true, "waypoints":[[div.scrollLeft+ 200,div.scrollTop + 200]]})
+              .addToWorld();
+  }
+  
+  void addPortal(){
+      new EntityFactory.forType("Portal")
+                  .build(world, {"position.x": div.scrollLeft+ 200, "position.y": div.scrollTop + 200, "color_r": 255,
+                    "color_g" : 0, "color_b" : 0, "direction" : 3})
+                  .addToWorld();
+  }
+  
   void inserted(Entity e) {
     SpriteComponent spriteComponent = spriteMapper.getSafe(e);
     PositionComponent pos = posMapper.getSafe(e);
@@ -170,6 +194,8 @@ class EditorSystem extends EntityProcessingSystem {
     ColliderComponent collider = colliderMapper.getSafe(e);
     VelocityComponent vel = velMapper.getSafe(e);
     ElevatorComponent elevator = elevatorMapper.getSafe(e);
+    WaypointComponent waypoint = waypointMapper.getSafe(e);
+    PortalComponent portal = portalMapper.getSafe(e);
     Sprite sprite = new Sprite();
     spriteComponent.dbo.removeFromParent();
     sprite.addChild(spriteComponent.dbo);
@@ -211,12 +237,21 @@ class EditorSystem extends EntityProcessingSystem {
         values["speed"] = elevator.speed.toString();
         setter["speed"] = (s) {elevator.speed = double.parse(s);  };
         
-        values["loop"] = elevator.loop;
-        setter["loop"] = (b) {elevator.loop = b;  };
-                  
-        values["waypoints"] = elevator.waypoints;
-        setter["waypoints"] = (i) {elevator.currentWaypoint = i;pos.position = new Vector(elevator.waypoints.elementAt(elevator.currentWaypoint).x, elevator.waypoints.elementAt(elevator.currentWaypoint).y) ; };            
-                    
+        
+      }
+      
+      if(waypoint!=null){
+        values["loop"] = waypoint.loop;
+        setter["loop"] = (b) {waypoint.loop = b;  };
+                          
+        values["waypoints"] = waypoint.waypoints;
+        setter["waypoints"] = (i) {waypoint.currentWaypoint = i;pos.position = new Vector(waypoint.getCurrentWaypoint().x, waypoint.getCurrentWaypoint().y) ; };            
+                            
+      }
+      
+      if(portal !=null){
+        values["direction"] = portal.direction.toString();
+        setter["direction"] = (s) {portal.direction = int.parse(s); };
       }
       
       
@@ -240,20 +275,20 @@ class EditorSystem extends EntityProcessingSystem {
         if(value is List){
           StringBuffer sb = new StringBuffer();
           for(int i = 0; i < (value as List).length; i++){
-            sb.write("<option value='$i' ${(i==elevator.currentWaypoint)?"selected":""} >$i</option>");  
+            sb.write("<option value='$i' ${(i==waypoint.currentWaypoint)?"selected":""} >$i</option>");  
           }
           html.querySelector("#inspector table tr.first").insertAdjacentHtml("afterEnd","<tr class='removable'><th>$key</th><td><select id='prop_$key'>${sb.toString()}</select><button id='prop_$key"+"_add' >+</button><button id='prop_$key"+"_del' >-</button></td></tr>");
           html.querySelector("#prop_$key").onChange.listen((e) {
                                                  setter[key]((html.querySelector("#prop_$key") as html.SelectElement).selectedIndex);
                                                });
-          html.querySelector("#prop_$key"+"_add").onClick.listen((e){elevator.waypoints.add(new Vector(pos.x, pos.y));
-                                                                  elevator.currentWaypoint = elevator.waypoints.length-1;
-                                                                  (html.querySelector("#prop_$key") as html.SelectElement).children.add(new html.OptionElement(data:elevator.currentWaypoint.toString(), value : elevator.currentWaypoint.toString()));
-                                                                  (html.querySelector("#prop_$key") as html.SelectElement).selectedIndex = elevator.currentWaypoint;});
-          html.querySelector("#prop_$key"+"_del").onClick.listen((e){elevator.waypoints.removeLast();
-                                                                      elevator.currentWaypoint = elevator.waypoints.length-1;
+          html.querySelector("#prop_$key"+"_add").onClick.listen((e){waypoint.addWaypoint(pos.x, pos.y);
+                                                                  waypoint.currentWaypoint = waypoint.waypoints.length-1;
+                                                                  (html.querySelector("#prop_$key") as html.SelectElement).children.add(new html.OptionElement(data:waypoint.currentWaypoint.toString(), value : waypoint.currentWaypoint.toString()));
+                                                                  (html.querySelector("#prop_$key") as html.SelectElement).selectedIndex = waypoint.currentWaypoint;});
+          html.querySelector("#prop_$key"+"_del").onClick.listen((e){waypoint.waypoints.removeLast();
+                                                                      waypoint.currentWaypoint = waypoint.waypoints.length-1;
                                                                       (html.querySelector("#prop_$key") as html.SelectElement).children.removeLast();
-                                                                      (html.querySelector("#prop_$key") as html.SelectElement).selectedIndex = elevator.currentWaypoint;});
+                                                                      (html.querySelector("#prop_$key") as html.SelectElement).selectedIndex = waypoint.currentWaypoint;});
           
         }
         
@@ -306,9 +341,10 @@ class EditorSystem extends EntityProcessingSystem {
       pos.x = dbo.stage.mouseX;
       pos.y = dbo.stage.mouseY;
       
-      ElevatorComponent elevator = elevatorMapper.getSafe(selectedEntity);
-      if(elevator!=null){
-        elevator.waypoints[elevator.currentWaypoint] = new Vector(pos.x, pos.y);
+
+      WaypointComponent waypoint = waypointMapper.getSafe(selectedEntity); 
+      if(waypoint!=null){
+        waypoint.waypoints[waypoint.currentWaypoint] = new Vector(pos.x, pos.y);
     
       }
     }
@@ -352,7 +388,7 @@ class EditorSystem extends EntityProcessingSystem {
     entities.forEach((entity) {
       
       String type = typeMapper.get(entity).type;
-      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)|(Goal)|Elevator")))
+      if(!type.contains(new RegExp("(Wall)|(Player)|(ColorChanger)|(Door)|(Goal)|(Elevator)|(Monster)|(Portal)")))
           return;
       if(firstEntity){
         firstEntity=false;
@@ -410,11 +446,36 @@ class EditorSystem extends EntityProcessingSystem {
              PositionComponent pos = posMapper.get(entity);
              ColliderComponent collider = colliderMapper.get(entity);
              ElevatorComponent elevator = elevatorMapper.getSafe(entity);
+             WaypointComponent waypoint = waypointMapper.getSafe(entity);
              sb.writeln("\"type\":\"Elevator\",");
              sb.write(pos.toJson());
              sb.writeln(",\n" + cc.toJson()+",");
              sb.writeln("\"bounciness\":${collider.bounciness},");
-             sb.writeln(elevator.toJson());
+             sb.writeln(elevator.toJson()+",");
+             sb.writeln(waypoint.toJson());
+             break;
+         case "Monster":
+             ColorComponent cc = colorMapper.getSafe(entity);
+             PositionComponent pos = posMapper.get(entity);
+             ColliderComponent collider = colliderMapper.get(entity);
+             VelocityComponent velocity = velMapper.getSafe(entity);
+             WaypointComponent waypoint = waypointMapper.getSafe(entity);
+             sb.writeln("\"type\":\"Monster\",");
+             sb.write(pos.toJson());
+             sb.writeln(",\n" + cc.toJson()+",");
+             sb.writeln("\"vx\":${velocity.vx},\"vy\":${velocity.vy},");
+             sb.writeln(waypoint.toJson());
+             break;
+         case "Portal":
+             ColorComponent cc = colorMapper.getSafe(entity);
+             PositionComponent pos = posMapper.get(entity);
+             ColliderComponent collider = colliderMapper.get(entity);
+             PortalComponent portal = portalMapper.get(entity);
+             
+             sb.writeln("\"type\":\"Portal\",");
+             sb.write(pos.toJson());
+             sb.writeln(",\n" + cc.toJson()+",");
+             sb.writeln("\"direction\":${portal.direction}");
              break;
                   
          

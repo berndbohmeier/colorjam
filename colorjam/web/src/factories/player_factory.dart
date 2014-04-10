@@ -28,7 +28,7 @@ class PlayerFactory extends EntityFactory {
     
     
     
-    FlipBook flipBook = new FlipBook(bitmapDatas,10,true);
+    FlipBook flipBook = new FlipBook(bitmapDatas,20,true);
     SpriteComponent sc = new SpriteComponent(flipBook);
     
     

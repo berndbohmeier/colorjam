@@ -29,13 +29,14 @@ class EntityFactory {
   static void createFactories(ResourceManager rm){
     _factories =  {
       "Entity" : new EntityFactory._(rm),
-      "Circle" : new CircleFactory._(rm),
+      "Monster" : new MonsterFactory._(rm),
       "Wall" : new WallFactory._(rm),
       "Player" : new PlayerFactory._(rm),
       "ColorChanger" : new ColorChangerFactory._(rm),
       "Door" : new DoorFactory._(rm),
       "Goal" : new GoalFactory._(rm),
-      "Elevator" : new ElevatorFactory._(rm)
+      "Elevator" : new ElevatorFactory._(rm),
+      "Portal" : new PortalFactory._(rm)
     };
   }
 }

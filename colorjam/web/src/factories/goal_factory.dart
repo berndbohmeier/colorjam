@@ -1,7 +1,8 @@
 part of colorjam;
 
 class GoalFactory extends EntityFactory {
-  static const WIDTH = 60, HEIGHT = 60;
+  static const WIDTH = 100, HEIGHT = 100;
+  static const INTER_WIDTH = 60, INTER_HEIGHT = 60;
   GoalFactory._(ResourceManager resourceManager) : super._(resourceManager) {}
   
   Entity build(World world, Map<String, dynamic> args) {
@@ -31,6 +32,7 @@ class GoalFactory extends EntityFactory {
       ..addComponent(cp)
       ..addComponent(new GoalComponent())
       ..addComponent(new GeometryComponent(WIDTH, HEIGHT))
+      ..addComponent(new InteractionComponent(INTER_WIDTH, INTER_HEIGHT))
       ..addComponent(sc);
     
     return e;
