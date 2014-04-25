@@ -81,6 +81,7 @@ class Game {
       ..addTextFile("simon1.lvl", "levels/simon1.lvl")
       ..addTextFile("simon2.lvl", "levels/simon2.lvl")
       ..addTextFile("elevator1.lvl", "levels/elevator1.lvl")
+      ..addTextFile("portal1.lvl", "levels/portal1.lvl")
       ..addTextFile("portallevel.lvl", "levels/portallevel.lvl")
       
       ;//resourcemanager
@@ -88,7 +89,7 @@ class Game {
     
     
     
-    List<String> levels = ["flat","simon0","simon1","simon2", "sebi1", "sebi3", "bernd1","bernd2", "bernd3","bernd5","bernd6", "max0","bernd4" ,"bernd7", "bernd8", "elevator1", "portallevel"];
+    List<String> levels = ["flat","simon0","simon1","simon2", "sebi1", "sebi3", "bernd1","bernd2", "bernd3","bernd5","bernd6", "max0","bernd4" ,"bernd7", "bernd8", "elevator1", "portal1","portallevel"];
     
     
     levelManager = new LevelManager(levels,resourceManager);

@@ -16,9 +16,9 @@ class MonsterSystem extends InteractionSystem {
   void processInteraction(Entity monster, Entity player) {
     ColorComponent monsterColor = colorMapper.get(monster);
     ColorComponent playerColor = colorMapper.get(player);
-    if((monsterColor.nr == 0 || playerColor.r > 0) &&
-       (monsterColor.ng == 0 || playerColor.g > 0) &&
-       (monsterColor.nb == 0 || playerColor.b > 0)) {
+    if((monsterColor.nr > 0 && playerColor.r > 0) ||
+       (monsterColor.ng > 0 && playerColor.g > 0) ||
+       (monsterColor.nb > 0 && playerColor.b > 0)) {
       
       // monster has same color
       

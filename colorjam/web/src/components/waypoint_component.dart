@@ -63,6 +63,8 @@ class WaypointComponent extends Component {
     if(currentWaypoint >= waypoints.length){
           if(loop){
             currentWaypoint = 0;
+          }else{
+            currentWaypoint--;
           }
     }
   }
